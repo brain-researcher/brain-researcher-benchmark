@@ -13,7 +13,7 @@ Hard-won playbook. **Core principle: difficulty comes from the science and the d
 - A verifier looks machine-generated (weighted rubric / artifact-contract trio) and needs a human-looking, schema-robust rewrite.
 - NOT for: running an existing task (that's Harbor CLI); non-benchmark reproduction (use `neuroprogram-real-fmri`).
 
-Worked examples in this repo (`benchmarks/tb-science-task/`), a measured difficulty ladder:
+Worked examples ship alongside this skill (the `*-001` task directories at the repo root), a measured difficulty ladder:
 - **`GRADIENT-001`** — un-cued *characterise the principal gradient* → both GPT-5.5 xhigh & Claude Opus 4.8 overclaim a single identity → **FAIL** (hard).
 - *easy control (measured during dev, not shipped)* — clean reproduction of Richardson 2018's within-network result, pipeline fully pinned → both compute it and report honestly → **PASS**. This is the baseline that proves the difficulty below is the un-cued choice, not reproduction itself.
 - **`SOCIALBRAIN-001`** — reproduce Richardson's headline anti-correlation, but it only holds under GSR (an un-cued, contested choice) → both run one default pipeline and give a flat verdict → **FAIL** (hard reproduction).

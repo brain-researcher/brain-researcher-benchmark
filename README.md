@@ -1,8 +1,7 @@
 # brain-researcher-benchmark
 
 A small benchmark of **un-cued scientific judgement** for coding/agent systems, in
-[terminal-bench-science / Harbor](https://github.com/laude-institute/terminal-bench)
-task format. Each task is a real neuroimaging analysis a capable agent can *run*
+[Harbor / terminal-bench](https://github.com/harbor-framework/harbor) task format. Each task is a real neuroimaging analysis a capable agent can *run*
 correctly — yet frontier agents still **fail** it, because the honest answer needs a
 piece of scientific judgement nobody told them to apply.
 
@@ -51,7 +50,8 @@ TASK-NAME/
 
 ## How to run
 
-With the Harbor / terminal-bench-science harness:
+Install the harness ([harbor-framework/harbor](https://github.com/harbor-framework/harbor)),
+then from the repo root:
 
 ```bash
 # reference solution — must score reward 1.0

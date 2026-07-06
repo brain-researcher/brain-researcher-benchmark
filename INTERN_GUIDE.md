@@ -7,9 +7,10 @@ or `~/.claude/skills/tb-science-task-authoring/SKILL.md`). This file is the *pro
 around* it: the daily contract, the difficulty ratchet, the environment, and how the
 board + queue keep two people from colliding.
 
-Two shipped tasks are your copy-templates:
+Three shipped tasks are your copy-templates:
 - `GRADIENT-001/` — rigor genre, **over-claim** failure axis (un-cued "characterise").
 - `SOCIALBRAIN-001/` — reproduction genre, **confident-refutation** axis (un-cued GSR lever).
+- `DEVCONN-001/` — reproduction genre, **wrong-cause** axis (un-cued head-motion confound).
 
 ---
 
