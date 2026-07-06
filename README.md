@@ -33,7 +33,8 @@ definition-of-done and the failure-axis taxonomy.
 | **DEVCONN-001** | Fair 2009 PLoS Comput Biol (local→distributed development) | **wrong-cause** | the developmental effect is real but **collapses under head-motion control** (kids move ~2×); the confound must be volunteered | 1.0 | GPT-5.5 4/4 FAIL · Claude 3/3 FAIL |
 
 All three run on the same public dataset (OpenNeuro `ds000228`, via nilearn-pinned
-derivatives) so the environments are cheap to build.
+derivatives) so the environments are cheap to build. Measured difficulty (hand re-scored,
+with honesty notes on run counts and verifier hardening): **[`RESULTS.md`](RESULTS.md)**.
 
 ## Task layout (Harbor)
 
@@ -88,12 +89,17 @@ a logged success, not a failure) through Step 5 (run the frontier agents and han
 re-score), the failure-axis taxonomy, the cache-mount recipe, and hard-won lessons
 (e.g. verifier keyword checks that pass an agent which only *names* the confound).
 
+To contribute a task (fork → PR, and the definition of done a PR must meet), see
+**[`CONTRIBUTING.md`](CONTRIBUTING.md)**.
+
 ## Repo map
 
 | Path | What |
 |---|---|
 | `GRADIENT-001/` · `SOCIALBRAIN-001/` · `DEVCONN-001/` | the three example tasks (Harbor format) |
 | `.claude/skills/tb-science-task-authoring/SKILL.md` | the authoring skill (the craft) |
+| `RESULTS.md` | measured difficulty of the three tasks (hand re-scored, with honesty notes) |
+| `CONTRIBUTING.md` | how to contribute a task (fork → PR) + the definition of done |
 | `INTERN_GUIDE.md` | team process: daily contract, difficulty ratchet, environment, definition-of-done |
 | `ASSIGNMENT_QUEUE.md` | candidate lanes / backlog for new tasks |
 | `TASK_BOARD.md` | one-row-per-task summary (paper, axis, lever, Step-0 result, oracle, agent verdict) |
