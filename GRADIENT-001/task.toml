@@ -1,0 +1,30 @@
+version = "1.1"
+instruction_version = "1.0"
+test_version = "1.0"
+
+[metadata]
+task_id = "GRADIENT-001"
+title = "Principal connectivity gradient: un-cued robustness / overconfidence trap"
+category = "Connectivity"
+difficulty = "hard"
+dataset_source = "OpenNeuro (nilearn-pinned derivatives)"
+dataset_id = "ds000228"
+source_paper = "Vos de Wael et al. 2020 (BrainSpace) / Margulies et al. 2016"
+
+[verifier]
+timeout_sec = 3000.0
+
+[agent]
+timeout_sec = 3000.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = true
+
+[verifier.env]
+
+[solution.env]
