@@ -53,3 +53,21 @@ This repo holds worked examples + the authoring skill. New tasks are welcome by
   reason and move on. Never manufacture a trap.
 - Frontier-agent access (Harbor, GPT-5.5 `~/.codex/auth.json`, Claude
   `CLAUDE_CODE_OAUTH_TOKEN`) is the contributor's own; never commit credentials or tokens.
+
+## Running the Claude agent (auth gotcha)
+
+Harbor's `claude-code` agent reads `CLAUDE_CODE_OAUTH_TOKEN` from the host env only — it
+does **not** inherit your interactive `~/.claude` login. Without an export, a run dies in
+~30 s with `NonZeroAgentExitCodeError` / "Not logged in" — a **0.0 that is an auth failure,
+not a task FAIL** (always check `exception_stats` in `result.json` before scoring a 0.0).
+
+Two fixes: either `export CLAUDE_CODE_OAUTH_TOKEN=…`, or run once:
+
+```bash
+python tools/patch_harbor_oauth.py
+```
+
+which idempotently patches Harbor's agent to fall back to your logged-in session token
+(`~/.claude/.credentials.json`). An exported env var still wins; re-run after
+`uv tool upgrade harbor`. (Likewise, a GPT-5.5 run that exits non-zero in seconds is usually
+a codex **usage-limit**, not a task FAIL.)
