@@ -69,5 +69,24 @@ python tools/patch_harbor_oauth.py
 
 which idempotently patches Harbor's agent to fall back to your logged-in session token
 (`~/.claude/.credentials.json`). An exported env var still wins; re-run after
-`uv tool upgrade harbor`. (Likewise, a GPT-5.5 run that exits non-zero in seconds is usually
-a codex **usage-limit**, not a task FAIL.)
+`uv tool upgrade harbor`.
+
+## Running the GPT-5.5 agent (auth gotcha)
+
+Harbor's `codex` agent defaults to **`OPENAI_API_KEY`** auth. If you log in with a
+ChatGPT account (`~/.codex/auth.json` has `auth_mode=chatgpt` and an **empty**
+`OPENAI_API_KEY`), the default path ships an empty key and the run dies in ~40 s with
+`401 Unauthorized: Incorrect API key ''` — again a **0.0 that is an auth failure, not a
+task FAIL**. Two fixes:
+
+- **ChatGPT login:** force Harbor to upload your `auth.json` —
+  `--ae CODEX_FORCE_AUTH_JSON=1` (or `export CODEX_FORCE_AUTH_JSON=1`).
+- **API key:** `export OPENAI_API_KEY=sk-…` (harbor's default path uses it; no flag needed).
+
+Separately, a codex run that exits non-zero in seconds with *"You've hit your usage limit …
+try again at HH:MM"* is a **quota** exhaustion, not a task FAIL — wait for the reset or use
+an account/key with quota.
+
+**Golden rule:** a `0.0` that finishes in seconds with a non-empty `exception_stats` is an
+infra artifact (auth / quota / build), never a task result. Only score runs with
+`exception_stats: {}` and a realistic duration (~15–20 min for these tasks).

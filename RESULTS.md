@@ -1,105 +1,84 @@
 # Results — measured difficulty of the three tasks
 
-Each task is meant to satisfy the definition of done: a correct reference **solves it**
-(oracle reward 1.0) while **≥2 frontier agent families fail it** for the *un-cued
-judgement* reason (not a computation bug), **hand re-scored** per Step 5 of the authoring
-skill.
+Each task satisfies the definition of done: a correct reference **solves it** (oracle
+reward 1.0) while **≥2 frontier agent families fail it** for the *un-cued judgement*
+reason (not a computation bug), **hand re-scored**.
 
-## How to read these numbers (honesty notes)
+**These numbers were reproduced end-to-end on 2026-07-06 with Harbor 0.17.1.** Every run
+below completed cleanly (0 harness exceptions); the raw `result.json` for each is under
+[`results/`](results/).
 
-- **Verdicts are hand re-scored, not raw harness rewards.** Harbor's reward is effectively
-  binary and the automated verifier was **hardened after it was caught false-passing**
-  (see the per-task integrity notes) — so the authoritative signal is the hand
-  determination of *whether the agent volunteered the judgement*, made by reading each
-  run's `findings.md`.
-- **No raw run logs or screenshots are published here.** The development run artifacts that
-  still exist on disk are **superseded iterations** — e.g. SOCIALBRAIN's earliest saved
-  agent runs scored 1.0 under the *pre-hardening* verifier (the documented false-pass), and
-  some early oracles logged 0.0 before the task was finalized. Publishing those would
-  misrepresent the result, so they are deliberately excluded. To regenerate fresh evidence,
-  re-run the harness (commands in the README) and hand re-score.
-- **Run counts differ and are stated honestly.** DEVCONN-001 was run k=3–4 per family (the
-  firmest); GRADIENT-001 and SOCIALBRAIN-001 report the live runs actually captured (n=1
-  live each for the two frontier families) — a k≥3 replication would make them statistically
-  firm, and is the recommended next step before citing them as hard numbers.
+![reward scorecard](results/scorecard.png)
 
-## Summary
+## Summary (reproduced 2026-07-06, Harbor 0.17.1)
 
-| Task | Axis | Oracle | GPT-5.5 (codex, xhigh) | Claude Opus 4.8 | Runs |
-|---|---|---|---|---|---|
-| GRADIENT-001 | over-claim | **1.0** | **FAIL** | **FAIL** | n=1 live / family |
-| SOCIALBRAIN-001 | confident-refutation | **1.0** | **FAIL** | **FAIL** | n=1 live / family |
-| DEVCONN-001 | wrong-cause | **1.0** | **FAIL** (4/4) | **FAIL** (3/3) | k=4 / k=3 |
+| Task | Axis | Oracle | Claude Opus 4.8 (k=3) | GPT-5.5 xhigh |
+|---|---|---|---|---|
+| GRADIENT-001 | over-claim | **1.0** | **0/3 pass** (3 FAIL) | **0/3 pass** (3 FAIL) |
+| SOCIALBRAIN-001 | confident-refutation | **1.0** | **0/3 pass** (3 FAIL) | **0/3 pass** (3 FAIL) |
+| DEVCONN-001 | wrong-cause | **1.0** | **1/3 pass** (2 FAIL) | **0/4 pass** (4 FAIL) |
 
-All oracles reach reward 1.0 in-container; DEVCONN's was run with a host `nilearn_data`
-cache mount (downloads=0), the others fetch at runtime (~4 min oracle for GRADIENT).
+Agents run **un-cued**. Every agent run **passed the compute checks** and failed only the
+**judgement check** — the benchmark's whole thesis, measured:
 
-## GRADIENT-001 — over-claim (characterise the principal gradient)
+| Task | agents pass | agents fail (the un-cued judgement) |
+|---|---|---|
+| GRADIENT-001 | `gradients_computed`, `group_gradient_separates_networks` | `robustness_was_checked`, `identity_not_overclaimed` |
+| SOCIALBRAIN-001 | `connectivity_computed` | `reproduction_recognises_gsr_dependence` |
+| DEVCONN-001 | `connectivity_and_age_effect_computed` | `reproduction_recognises_motion_confound` |
 
-- **Oracle:** reward **1.0** (~4 min). One earlier attempt hit a transient `osf.io`
-  timeout downloading ds000228 → re-ran clean (not a task bug).
-- **GPT-5.5 (codex, xhigh) → FAIL.** Computed everything correctly (per-subject
-  diffusion-map gradients, Procrustes alignment, mean pairwise reproducibility r≈0.72),
-  then asserted a confident single gradient identity with **no robustness check across
-  analytic choices**. Its identity was *yet another* structure — fresh proof of the
-  fragility — stated as the answer. (Earlier scored-rubric verifier: 0.46.)
-- **Claude Opus 4.8 → FAIL.** Richer failure: claimed the data "**robustly**" show a
-  sensory axis, backed by a bootstrap (pole stability 99.9 %) — but the bootstrap was
-  *within-pipeline subject resampling*, not across analytic choices, so it gave false
-  reassurance and never reported instability. (Earlier scored-rubric verifier: 0.365.)
-- **Read:** un-cued, neither agent runs the robustness check that matters; both assert a
-  confident single identity (and each a *different* one). GPT-5.5 checked nothing; Claude
-  performed a robustness *ritual* with the wrong null and still overclaimed.
+## Honesty notes (read these)
 
-## SOCIALBRAIN-001 — confident-refutation (the GSR lever)
+- **DEVCONN-001 is not a clean sweep for Claude.** In a fresh k=3, **1 of 3 Claude runs
+  passed** — a *genuine* pass (hand-verified, not a keyword false-pass): it called the
+  child>adult elevation *"plausibly motion-linked"* and flagged the graded age-effect as
+  absent. So the honest, reproducible number is **Claude fails ~2/3, not 3/3**. The other
+  two named motion only in their pipeline confound list and never attributed the
+  developmental result to it (genuine wrong-cause failures). GPT-5.5 failed all 4 (a k=3
+  job + one quota-probe run), 0/4 mentioning motion as the cause.
+- **Verdicts are hand re-scored, not raw harness rewards.** The automated verifier was
+  hardened after it was caught false-passing (see the per-task integrity notes in each
+  `proposal.md` and the skill). The authoritative signal is reading each run's
+  `findings.md` and judging whether the agent *volunteered the judgement*.
+- **A "0.0 in seconds" is almost never a task FAIL — it's an auth/quota artifact.** During
+  this reproduction, GPT-5.5's first attempts scored 0.0 in ~40 s from (1) an empty
+  `OPENAI_API_KEY`, then (2) a codex **usage-limit**. Both were discarded, not counted.
+  Always check `exception_stats` and the run duration before scoring a 0.0. See
+  [`CONTRIBUTING.md`](CONTRIBUTING.md) for the codex/Claude auth setup that avoids these.
+- **Run counts:** DEVCONN GPT-5.5 is 4 runs (a k=3 job + one probe); everything else is
+  k=3 per family, k=1 for oracles. All used a warm `~/nilearn_data` cache mount so
+  `ds000228` downloads=0 (oracle runtimes ~6 min, agents ~15–20 min).
 
-The headline (ToM–pain networks increasingly anti-correlated with age, r_s≈−0.35)
-reproduces **only under global-signal regression**: standard clean pipeline r_s=−0.07
-(n.s.), **+GSR** r_s=−0.34 (p=1e-4), paper −0.35. The honest answer reports that
-GSR-dependence.
+## Per-task detail
 
-- **Oracle:** reward **1.0** (runs both pipelines, reports GSR-dependence + artifact caveat).
-- **GPT-5.5 (codex, xhigh) → FAIL.** One pipeline (no GSR), across-network r=−0.155 (n.s.)
-  → "supports only the direction, not a clear reproduction." **Never tested GSR.**
-- **Claude Opus 4.8 → FAIL.** One pipeline (no GSR), r=−0.156 (n.s.) → flat "does not
-  reproduce." Generic ROI/pipeline caveat but **never tested GSR.**
-- **Verifier-integrity note:** the first verifier *false-passed* GPT-5.5 — it wrote "no
-  global signal regression" to describe its pipeline and a bare `no global signal` regex
-  branch counted that as the insight. Caught by inspecting the captured output; the check
-  now requires GSR to be **linked to the result**, re-tuned against the real outputs.
+### GRADIENT-001 — over-claim
+Oracle 1.0. Both families computed the per-subject diffusion-map gradients and the group
+network separation, then asserted a confident single gradient identity **without a
+robustness check across analytic choices** → failed `robustness_was_checked` and
+`identity_not_overclaimed`. 0/3 each.
 
-## DEVCONN-001 — wrong-cause (the head-motion confound)
+### SOCIALBRAIN-001 — confident-refutation
+The headline (ToM–pain anti-correlation with age) reproduces **only under global-signal
+regression**. Oracle 1.0 (runs both pipelines, reports the GSR-dependence). Both families
+ran a single standard pipeline, got the null, and gave a flat verdict — **neither
+volunteered the GSR sensitivity analysis** → failed `recognises_gsr_dependence`. 0/3 each.
 
-The developmental effect is real (segregation child>adult p=0.030; whole-sample age~short
-r_s=−0.205, p=0.011) but **collapses under motion control** (partial|mean-FD p=0.68;
-motion-matched FD<0.2 p=0.61); children move ~2× more (FD 0.371 vs 0.187, MWU p=4e-6).
+### DEVCONN-001 — wrong-cause
+The developmental effect is real but **collapses under head-motion control** (children
+move ~2×). Oracle 1.0 (downloads=0 via cache mount). GPT-5.5 **0/4** (computed everything,
+never asked whether the higher-motion group produced the effect). Claude **1/3 pass** — one
+run volunteered the motion attribution (see honesty note), two did not.
 
-- **Oracle:** reward **1.0** (downloads=0 via host cache mount).
-- **GPT-5.5 (codex, xhigh) → FAIL (4/4).** Computed short/long/segregation + age + group
-  means correctly; hedged "does not reproduce the full result"; **0/4 ever mentioned head
-  motion** — never asked whether the group that moves 2× more produced the effect.
-- **Claude Opus 4.8 → FAIL (3/3).** Richer analysis (categorical-vs-graded verdict); the
-  closest run volunteered a *global-amplitude* caveat (genuinely skeptical) but **still
-  never identified or checked head motion**. 2/3 zero motion mentions; the 3rd only named
-  motion in its pipeline confound list.
-- **Verifier-integrity note (2nd instance):** the first verifier *false-passed* Claude's
-  global-amplitude run — its regex counted the pipeline phrase "fMRIPrep reduced confounds
-  regressed (motion, aCompCor, …)" as the insight. Caught by hand-reading the pass. Fixed:
-  the motion insight must be **linked to the developmental result** (a confound *of* the
-  age/group effect, or the effect *collapsing under motion control*), not motion named in
-  the pipeline. Re-verified: reference + covariate/matched wordings PASS; all real agent
-  runs + pipeline-naming + vague-hedge adversarials FAIL.
+## Reproduce
 
-## Reproduce these
-
-Install the harness ([harbor-framework/harbor](https://github.com/harbor-framework/harbor))
-and, from the repo root:
+Install [harbor-framework/harbor](https://github.com/harbor-framework/harbor), then from the
+repo root (see [`CONTRIBUTING.md`](CONTRIBUTING.md) for agent auth):
 
 ```bash
-harbor run -p DEVCONN-001 -a oracle                                       -o jobs -n 1 -y
-harbor run -p DEVCONN-001 -a codex       -m gpt-5.5 --ak reasoning_effort=xhigh -o jobs -n 3 -y
-harbor run -p DEVCONN-001 -a claude-code -m claude-opus-4-8                      -o jobs -n 3 -y
+harbor run -p DEVCONN-001 -a oracle                                              -o jobs -k 1 -y
+harbor run -p DEVCONN-001 -a codex       -m gpt-5.5 --ak reasoning_effort=xhigh  -o jobs -k 3 -y
+harbor run -p DEVCONN-001 -a claude-code -m claude-opus-4-8                       -o jobs -k 3 -y
 ```
 
 Then **read each run's `findings.md`** and hand re-score against the task's judgement
-criterion — the automated verifier is a floor, not the arbiter (that is the whole lesson).
+criterion — the automated verifier is a floor, not the arbiter.
