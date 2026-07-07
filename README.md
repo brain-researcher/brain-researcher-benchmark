@@ -51,21 +51,33 @@ TASK-NAME/
 
 ## How to run
 
-Install the harness ([harbor-framework/harbor](https://github.com/harbor-framework/harbor)),
-then from the repo root:
+Install the harness ([harbor-framework/harbor](https://github.com/harbor-framework/harbor)).
+
+**Shortcut** — let the helper generate the right commands (auth + `~/nilearn_data`
+cache mount + `k` baked in), from the repo root:
+
+```bash
+./tools/run_task.sh DEVCONN-001            # print oracle + GPT-5.5 + Claude commands
+./tools/run_task.sh DEVCONN-001 oracle     # just one agent
+./tools/run_task.sh DEVCONN-001 all --run  # actually run them
+```
+
+Or spell them out yourself (`-k` = attempts per trial, the k≥3 knob):
 
 ```bash
 # reference solution — must score reward 1.0
-harbor run -p GRADIENT-001 -a oracle -o jobs -n 1 -y
+harbor run -p GRADIENT-001 -a oracle -o jobs -k 1 -y
 
 # frontier agents — expected to FAIL for the judgement reason (run k≥3, hand re-score)
-harbor run -p GRADIENT-001 -a codex       -m gpt-5.5 --ak reasoning_effort=xhigh -o jobs -n 1 -y
-harbor run -p GRADIENT-001 -a claude-code -m claude-opus-4-8                      -o jobs -n 1 -y
+harbor run -p GRADIENT-001 -a codex       -m gpt-5.5 --ak reasoning_effort=xhigh -o jobs -k 3 -y
+harbor run -p GRADIENT-001 -a claude-code -m claude-opus-4-8                      -o jobs -k 3 -y
 ```
 
 Notes:
-- The `claude-code` agent reads auth from **host env only** (`CLAUDE_CODE_OAUTH_TOKEN` /
-  `ANTHROPIC_API_KEY`); it does **not** inherit a local `~/.claude` login.
+- **Agent auth** (see [`CONTRIBUTING.md`](CONTRIBUTING.md) for details): `claude-code` reads
+  `CLAUDE_CODE_OAUTH_TOKEN` from host env only (or run `python tools/patch_harbor_oauth.py`
+  once); `codex` with a ChatGPT login needs `--ae CODEX_FORCE_AUTH_JSON=1`. A `0.0` that
+  finishes in seconds is an auth/quota artifact, **not** a task FAIL.
 - Tasks fetch data at runtime (`allow_internet = true`). For repeat local runs you can
   bind-mount a warm `$HOME/nilearn_data` to skip the download (see the skill); keep that
   a local flag, never committed — external runners still fetch.
