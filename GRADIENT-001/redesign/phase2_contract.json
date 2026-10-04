@@ -1,0 +1,55 @@
+{
+  "schema_version": "gradient-endpoint-qualification-v1",
+  "status": "prospective_awaiting_review_commit_and_explicit_go",
+  "base_pilot_contract": "pilot_contract.json",
+  "base_pilot_contract_sha256": "7eab0a9f8459a99b222ba01dd4f1ff7c981c5818e29468ee63f7f3002773995b",
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_qualification_2026-10-04/pr200",
+  "resources": {"cpus": 2, "memory_bytes": 8589934592, "memory_swap_bytes": 8589934592, "global_wall_seconds": 1200, "gpu": 0, "network": "none", "pids_limit": 128, "tmp_bytes": 67108864, "max_new_output_bytes": 1073741824, "blas_threads": 1},
+  "stages": ["authenticate", "fit", "evaluate", "check_fit", "check_evaluate"],
+  "frozen_design": {
+    "cohort_and_split": "Exactly the base pilot's20 identities and10/10 metadata-only age-pair/hash split; independently recompute from authenticated metadata.",
+    "source_support": "Discovery-only intersection of geometry and public no-band-pass activity rule. Prior pilot observed400; recompute rather than copy. Never shrink it using evaluation activity.",
+    "preprocessing": "Inherited identity-world nearest labels, originalfloat64 scaling,168frames, selected15confounds, no-band-pass nuisance removal; no censoring, epsilon correlations or support repair.",
+    "group_FC": "Equal-person arithmetic mean of ten discovery Pearson FCs; diagonal1; upper triangle mirrored.",
+    "operator": "Retain ceil(0.1*P) largest signed FC values per row including diagonal eligibility; exact ties smaller original parcel ID. Normalized-angle kernel; alpha0.5; real symmetric diffusion operator.",
+    "principal_axis": "Largest algebraic nontrivial eigenvector; no network-label selection, alignment or multicomponent rotation.",
+    "discovery_stability": "All ten leave-one-discovery-person group FC/operator fits on unchanged discovery support. Report gap and squared principal-axis overlap when both axes identifiable; no outcome-selected alternative.",
+    "evaluation": "Each of the ten fixed evaluation slots uses frozen support. Source-inactive row remains explicitnull; valid people are scored independently. Frozen fit artifact read-only and hash-checked before/after.",
+    "primary": "Remove heldout stationary component from frozen unit discoveryaxis; normalize if resolved; report R=v^T K v,lambda1,R/lambda1,stationary_overlap_squared,projectionnorm,heldoutgap,spectralmean=(traceK-1)/(P-1),R-minus-spectralmean. Ratio alone is not selective transfer.",
+    "secondary": "Sign/scale-invariant C=(meanDefault(g)-meanVis(g))*(meanDefault(g)-meanSomMot(g))/var_parcels(g). For unresolved leading block, full-span min/max; never choose favorable basis. C is not global DMN apex.",
+    "leading_block": "Maximal contiguous leading nontrivial eigenvalue block whose successive gaps are <=4e-8; include its full certified span. Boundary and rank reported.",
+    "spectral_nulls": "Inherited4e-8 numerical gap/energy envelope; non-simple stationary mode, unresolved discoveryaxis,projectionnorm<=1e-12 orheldoutlambda1<=4e-8 gives explicitprimarynull. No fabricated/blanketnull accepted.",
+    "network_nulls": "Source-inactive, non-simple stationary mode or constant diffusion-coordinate span; all actual leading eigenvalues and block rank retained. Range rank threshold per public protocol1e-10 after column equilibration.",
+    "inference": "Descriptive fixed-cohort/shared-movie method validation only; no pvalues, population CIs, required positive effect or new difficulty claim."
+  },
+  "independence": {
+    "production": "Pinned original-byte decoder and nearest-grid extraction; explicit QR cleaning; NumPy Pearson; publicoperator; stationary-orthogonal QR plus SciPy symmetric eigensolve; public prototype scalar/range routines.",
+    "checker": "Separately decode authenticated NIfTI bytes with explicit raw-storage scaling; explicit homogeneous-coordinate nearest sampling; bincount parcel sums; SVD nuisance projection using only the public QR-kept rank and certifying equality of the kept projector, never an alternative rank cutoff; normalized-vector dot-product correlations; separate row sorting/kernel/degree arithmetic; full symmetric NumPy eigensolve; independently composed Rayleigh and generalized quadratic-form range.",
+    "shared": "Immutable source/capsule authentication, fixed metadata/LUT parsing, high-level recipe orchestration including aggregation and null dispatch, NumPy/SciPy/NiBabel libraries and public contract. A separate accounting audit rechecks fixed slots, source/numerical null reasons and participant summary arithmetic. Not a fully independent complete verifier, independent raw dataset or anatomical registration. Checker never calls production cleaning/operator/endpoint functions or legacycore numerical routines.",
+    "numerical_equivalence": "Certificate-valid eigenvectors and full repeated-block spans accepted; no private sign/basis fingerprint. Check source-canonical sparsity membership separately; disagreement stops qualification rather than tuning after results."
+  },
+  "engineering_envelopes_not_final_scoring_tolerances": {
+    "raw_means": {"atol": 0.00001, "rtol": 1e-7},
+    "cleaned_series": {"atol": 0.000001, "rtol": 0.000001},
+    "FC": {"atol": 1e-8, "rtol": 1e-7},
+    "operator": {"atol": 1e-9, "rtol": 1e-7},
+    "scalar": {"atol": 1e-6, "rtol": 1e-6},
+    "spectral_certificate": {"residual_l2": 1e-8, "orthogonality": 1e-7, "stationary_dot": 1e-8},
+    "nuisance_projector_frobenius": 1e-8,
+    "scope": "Source/clean/FC/scalar envelopes inherited from prior public contract; operator envelope is a prospective engineering bound for independently composed kernel arithmetic, not a scientific similarity threshold or final grader. Report maximum differences and stop on any failure, no widening after observation."
+  },
+  "deliverable_boundary": "Fullsource/matrix/hash/certificate receipts are private authoring QA. Future agent-facing interface is frozen discoveryartifact plus keyed person-level scientific report, not all authoring housekeeping.",
+  "qualification_not_benchmark_pass": "No Sol, Harbor, regrade, public PR change or reward computation; successful numerical qualification is not evidence of empirical difficulty or anatomical validity.",
+  "code_sha256": {
+    "phase2_production.py": "fa91a24bcc0fc68d15209162f9fd392012c95fabf0b97867fccbbfb8d97b14bc",
+    "phase2_independent.py": "b9c3fbee8ef63859d2e25f6957974df84a418d48a53fa21524633dff05b6bdf0",
+    "phase2_workflow.py": "58b98b2e5bc2ddf6bd60fe1b759488a8f0abf88bcd9ac7409c33ab484564bb1c",
+    "phase2_compare.py": "8aec77cd7613ef09cfcc28ab50c5a01e4b195fefc55d8bb2ef7156b7521ed756",
+    "phase2_stage.py": "a72966976c78229eb3fe9111adc9a75d8aa773cd7f2935740e455876ba6e7566",
+    "launch_phase2.py": "85ae85d1c0fc716afb68d37f4b7f865e4ff2f678470b265da4fe9a5291572441",
+    "protocol.py": "1a7590bcc449d4edd163af6aa25f4de0748f40e06465e8b34dbc6ebeba9652d2",
+    "pilot_support.py": "455bb766f40523e1d088732aee9c2cd3072a2b3fc09dc75cb4f9a1af03203aad",
+    "launch_support_pilot.py": "69842c6264329bd1ca4e823e545323dc3f96935aec20b36f1a48ddacf1d82b22",
+    "test_phase2.py": "3289aaab01d8ba8f56530c37d6cac83208c9632f1c75c8b1ff267fb1388372f2"
+  }
+}
