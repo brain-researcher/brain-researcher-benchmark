@@ -1,0 +1,46 @@
+{
+  "schema_version": "gradient-structural-support-pilot-v1",
+  "status": "awaiting_root_scientific_resource_review_and_explicit_launch_go",
+  "image_id": "sha256:19be0cc27dd1c6a1250b318d32c1dd628d49f4d8426122513e0f0f55e41760ca",
+  "image_authority": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/pr_repairs_2026-10-01/pr-200/final_receipt.json",
+  "source_manifest_sha256": "6afac2a68c4ca4847265ac5f890d56aa53a658e78f13b32e0f15f74007ed91c7",
+  "method_sha256": "c6575d9cc8a9f8d422dc3ec88c2a7aefa6ca971757180517948d2466fefce872",
+  "schema_sha256": "e9ceb1a15180ed086290c4c7f5eb079038302b4dd5feabc3e99c9acb688bcf16",
+  "legacy_code_sha256": {
+    "source_reader.py": "e3e5cbee2cc2012fa61403c7b0686cf880d9e14c5d7957f5e44f8ff4c42d68d7",
+    "core.py": "456ce2f70b64730fe65cbd3a9c74eb4174eb5febc87df76fa06818848f886632"
+  },
+  "protocol_sha256": "1a7590bcc449d4edd163af6aa25f4de0748f40e06465e8b34dbc6ebeba9652d2",
+  "pilot_code_sha256": {
+    "pilot_support.py": "455bb766f40523e1d088732aee9c2cd3072a2b3fc09dc75cb4f9a1af03203aad",
+    "launch_support_pilot.py": "69842c6264329bd1ca4e823e545323dc3f96935aec20b36f1a48ddacf1d82b22"
+  },
+  "cohort": {
+    "n_people": 20,
+    "n_frames": 168,
+    "n_source_parcels": 400,
+    "discovery": ["sub-pixar001", "sub-pixar003", "sub-pixar005", "sub-pixar006", "sub-pixar009", "sub-pixar010", "sub-pixar012", "sub-pixar013", "sub-pixar123", "sub-pixar125"],
+    "evaluation": ["sub-pixar002", "sub-pixar004", "sub-pixar007", "sub-pixar008", "sub-pixar011", "sub-pixar014", "sub-pixar015", "sub-pixar016", "sub-pixar124", "sub-pixar126"],
+    "split_rule": "Recompute protocol.metadata_split from authenticated participants.tsv with fixed GRADIENT-HELDOUT-v1 salt and require exact agreement; no alternate split.",
+    "holdout_claim": "Procedural locked split of previously used public data, not pristine unseen participants."
+  },
+  "scientific_scope": {
+    "include": ["Authenticate all46 original source/provenance files", "Recompute metadata split", "Decode original20 BOLD and selected15 confounds in split-isolated processes", "Inherited identity-world nearest atlas extraction", "No-band-pass detrend and nuisance QR projection", "Per-person geometry/activity/QC only", "Discovery-only intersection support", "Held-out eligibility on immutable discovery support", "Denied opposite-partition reads and denied fit-artifact writes"],
+    "exclude": ["FC or affinity construction", "gradient/eigenvector fit", "Rayleigh or network endpoint calculation", "changing the split, cleaning or activity rule", "data download", "155-person expansion", "Sol or Harbor run"],
+    "spatial_limit": "Inherited FSLMNI152/MNI152NLin6Asym atlas to MNI152NLin2009cAsym BOLD identity-world approximation; no nonlinear registration or anatomical qualification inferred.",
+    "cleaning": "Inherited no-band-pass branch only; exact-constant guards; detrend signal and15 nuisance columns; center/scale nuisance; pivoted economic QR absdiagR>100eps; residuals; no final zscoring.",
+    "activity": "centered residual L2 >1e-12*sqrt(168)*max(1,original raw sampleSD); no epsilon correlation repair and no outcome-based exclusions.",
+    "fit_output": "All ten person/parcel diagnostics, source hashes and discovery intersection support, no evaluation source values.",
+    "evaluation_output": "All ten person/parcel diagnostics and valid/invalid status on the unchanged discovery support; all people retained."
+  },
+  "isolation": {
+    "trusted_authentication_stage": "Sees full baked source, authenticates bytes and public contracts, creates exact allowlist copies for two capsules; does not compute image signals.",
+    "fit_and_evaluate": "Separate containers; original /app and /opt/source_capture covered by empty tmpfs. Mount only current partition capsule at/source readonly, approved code/public contracts readonly, stage output writable. Evaluation alone also receives frozen fit artifact readonly.",
+    "negative_probes": ["Open each opposite-partition BOLD/confounds path at/source must fail", "Open opposite-partition original/app/data/gradient path must fail", "Covered/opt/source_capture must be empty", "Evaluation open-for-write of frozen fit artifact must fail"],
+    "security": ["nonroot uid/gid", "cap-dropALL", "no-new-privileges", "readonly rootfs", "no network", "no host PID namespace", "no Docker socket", "no GPU devices"]
+  },
+  "resources": {"cpus": 2, "memory_bytes": 8589934592, "memory_swap_bytes": 8589934592, "global_wall_seconds": 1200, "gpu": 0, "network": "none", "pids_limit": 128, "tmp_bytes": 67108864, "max_new_output_bytes": 1073741824, "blas_threads": 1},
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_pilots_2026-10-04/pr200",
+  "stop_conditions": ["Any source/code/contract hash mismatch", "Unexpected source role/member or metadata split", "Stage isolation/read-only probe failure", "Nonfinite contributing source or nuisance values", "Empty discovery support or missing represented network", "Global time, memory or output limit", "Any attempt to change scientific settings"],
+  "evidence_scope": "Source/support and process-isolation engineering pilot only, not anatomical validation, full source-backed verifier, oracle pass, scientific endpoint result or model difficulty."
+}
