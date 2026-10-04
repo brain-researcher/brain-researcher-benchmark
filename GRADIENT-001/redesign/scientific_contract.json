@@ -1,0 +1,87 @@
+{
+  "schema_version": "gradient-heldout-design-v1",
+  "status": "proposed_not_source_qualified_not_calibrated",
+  "base_commit": "670f98f070c95005c1ebfcc48719a1a68be8717a",
+  "paper": {
+    "doi": "10.1073/pnas.1608282113",
+    "anchor": ["Figure 1A/D: leading connectivity gradient", "Figure 3A/B: canonical-network positions"],
+    "target": "Paper-derived conditional transfer of a leading connectivity axis and a separate DMN-versus-two-sensory-means configuration statistic",
+    "not_claimed": ["exact HCP replication", "population developmental effect", "global DMN apex", "causal hierarchy", "resting-state generalization"]
+  },
+  "data": {
+    "source_manifest": "../environment/source_manifest.json",
+    "source_manifest_sha256": "6afac2a68c4ca4847265ac5f890d56aa53a658e78f13b32e0f15f74007ed91c7",
+    "n_subjects": 20,
+    "n_child": 16,
+    "n_adult": 4,
+    "n_frames_each": 168,
+    "source_parcel_ids": "1..400",
+    "new_downloads": false,
+    "holdout_scope": "Procedure-level locked split only; source data and old task outputs were previously inspected.",
+    "template_limit": "Atlas FSLMNI152/MNI152NLin6Asym and BOLD MNI152NLin2009cAsym are not shown to be nonlinearly registered. Retaining identity-world extraction is an explicit operational approximation."
+  },
+  "split": {
+    "function": "protocol.metadata_split",
+    "rule": "Within child/adult stratum sort by age then literal participant_id; adjacent pairs; hash salt|stratum|id1|id2; parity of first SHA256 byte selects discovery member.",
+    "salt": "GRADIENT-HELDOUT-v1",
+    "expected_per_partition": {"child": 8, "adult": 2},
+    "forbidden": ["seed search", "gradient-based split", "source-activity-based split", "replacement participants"]
+  },
+  "preprocessing": {
+    "inherit": "../environment/method_contract.json spatial_extraction and cleaning, no-band-pass only",
+    "support": "Intersection of geometry-valid and residual-active parcels across discovery people only; frozen before held-out evaluation.",
+    "coverage": "All seven networks must remain represented. Report parcel and network coverage without pretending a mathematical nonempty-network rule is scientific coverage validation.",
+    "heldout_inactive": "Invalidate only that person's score on the frozen support; retain their identity, exact reason and all cohort denominators. Never shrink support or replace them.",
+    "independent_unit": "participant, conditional on this fixed shared movie and convenience cohort"
+  },
+  "operator": {
+    "group_FC": "Equal-person mean of all discovery FCs on discovery-only support",
+    "sparsity": "ceil(0.1*P) largest signed entries per row, diagonal eligible, exact ties smaller source ID",
+    "kernel": "normalized angle, not the original paper's cosine recipe",
+    "alpha": 0.5,
+    "symmetric_operator": "S=D^-1/2 W_alpha D^-1/2",
+    "selection": "Largest algebraic nontrivial eigenvector; no network-label-based component search",
+    "numerical_gap_tolerance": 4e-8,
+    "tolerance_scope": "Inherited numerical resolution only; not a biological stability or success threshold",
+    "discovery_stability": "All ten leave-one-discovery-participant fits on the same frozen support, report squared principal-axis overlap and gaps; do not select among them"
+  },
+  "primary": {
+    "name": "frozen_axis_heldout_Rayleigh_fraction",
+    "per_person": "Project unit discovery eigenvector away from held-out stationary mode; normalize; R=v^T S v; T=R/lambda1.",
+    "required_components": ["R", "lambda1", "T", "stationary_overlap_squared", "projected_norm", "heldout_leading_gap", "nontrivial_spectral_mean", "rayleigh_minus_spectral_mean", "status"],
+    "flat_spectrum_diagnostic": "The nontrivial spectral mean is (trace(K)-1)/(P-1). Report R minus this mean as descriptive excess only, not a null-test statistic. A flat spectrum gives T=1 for arbitrary axes and is not selective gradient transfer.",
+    "undefined": ["source-inactive on fixed support", "non-simple stationary mode", "discovery leading axis unresolved", "projection norm <=1e-12", "held-out largest nontrivial eigenvalue <=4e-8"],
+    "summary": "Defined-person mean/min/max and leave-one-defined-person mean range with expected/defined counts",
+    "inference": "Descriptive conditional transfer; no positive threshold, p-value, population confidence interval or random-parcel null"
+  },
+  "secondary": {
+    "name": "DMN_versus_two_sensory_means_configuration",
+    "formula": "(meanDefault(g)-meanVis(g))*(meanDefault(g)-meanSomMot(g))/mean((g-mean(g))^2)",
+    "sign_scope": "positive: DMN mean lies in same direction from both sensory means; negative: between them; not global apex or significance",
+    "degeneracy": "Exact min/max over centered diffusion-coordinate span of complete numerically unresolved leading eigenspace; basis-invariant generalized quadratic-form range",
+    "range_numerics": "Column-max normalization before centering, exact-constant column removal, centered-column equilibration, SVD rank counts singular values >1e-10*largest. Invariance applies to numerically resolved certified spans, not transforms that lose information. Final source-backed acceptance envelopes remain a release gate.",
+    "forbidden": ["choosing favorable axis within degenerate block", "positive orienting test contrast", "rotating gradients using network labels"]
+  },
+  "qualification": {
+    "must_finish_before_active_task": ["approve scientific/resource defaults", "re-authenticate source bytes and metadata-derived split", "measure train-only coverage and held-out eligibility without gradient endpoint tuning", "independent source reconstruction and endpoint implementation", "final public minimal output schema and justified numeric acceptance envelopes", "in-container oracle", "source-backed alternative-equivalence and adversarial controls", "fresh blinded Sol calibration on locked task version"],
+    "hardness_status": "unknown; source-free tests and an oracle pass cannot demonstrate difficulty",
+    "no_blanket_null": "Every null reason must be independently established from authenticated source and public numerical rules"
+  },
+  "proposed_next_resource_contract": {
+    "operation": "Read-only structural and support pilot on existing pinned 20-person image, no model API",
+    "network": "disabled",
+    "cpu_limit": 2,
+    "memory_GiB": 8,
+    "wall_minutes": 20,
+    "gpu": 0,
+    "new_output_limit_GiB": 1,
+    "source_mount": "read-only",
+    "status": "proposal_requires_parent_review_before_execution",
+    "stop": "Stop on source hash mismatch, ambiguous metadata, empty network support, spatial-contract contradiction or memory/time limit; do not substitute data/settings."
+  },
+  "expanded_cohort_fallback": {
+    "available_manifest_only": "Adjacent SOCIALBRAIN-001/DEVCONN-001 manifests cover 155 released people (122 child,33 adult)",
+    "authorized": false,
+    "condition": "Only propose expansion after the fixed20 structural pilot establishes a scientific limitation; lock a new cohort/split/resource contract before use."
+  }
+}
