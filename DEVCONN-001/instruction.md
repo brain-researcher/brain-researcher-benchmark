@@ -1,61 +1,64 @@
-# Reproducing the developmental "local-to-distributed" connectivity finding (DEVCONN-001)
+# Child-only movie connectivity and motion sensitivity (DEVCONN-001)
 
-## Scientific context
+Fair et al. (2009), *Functional Brain Networks Develop from a “Local to
+Distributed” Organization* ([paper](https://doi.org/10.1371/journal.pcbi.1000381)),
+motivates the question. Apply a related distance-based connectivity analysis to
+the released ds000228 movie-watching derivatives. This is a **paper-derived
+methods and sensitivity case**, not a reproduction of Fair's resting-state
+cohort, four-network analysis, or developmental finding.
+The specific motivation is the paper's Figure 5 distance-dependent child/adult
+comparison, not Figure 4 community detection. The tertile Fisher-z summaries and
+child-only rank inference below are explicit adaptations, not the paper's estimator.
 
-A well-established developmental-neuroimaging finding (Fair et al. 2009, *PLoS
-Computational Biology*, "Functional Brain Networks Develop from a 'Local to Distributed'
-Organization"; see also Dosenbach et al. 2010) is that functional connectivity
-**reorganizes from a local to a distributed pattern across development**: young children
-show relatively **stronger short-range** cortico-cortical functional connectivity, and
-connectivity becomes progressively **less locally dominated with age**. This shift toward
-a more distributed organization is one of the most-cited maturational signatures of the
-developing functional connectome.
+Use the fixed originals under `/app/data/devconn`, whose complete identities are
+in `/app/source_manifest.json`: 155 participants (122 children, 33 adults), their
+full confound tables and phenotype table, and the original 264 Power ROI centers.
+Everything needed is available offline. Do not fetch substitute data. Preserve
+literal participant/ROI IDs and join by identity, not position.
 
-## Task
+The public numerical contract is `/app/method_contract.json`, with explanations
+in `/app/ANALYSIS_CONTRACT.md` and output fields in `/app/output_schema.json`.
+`/app/reporting_kernel.py` is the disclosed downstream reporting implementation;
+you may use it or implement an equivalent calculation. Source extraction and
+cleaning still need to be reconstructed from the originals. The verifier compares
+source-close primitives and then replays the submitted cleaned signals, not a
+hidden target effect or a prescribed conclusion.
 
-Using the nilearn-pinned preprocessed derivatives of OpenNeuro `ds000228`
-(`nilearn.datasets.fetch_development_fmri`, **all subjects** — it ships the full
-122 children + 33 adults, with `Age` and `Child_Adult` phenotypic fields),
-**reproduce this local-to-distributed developmental result and report whether it holds
-on these data.**
+Extract 5 mm spheres at every Power coordinate, using the stated sphere support
+convention. Keep all 168 released frames for each participant. Preserve original
+header/scaling metadata; use the separately documented operational MNI-mm/TR=2 s
+convention, not an invented measured onset. Detrend and band-pass both ROI signals
+and the 14 specified nuisance columns at 0.009–0.08 Hz, regress the nuisance design,
+and sample-standardize. FD is a separate motion covariate, not a nuisance regressor.
+Only the declared missing tokens may be zero-filled, with their locations recorded.
 
-For each subject, extract mean BOLD time series from the **Power et al. (2011) 264-ROI
-coordinate atlas** (`nilearn.datasets.fetch_coords_power_2011`, 5 mm spheres) and form the
-ROI×ROI correlation matrix. Bin the ROI pairs by the **Euclidean distance between ROI
-coordinates**, and define **short-range** and **long-range** connectivity as the mean
-correlation over, respectively, the **bottom tertile** and the **top tertile** of the
-ROI-pair distance distribution. A useful summary of local dominance is the **segregation
-index** = short-range − long-range.
+Use signed correlations and average their Fisher-z transforms within strict lower
+and upper distance-tertile bins. Do **not** transform these means back with tanh.
+Segregation is short-range minus long-range. Report canonical-active ROI and edge
+coverage; undefined values must remain explicitly unavailable rather than become
+zeros, dropped people, or replacement draws.
 
-Then quantify the developmental effect: across the children, relate short-range
-connectivity (and the segregation index) to **age** (Spearman), and compare the
-**children vs adults** group means. The standard preprocessing choices the analysis leaves
-to the analyst (nuisance regression, temporal filtering, signal normalisation) should
-follow common practice.
+For children only, report age Spearman and FD-rank-adjusted associations for all
+three metrics, and 1,000 seed-11 participant-bootstrap draws with percentile CIs.
+Retain child/adult means and signed segregation Welch descriptives, both for the
+full cohort and the separate strict FD<0.2 restriction. This restriction is not
+motion matching. Recompute rank/variance support and degrees of freedom as stated
+in the public contract, including degenerate and undefined cases.
 
-Report, in plain terms, **whether the local-to-distributed developmental result reproduces
-on these data** — stating only what your analysis actually supports.
+Write these five files to `/app/output`:
 
-## Output Location
+- `signal_evidence.npz`: raw and cleaned ROI signals, identity/activity axes, and
+  complete bootstrap receipts with defined/status masks.
+- `connectivity_metrics.csv`: all 155 participant metrics, covariates and edge counts.
+- `age_effects.json`: child inference, uncertainty, group means and Welch descriptives.
+- `run_metadata.json`: source identities, headers, missingness, geometry and QC receipts.
+- `findings.md`: the measured results, uncertainty, coverage and interpretation limits.
 
-Write all outputs to `${OUTPUT_DIR}` (default `/app/output`).
-
-## Required Outputs
-
-- `connectivity.csv` — one row per subject:
-  `subject_index, age, group, short_range, long_range, segregation`.
-- `age_effects.json` — for the **children**, the Spearman correlation of age with
-  `short_range`, `long_range`, and `segregation` as
-  `{"children_age_spearman": {"<name>": {"r": ..., "p": ...}}}`; plus `group_means`
-  (child vs adult per measure) and `n_children`, `n_adults`.
-- `run_metadata.json` — dataset id, n subjects, atlas, distance bins, and the
-  preprocessing choices you made.
-- `findings.md` — a short written summary stating whether the local-to-distributed
-  developmental result reproduces on these data. State only what your analysis actually
-  supports.
-
-## Failure handling
-
-If the dataset cannot be resolved, exit non-zero with `failed_precondition` and a
-non-empty reason, and still write parseable `run_metadata.json`, `age_effects.json`,
-and `findings.md`.
+Coherent output-axis permutations and numerically equivalent implementations are
+accepted. Scores are binary: one complete source-bound validation must pass;
+there is no proportional-scoring promise. No direction, attenuation, significance,
+effect-size floor, narrative keyword, or implementation version is required.
+If a precondition fails, preserve the evidence, exit nonzero, and write a
+`failure_report.json` in a safe output directory. Do not change inputs or overwrite
+an earlier output to make the task pass. See `/app/SOURCE_NOTICE.md` for provenance
+and the unresolved license notice attached to the packaged Power coordinates.
