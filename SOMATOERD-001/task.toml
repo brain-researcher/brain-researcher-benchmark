@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/oracle_private", "/app/data/somato/data_manifest.json"]
+
+[metadata]
+task_id = "SOMATOERD-001"
+title = "Fixed-sensor total beta-power change in original somato MEG"
+category = "MEG / method control"
+difficulty = "easy"
+dataset_source = "MNE somato OSF archive version 8, checksum-pinned and staged offline"
+dataset_id = "somato"
+source_paper = "Pfurtscheller and Lopes da Silva 1999, section 3.1/Figure 3, DOI 10.1016/S1388-2457(99)00141-8; method anchor, not numerical finding reproduction"
+
+[verifier]
+timeout_sec = 1800.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
