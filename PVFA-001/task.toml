@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/sherbrooke/data_manifest.json"]
+
+[metadata]
+task_id = "PVFA-001"
+title = "Diffusion-model sensitivity in a diffusion-defined adjacent-tissue proxy ROI"
+category = "Method control"
+difficulty = "easy"
+dataset_source = "Original Sherbrooke image/b-values and documented corrected DIPY b-vectors; checksum-pinned and baked offline"
+dataset_id = "sherbrooke-3shell"
+source_paper = "Hoy et al. 2014 (10.1016/j.neuroimage.2014.09.053) and Henriques et al. 2017 (10.5281/zenodo.495237), two-compartment model/method adaptation; not an original-cohort or anatomical finding reproduction"
+
+[verifier]
+timeout_sec = 900.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
