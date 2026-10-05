@@ -1,0 +1,15 @@
+{
+  "version": "gradient-heldout-release-v1",
+  "source_manifest_sha256": "6afac2a68c4ca4847265ac5f890d56aa53a658e78f13b32e0f15f74007ed91c7",
+  "discovery_ids": ["sub-pixar001", "sub-pixar003", "sub-pixar005", "sub-pixar006", "sub-pixar009", "sub-pixar010", "sub-pixar012", "sub-pixar013", "sub-pixar123", "sub-pixar125"],
+  "evaluation_ids": ["sub-pixar002", "sub-pixar004", "sub-pixar007", "sub-pixar008", "sub-pixar011", "sub-pixar014", "sub-pixar015", "sub-pixar016", "sub-pixar124", "sub-pixar126"],
+  "confounds": ["trans_x", "trans_y", "trans_z", "rot_x", "rot_y", "rot_z", "framewise_displacement", "a_comp_cor_00", "a_comp_cor_01", "a_comp_cor_02", "a_comp_cor_03", "a_comp_cor_04", "a_comp_cor_05", "csf", "white_matter"],
+  "frames": 168,
+  "source_parcels": 400,
+  "split": "Within child/adult stratum sort by age then participant_id, pair adjacent people. SHA256('GRADIENT-HELDOUT-v1|'+stratum+'|'+id1+'|'+id2), parity of first byte chooses discovery member. Fixed memberships above are authoritative; no seed or outcome search.",
+  "gap_tolerance": 4e-8,
+  "scalar_acceptance": {"atol": 1e-6, "rtol": 1e-6},
+  "axis_certificate": {"squared_norm_error": 1e-7, "stationary_dot": 1e-8, "source_eigen_residual_l2": 1e-8},
+  "evaluation_resources": {"wall_seconds": 180, "cpu_seconds": 180, "address_space_bytes": 8589934592, "file_size_bytes": 1048576, "processes": 16, "open_files": 64},
+  "claim_scope": "Paper-derived fixed-cohort movie-data method validation, not original HCP reproduction, population inference, global DMN apex or known model difficulty. Negative/mixed results are valid. Identity-world atlas transfer is an unvalidated spatial approximation."
+}

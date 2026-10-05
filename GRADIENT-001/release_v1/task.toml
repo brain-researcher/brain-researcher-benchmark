@@ -1,0 +1,35 @@
+version = "1.0"
+instruction_version = "heldout-v1"
+test_version = "heldout-v1"
+artifacts = ["/submission/discovery.json", "/submission/evaluate.py"]
+
+[metadata]
+task_id = "GRADIENT-HELDOUT-001"
+title = "Discovery connectivity-axis transfer in a fixed movie cohort"
+category = "Connectivity / descriptive methods"
+dataset_id = "ds000228"
+# Empirical difficulty remains unassigned until a frozen fresh calibration.
+
+[agent]
+timeout_sec = 3000.0
+
+[environment]
+build_timeout_sec = 1200.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier]
+environment_mode = "separate"
+timeout_sec = 300.0
+user = "root"
+
+[verifier.environment]
+build_timeout_sec = 1200.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
