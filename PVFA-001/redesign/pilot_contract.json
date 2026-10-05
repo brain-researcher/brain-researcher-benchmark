@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "pilot_id": "pvfa-identifiability-feasibility-16-v1",
+  "status": "proposed_pending_root_review",
+  "scientific_release": false,
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_pilots_2026-10-04/pr156",
+  "host_source_receipt": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/pr_repairs_2026-10-01/pr-156/receipt.json",
+  "host_independent_report": "/home/zijiaochen/projects/brain-researcher-benchmark-runs/20261001/pr156-native/independent_full/report.json",
+  "question": "Can bounded, distinct numerical searches produce source-valid fits and informative model-conditioned FA witnesses at an affordable cost?",
+  "interpretation": "feasibility and conditional sensitivity only; no task hardness, biological truth, likelihood interval or global optimum claims",
+  "source": {
+    "bank_sha256": "dae9ac968a4f560f08b268abdfc54677b0679e74b040d4e4ec8c01f7ab0f0aff",
+    "receipt_sha256": "0153d3fc859abb2f8e23f82ecca43aa776dd808bc754b399f25d1a5c3e2214aa",
+    "independent_report_sha256": "1ca0c0f79f0ca31cc4eccfc86de51170f4645c3ad6872f9dee4439eb3a029aed",
+    "manifest_sha256": "f59a83a45da820308010d02ea93a29291df1bee117a66f399ddc95978c6be2fa",
+    "preprocessing_contract_sha256": "7ef255fc897d0afad5f91380e5edc6c0956cdea7679aac8daf305ec1b3e28420",
+    "allowed_bank_keys": ["ref_roi_ijk", "ref_signal", "ref_bvals", "ref_bvecs"],
+    "cache_authority": "Current raw files stream-hashed against original manifest; frozen byte-identical bank linked by receipt to historical independent full-source checks. Not a fresh preprocessing reconstruction in this pilot",
+    "required_report_checks": ["source_hash_identity", "source_manifest_identity", "full_source_roi", "source_signal", "source_bvals", "source_bvecs"],
+    "n_roi": 4083,
+    "signal_shape": [4083, 129],
+    "forbidden_inputs": ["old Sol outputs", "old fitted parameter arrays", "old failed voxel lists"]
+  },
+  "selection": {
+    "n_voxels": 16,
+    "method": "lexicographic ijk sorting, indices floor((k+0.5)*N/16), k=0..15",
+    "outcome_dependent": false
+  },
+  "protocols": {"b1000": [0, 1000], "b1000_b2000": [0, 1000, 2000]},
+  "domain": {
+    "eigenvalue_min": 0.0,
+    "eigenvalue_max": 0.003,
+    "s0_ratio_min": 0.5,
+    "s0_ratio_max": 1.5,
+    "fraction_min": 0.0,
+    "fraction_max": 0.999,
+    "eigenvalue_arithmetic_atol": 1e-15,
+    "eigenvalue_arithmetic_rtol": 1e-12,
+    "gradient_norm_atol": 1e-6,
+    "justification": "PSD follows model interpretation; 0.003 tissue upper bound is an explicit pilot assumption tied to free-water diffusivity, not a published universal tissue bound. S0 limits and f ceiling are broad operational choices, not measured noise bounds. Any bound hit is reported; no release claim is made."
+  },
+  "model": {"isotropic_diffusivity": 0.003, "loss": "mean(((predicted-observed)/observed_b0)^2)", "gradient_handling": "preserve source rounded values; no normalization"},
+  "search": {
+    "algorithms": ["trf_eigensystem", "slsqp_direct_tensor"],
+    "independence": "Different optimizer algorithms, parameterizations and forward-objective implementations; shared NumPy/SciPy/data remain a common dependency, not full independent scientific replication",
+    "profile_f": [0.0, 0.25, 0.5, 0.9, 0.99],
+    "starts": [
+      {"eigenvalues": [0.0016, 0.0005, 0.0003], "rotvec": [0.0, 0.0, 0.0], "S0_ratio": 1.0, "free_f": 0.2},
+      {"eigenvalues": [0.0008, 0.0008, 0.0008], "rotvec": [0.3, -0.4, 0.5], "S0_ratio": 1.0, "free_f": 0.8}
+    ],
+    "trf": {"max_nfev": 120, "ftol": 1e-10, "xtol": 1e-10, "gtol": 1e-10, "jac": "2-point", "x_scale": 1.0},
+    "slsqp": {"maxiter": 120, "ftol": 1e-12, "eps": 1e-6},
+    "max_objective_calls_per_fit": 1500,
+    "boundary_flag_fraction_of_parameter_span": 0.000001,
+    "max_fits": 768,
+    "ordering": "voxel, protocol, free/profile point, start, algorithm; no outcome-driven ordering or retries"
+  },
+  "sensitivity": {
+    "added_squared_normalized_residual_budgets": [0.000025, 0.0001, 0.0004],
+    "ceiling_rule": "best found feasible loss across both algorithms for each voxel/protocol plus each fixed budget; not a global optimum. A finite feasible iteration-limit candidate is retained with optimizer failure separately recorded",
+    "justification": "Prespecified operational sensitivity at squared normalized residual scales .005, .01, .02; not paper-reported cutoffs, noise estimates, statistical coverage or benchmark pass thresholds",
+    "fraction_views": {"all_found": 0.999, "f_at_most_0p9": 0.9, "f_at_most_0p7": 0.7},
+    "fraction_view_anchor": "Henriques2017 Conclusion suggests .7 as a possible high-f exclusion in its study; this is a prespecified candidate-pool sensitivity view here, not a universal physiological bound",
+    "fraction_view_comparison": "Filter the same found-candidate pool under the same full-pool ceiling; lower-bound witness sensitivity only, not independently optimized restricted-domain extrema",
+    "mandatory_positive_witness": false,
+    "protocol_comparison": "No true interval contraction/information-gain claim from nonnested mean-loss sets or independently found lower bounds"
+  },
+  "resources": {"cpus": 1, "memory_bytes": 2147483648, "memory_swap_bytes": 2147483648, "wall_seconds": 900, "global_wall_seconds": 900, "pids_limit": 128, "tmp_bytes": 67108864, "gpu": false, "network": false, "blas_threads": 1, "max_output_bytes": 16777216},
+  "software": {"python_major_minor": "3.12", "numpy": "2.1.3", "scipy": "1.14.1", "image_id": "sha256:7e8f17b835e293096936a957da6fc6ecf08093f5ab47ccac9b5b556f38fdcf57"},
+  "stop_conditions": ["source/contract/approval mismatch", "wall cap", "fit cap", "objective-call cap for each fit", "external container memory cap"],
+  "approval": "Execution requires a separate root-reviewed approval JSON binding exact contract and code SHA256; no approval is embedded here",
+  "paper_anchors": [
+    {"url": "https://samuelstjean.github.io/downloads/Henriques_et_al_2017.pdf", "locations": "Eq1/Eq8/Table1; high-b exclusion in in-vivo Methods", "supports": "model, d_iso=.003, two initial tensor spectra, signal residual and high-b caution; NOT pilot cutoffs"},
+    {"url": "https://arxiv.org/pdf/2007.06359", "locations": "Theory2.1 and Discussion5.2-5.6", "supports": "effective signal fraction, plausibility not specificity, initialization/model limitations; NOT this acquisition's result"}
+  ]
+}

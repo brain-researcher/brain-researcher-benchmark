@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "proposal_id": "pvfa-identifiability-v1",
+  "status": "design_unqualified",
+  "runnable": false,
+  "legacy_base_commit": "bc97e76f8787040f1ee7b6a72beb14e74d21c235",
+  "scientific_target": "Model-conditioned tissue-FA ambiguity supported by explicit low-discrepancy parameter witnesses on one real diffusion acquisition",
+  "claim_type": "paper-derived descriptive method and sensitivity case; not exact cohort replication",
+  "independent_unit": "one acquisition; ROI voxels are dependent descriptive locations, not independent subjects",
+  "data": {
+    "dataset_id": "sherbrooke_3shell",
+    "source_version": "dipy-1.12.1-corrected-bvec",
+    "source_url": "https://digital.lib.washington.edu/researchworks/handle/1773/38475",
+    "legacy_manifest": "../environment/data_manifest.json",
+    "manifest_sha256": "f59a83a45da820308010d02ea93a29291df1bee117a66f399ddc95978c6be2fa",
+    "files_sha256": {
+      "HARDI193.nii.gz": "2ad46e5c0ae3895da7db7c8f7c308816d3c1d7a08baba8cea77a633aae681a12",
+      "HARDI193.bval": "b0614efa30ca8f5fdd1c29e88fc7caa652c9759f3942a3619c83e9c69f024877",
+      "HARDI193.bvec": "a5861583c04e9e3782ee6e7f737479520cfea576635f14eefbd4eaf1e441a20b"
+    },
+    "source_geometry": [128, 128, 60, 193],
+    "bvalues_s_per_mm2": [0, 1000, 2000, 3500],
+    "shell_counts": [1, 64, 64, 64],
+    "legacy_roi_count_observed": 4083,
+    "legacy_source_signal_bank_shape_observed": [4083, 129],
+    "bank_use": "metadata inspected only; source signal convenience cache may be reused only after independent provenance validation; old fitted parameter banks are not ground truth"
+  },
+  "preprocessing": {
+    "basis": "Freeze legacy mask, gradient orientation, smoothing and proxy-ROI construction only; do not inherit old optimizer or point-matching tolerances",
+    "legacy_public_contract": "../environment/method_contract.json",
+    "required_release_action": "Export and hash a preprocessing-only contract to avoid accidentally importing obsolete fitting rules"
+  },
+  "model": {
+    "formula": "S0*((1-f)*exp(-b*g^T*D*g)+f*exp(-b*d_iso))",
+    "d_iso_mm2_per_s": 0.003,
+    "f_semantics": "effective free-water signal fraction, not independently measured CSF volume",
+    "D_order": ["Dxx", "Dxy", "Dyy", "Dxz", "Dyz", "Dzz"],
+    "S0": "positive fitted parameter; normalize discrepancy by measured b0",
+    "tensor_validity": "positive semidefinite, nonzero tensor; no post-hoc eigenvalue clipping",
+    "solver": "unrestricted provided numerical evidence satisfies the public contract"
+  },
+  "protocols_proposed": {
+    "primary": {"bvalues": [0, 1000, 2000], "n_measurements": 129},
+    "secondary_single_shell": {"bvalues": [0, 1000], "n_measurements": 65, "decision": "pending bounded pilot; protocol-specific operational sensitivity only; mean-SSE sets need not nest and found lower bounds do not establish interval contraction"},
+    "b3500": {"role": "not used in v1 primary or holdout scoring", "reason": "high-b non-Gaussian model mismatch is a separate question"}
+  },
+  "discrepancy": {
+    "formula": "mean(((predicted_signal-observed_signal)/observed_b0)^2)",
+    "interpretation": "deterministic signal-space discrepancy, not likelihood or confidence level",
+    "public_loss_ceilings_artifact": null,
+    "public_budgets": null,
+    "calibration_rule": null,
+    "constraint": "ceilings must be independently qualified and fixed before model evaluation; neither agent-declared bad fits nor model performance may set them"
+  },
+  "parameter_domain": {
+    "minimum_requirement": "finite S0>0, 0<=f<1, PSD nonzero D",
+    "tensor_eigenvalue_bounds_mm2_per_s": null,
+    "S0_over_observed_b0_bounds": null,
+    "f_bounds": null,
+    "eigenvalue_arithmetic_atol": null,
+    "eigenvalue_arithmetic_rtol": null,
+    "gradient_norm_atol": null,
+    "decision": "RELEASE BLOCKER: justify bounds scientifically and run sensitivity before freezing them; f approaching one leaves arbitrarily little tissue signal, so witness ambiguity can be boundary-driven and must not be called bound-independent"
+  },
+  "search_requirements": {
+    "public_fraction_profile_grid": null,
+    "fit_quality_ceilings": null,
+    "profile_quality_ceilings": null,
+    "required_profile_coverage": null,
+    "minimum_witness_fa_separation": null,
+    "witness_completeness_rule": null,
+    "no_witness_semantics": "search lower bound unresolved; not a uniqueness or identifiability certificate",
+    "anti_vacuity": "No-work or insufficient fit/profile evidence fails; a complete qualified search honestly returning no_witness_found on every row is permitted. Do not force positive ambiguity or mistake search failure for uniqueness."
+  },
+  "scoring": {
+    "status": "not designed or calibrated for release",
+    "public_component_weights": null,
+    "may_use": ["source coverage", "forward-model arithmetic", "admissible fit quality", "verified witnesses", "qualified profile evidence", "recomputed descriptive summaries"],
+    "must_not_use": ["private optimizer trajectory", "exact reference tensor parameters", "mandatory effect direction", "prose keyword fingerprint", "unannounced output enums"]
+  },
+  "resource_contract": {
+    "this_turn": "source-free arithmetic unit tests and source-bank shape inspection only",
+    "new_scientific_pilot_authorized": false,
+    "pilot_voxel_selection": null,
+    "cpu_count": null,
+    "memory_gib": null,
+    "wall_minutes": null,
+    "max_fits": null,
+    "network": false,
+    "gpu": false,
+    "sol_runs": 0
+  },
+  "proposed_pilot": {
+    "status": "proposed_not_launched_requires_review",
+    "selection": "16 midpoints of equal index bins after lexicographic sorting of the frozen ROI; no selection on old errors or new fit outcomes",
+    "protocols": 2,
+    "independent_implementations": 2,
+    "starts_per_fit": 2,
+    "profile_points": 5,
+    "profile_grid": "freeze after parameter-domain review, before fitting",
+    "maximum_fits": 768,
+    "cpu_count": 1,
+    "memory_gib": 2,
+    "wall_minutes": 15,
+    "network": false,
+    "gpu": false,
+    "source_access": "authenticated cache read-only; no original output mutation",
+    "stop": "provenance failure or resource/fit cap; never stop on a desired ambiguity pattern",
+    "details": "qualification_plan.md"
+  },
+  "release_blockers": [
+    "Justify and freeze parameter domain; retain boundary/degenerate-case interpretation",
+    "Qualify explicit arithmetic tolerances for PSD rotation/representation stability and released rounded gradient norms; do not silently clip or renormalize",
+    "Approve bounded source-data pilot and deterministic selection before inspecting redesign outcomes",
+    "Qualify public discrepancy and fit/profile-quality budgets with independent numerical implementations",
+    "Choose complete-evidence requirement that rejects no-work disclaimers without pretending search failure proves uniqueness",
+    "Export preprocessing-only public contract and audit source-cache lineage",
+    "Publish exact output schemas and scoring semantics; implement source-bound verifier",
+    "Run in-container oracle plus negative controls before fresh blinded frontier calibration"
+  ]
+}

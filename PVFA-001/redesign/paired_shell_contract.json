@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "diagnostic_id": "pvfa-paired-shell-ideal-psd-v1",
+  "status": "proposed_pending_root_review",
+  "scientific_release": false,
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_release_2026-10-04/pr156_paired_shell",
+  "prior_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_pilots_2026-10-04/pr156",
+  "phase2_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_qualification_2026-10-04/pr156",
+  "replay_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_release_2026-10-04/pr156_replay",
+  "scope": "Append-only ideal-PSD paired-shell descriptive relaxation on the unchanged canonical 16 voxels; zero fitting, regrading, exclusions or domain/tolerance changes",
+  "image_id": "sha256:7e8f17b835e293096936a957da6fc6ecf08093f5ab47ccac9b5b556f38fdcf57",
+  "software": {"python": "3.12", "numpy": "2.1.3"},
+  "input_sha256": {
+    "bank": "dae9ac968a4f560f08b268abdfc54677b0679e74b040d4e4ec8c01f7ab0f0aff",
+    "prior_contract": "d3048bd54b1becdff368a9f60718c50b65fd93e1719c64f20a8fb08579794036",
+    "selection": "e285ada92e94f21f964ca751b0cfafcdaeae172ff4c646ed9f1e1cb4a5746b6e",
+    "source_checks": "91f8686273c10dedfc75955a25dbb7b075012b03cd1c5e61b8ee5af79c7429f1",
+    "replay_result": "07baf997b1afbfde5267a15fd60c51bbf7c4b384b0b633652f2bb3d4db9659ba"
+  },
+  "immutable_code_sha256": {
+    "phase2_diagnostic.py": "1422bbb46184376479e082524580b8d34d35cf00a9f1441df5aeef263b707d9a",
+    "launch_pilot.py": "aef3d668fc0e04219af8727f2fc6ba30ebba267f5dac61817d1133990696a504"
+  },
+  "support": {"coordinates": 16, "volumes": 129, "pairs_per_coordinate": 64, "source_indices": [127,382,637,893,1148,1403,1658,1913,2169,2424,2679,2934,3189,3445,3700,3955]},
+  "allowed_bank_keys": ["ref_roi_ijk","ref_signal","ref_bvals","ref_bvecs","ref_volume_indices"],
+  "pairing": "Exactly one-to-one equal released float64 vectors across b1000 and b2000; preserve source order within b1000, carry explicit source volume indices; fail closed for unmatched or duplicate vectors. No angular tolerance, antipodal substitution or normalization",
+  "calculation": "Per-pair max(0,y_b2000-y_b1000)^2/2; sum over all 64 pairs then divide by measured canonical b0 squared and 129, unchanged two-shell mean-SSE denominator. Ignore b0 residual and other shared model constraints only as a relaxation",
+  "outputs": ["report.json","pairs.jsonl","voxels.json","pairing.json"],
+  "resources": {"cpus": 1, "memory_bytes": 2147483648, "memory_swap_bytes": 2147483648, "global_wall_seconds": 60, "pids_limit": 128, "tmp_bytes": 16777216, "max_output_bytes": 16777216, "network": false, "gpu": false, "fits": 0},
+  "release_boundary": "Exploratory descriptive necessary-condition calculation for an ideal mathematical PSD model only, not a certified operational lower bound for the roundoff-tolerant numerical domain. Float64 evaluation is not an interval-arithmetic certificate. Noise can reverse observed shell order. No biological adequacy conclusion, artifact label, noise estimate, loss ceiling, threshold, or hardness claim follows. The scan is the acquisition unit; the selected 16 voxels are not 16 independent participants. No physical-gradient orientation certification, search extension, optimizer or Sol run is authorized"
+}

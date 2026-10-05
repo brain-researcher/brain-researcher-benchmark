@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "diagnostic_id": "pvfa-residual-source-diagnostic-v1",
+  "status": "proposed_pending_root_review",
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_qualification_2026-10-04/pr156",
+  "prior_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_pilots_2026-10-04/pr156",
+  "scope": "Exploratory diagnosis on the same previously seen 16 coordinates and two protocols; no new fit, optimization, exclusions, noise inference, grading threshold or biological claim",
+  "image_id": "sha256:7e8f17b835e293096936a957da6fc6ecf08093f5ab47ccac9b5b556f38fdcf57",
+  "software": {"python": "3.12", "numpy": "2.1.3"},
+  "input_sha256": {
+    "bank": "dae9ac968a4f560f08b268abdfc54677b0679e74b040d4e4ec8c01f7ab0f0aff",
+    "manifest": "f59a83a45da820308010d02ea93a29291df1bee117a66f399ddc95978c6be2fa",
+    "method": "7ef255fc897d0afad5f91380e5edc6c0956cdea7679aac8daf305ec1b3e28420",
+    "prior_contract": "d3048bd54b1becdff368a9f60718c50b65fd93e1719c64f20a8fb08579794036",
+    "attempts": "bc067da6dfd3bc6a08407f960cba015d5692c0fc95a0aeaba722cfdee2d3ca77",
+    "selection": "e285ada92e94f21f964ca751b0cfafcdaeae172ff4c646ed9f1e1cb4a5746b6e",
+    "prior_report": "93aa728a70eeee486307fd2a4df0878993759d76ef6981d7b69386bd41d1308f",
+    "prior_result": "ee2876f3325d472500c7de7247d975cbc8d5d8a06ef2262a75d73b261517a255"
+  },
+  "immutable_prior_code_sha256": {
+    "pilot.py": "b87c166e89ee41488892a9113ea86be4c50c54302e0b9fa297b1b50bda1e46c7",
+    "witness.py": "2a6825afe1fe79172f924460ead1e0874f7d368fd34c7bede511133a17eaaa3b",
+    "launch_pilot.py": "aef3d668fc0e04219af8727f2fc6ba30ebba267f5dac61817d1133990696a504"
+  },
+  "selection": {"n": 16, "source_indices": [127,382,637,893,1148,1403,1658,1913,2169,2424,2679,2934,3189,3445,3700,3955], "rule": "reuse exact prior selection, never rerank by residual"},
+  "protocols": {"b1000": [0,1000], "b1000_b2000": [0,1000,2000]},
+  "source_reconstruction": {
+    "shape": [128,128,60,193],
+    "datatype": "NIfTI-1 single-file uint16, endian parsed, x index fastest",
+    "scaling": "apply finite nonzero slope/intercept; zero or nonfinite slope means identity; reject active nonfinite intercept",
+    "volume_indices": "0 through 128; check exact original bval/bvec ordering against cache, no flip or normalization",
+    "smoothing_fwhm_voxels": 0.625,
+    "sigma_formula": "0.625/sqrt(8*ln(2)) voxels",
+    "kernel_radius": 1,
+    "intermediate_dtype": "float64 after NIfTI intensity scaling; Gaussian weights, products and accumulated sums are float64; no uint16/float32 filtering intermediates",
+    "axis_handling": "i,j,k voxel axes; source uses sequential 1D filtering across axes 0,1,2 with float64 intermediates; diagnostic uses equivalent 3D product weights with a different float64 summation order",
+    "truncate": 4.0,
+    "mode": "reflect, half-sample symmetric",
+    "method": "stream one original volume at a time; independently evaluate direct separable-product Gaussian weights on 27 neighbors at each selected coordinate",
+    "allowed_bank_keys": ["ref_roi_ijk","ref_signal","ref_raw_signal","ref_bvals","ref_bvecs","ref_volume_indices"],
+    "not_done": ["full ROI/mask reconstruction", "physical gradient orientation validation", "anatomical validation", "all-voxel preprocessing rerun"]
+  },
+  "arithmetic_checks": {"selected_raw_atol": 0.0, "selected_smoothed_atol": 1e-9, "normalized_mse_atol": 1e-10, "fa_atol": 1e-10, "meaning": "implementation compatibility only, not scientific error bars or scoring thresholds"},
+  "diagnostics": {
+    "candidate_scope": "every retained parameter candidate among all768 attempts; cap-aborted attempts remain unresolved without invented candidates",
+    "forward_implementation": "new independent scalar quadratic-form evaluation; no pilot/witness forward imports",
+    "domain": "recompute the exact already frozen phase1 domain and roundoff semantics without modification",
+    "directional_output": "every direction for each of32 preexisting best-feasible voxel/protocol slots; choosing diagnostic representatives does not alter the16-voxel analysis support",
+    "summaries": ["source/raw/smoothing alignment", "MSE/FA/PSD arithmetic agreement", "by-shell residual bias/RMSE/SSE share", "directional residuals", "raw/smoothed zeros/nonfinite/negative counts", "observed diffusion signal above observed b0 and fitted S0", "existing solver caps/termination/domain-boundary summaries"],
+    "qc_interpretation": "descriptive counts; neither a noise model nor exclusion thresholds"
+  },
+  "resources": {"cpus": 1, "memory_bytes": 2147483648, "memory_swap_bytes": 2147483648, "global_wall_seconds": 900, "pids_limit": 128, "tmp_bytes": 67108864, "max_output_bytes": 67108864, "network": false, "gpu": false, "fits": 0},
+  "references": ["https://raw.githubusercontent.com/NIFTI-Imaging/nifti_clib/master/niftilib/nifti1.h", "https://docs.scipy.org/doc/scipy-1.14.1/reference/generated/scipy.ndimage.gaussian_filter.html"],
+  "release_boundary": "Completion narrows possible implementation/source explanations; it does not establish biological adequacy, calibrated identifiability, task difficulty or release readiness"
+}

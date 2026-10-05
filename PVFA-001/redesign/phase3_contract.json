@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "replay_id": "pvfa-canonical-substrate-replay-v1",
+  "status": "proposed_pending_root_review",
+  "scientific_release": false,
+  "evidence_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_release_2026-10-04/pr156_replay",
+  "prior_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_pilots_2026-10-04/pr156",
+  "phase2_root": "/home/zijiaochen/projects/brain_researcher_benchmark/tracking/scientific_qualification_2026-10-04/pr156",
+  "scope": "Append-only numerical-substrate compatibility replay of unchanged prior candidates; no optimization, exclusions, pool replacement, grading, domain or tolerance changes",
+  "image_id": "sha256:7e8f17b835e293096936a957da6fc6ecf08093f5ab47ccac9b5b556f38fdcf57",
+  "software": {"python": "3.12", "numpy": "2.1.3"},
+  "input_sha256": {
+    "bank": "dae9ac968a4f560f08b268abdfc54677b0679e74b040d4e4ec8c01f7ab0f0aff",
+    "prior_contract": "d3048bd54b1becdff368a9f60718c50b65fd93e1719c64f20a8fb08579794036",
+    "attempts": "bc067da6dfd3bc6a08407f960cba015d5692c0fc95a0aeaba722cfdee2d3ca77",
+    "selection": "e285ada92e94f21f964ca751b0cfafcdaeae172ff4c646ed9f1e1cb4a5746b6e",
+    "prior_report": "93aa728a70eeee486307fd2a4df0878993759d76ef6981d7b69386bd41d1308f",
+    "phase2_contract": "dd47d465d24666b2533fd9e8ce3bce84c8979f2db461fbe8babbd12faeccdace",
+    "phase2_report": "34c57e38f79bf2ccee2fe966fd24c30e0ce0a80122bbf0e9b1e53de499f1c1d4",
+    "phase2_selected": "78c40901e3c134b19f1ea0a62dbed9d5574616b70b9bae88ace470251f6cbc94",
+    "phase2_checks": "45bb9241df3c6ef9a78130a952744e51d21696131676f5f4f433ac2bcf831732",
+    "phase2_source_checks": "91f8686273c10dedfc75955a25dbb7b075012b03cd1c5e61b8ee5af79c7429f1"
+  },
+  "immutable_code_sha256": {
+    "phase2_diagnostic.py": "1422bbb46184376479e082524580b8d34d35cf00a9f1441df5aeef263b707d9a",
+    "launch_pilot.py": "aef3d668fc0e04219af8727f2fc6ba30ebba267f5dac61817d1133990696a504"
+  },
+  "support": {"coordinates": 16, "attempt_slots": 768, "retained_candidates": 672, "best_representatives": 32, "sensitivity_rows": 288, "source_indices": [127,382,637,893,1148,1403,1658,1913,2169,2424,2679,2934,3189,3445,3700,3955]},
+  "allowed_bank_keys": ["ref_roi_ijk","ref_signal","ref_bvals","ref_bvecs","ref_volume_indices"],
+  "substrates": {
+    "canonical": "Exact authenticated ref_signal values at the unchanged selected rows; these are the phase1 numerical substrate, not new biological truth",
+    "reconstructed": "Exact authenticated phase2 selected_source.npz smoothed values; preserve their separate strict-domain classifications",
+    "authority": "Pinned phase2 receipts independently checked selected raw/smoothed data and source gradient ordering. This replay does not read raw acquisition files, rerun smoothing or newly certify physical gradient orientation",
+    "normalization": "Each substrate uses its own measured smoothed b0 in the unchanged MSE and S0 ratio definitions"
+  },
+  "arithmetic": {
+    "implementation": "Reuse pinned phase2 prediction_and_metrics for both substrates to isolate only the input representation; not a third independent forward implementation",
+    "domain": "Exact unchanged domain from pinned prior_contract; strict S0/f bounds and relative-capped eigenvalue allowance",
+    "comparisons": "Exact feasibility equality; unchanged phase2 MSE/FA comparison tolerances; no new epsilon, parameter clipping or repairs",
+    "expected_historical_difference_ids": [16,40,66,317,319,647]
+  },
+  "completion_rule": "All canonical candidate classifications and available prior metrics match, reconstructed metrics/classifications reproduce phase2, exact support retained. Substrate membership differences remain reported; no scientific release is inferred",
+  "outputs": ["report.json","candidate_replay.jsonl","representative_audit.json","endpoint_membership_audit.json"],
+  "resources": {"cpus": 1, "memory_bytes": 2147483648, "memory_swap_bytes": 2147483648, "global_wall_seconds": 60, "pids_limit": 128, "tmp_bytes": 16777216, "max_output_bytes": 16777216, "network": false, "gpu": false, "fits": 0},
+  "release_boundary": "Replay completion is numerical compatibility evidence only. Phase2 status and every prior pool/score remain immutable. Model adequacy, discrepancy justification, search quality, biological identifiability and LLM hardness remain unqualified. The separate adequacy/search proposal is not authorized by this replay approval"
+}
