@@ -1,0 +1,31 @@
+version = "2.0"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/netseg/source_manifest.json", "/app/method_contract.json"]
+
+[metadata]
+task_id = "NETSEG-001"
+title = "Movie-fMRI system segregation: a source-bound method control"
+category = "Method control"
+dataset_source = "Authenticated OSF development_fmri originals and immutable Schaefer-2018 atlas; offline snapshot"
+dataset_id = "development_fmri"
+source_paper = "Chan et al. 2014 PNAS (system segregation, 10.1073/pnas.1415122111); Richardson et al. 2018 Nat Commun (developmental fMRI); Schaefer et al. 2018 (atlas)"
+difficulty = "easy"
+
+[verifier]
+timeout_sec = 1800.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 8192
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
