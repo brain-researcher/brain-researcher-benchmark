@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/cfin/data_manifest.json"]
+
+[metadata]
+task_id = "WMMD-001"
+title = "Source-bound CFIN model-dependent MD and FA method control"
+category = "Method control"
+difficulty = "easy"
+dataset_source = "CFIN original University of Washington image and gradient bitstreams, hash pinned"
+dataset_id = "cfin_multib"
+source_paper = "Hansen & Jespersen 2016 (10.1038/sdata.2016.72); Jensen & Helpern 2010 (method); Veraart et al. 2011 (motivation, not reproduced rat/Rician result)"
+
+[verifier]
+timeout_sec = 1800.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
