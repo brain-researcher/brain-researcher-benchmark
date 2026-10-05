@@ -1,0 +1,32 @@
+version = "1.1"
+instruction_version = "1.3"
+test_version = "1.3"
+artifacts = ["/app/output", "/app/data/eegmmidb/data_manifest.json"]
+
+[metadata]
+task_id = "ALPHABAND-001"
+title = "Reproduce the Berger effect: occipital alpha, eyes-closed vs eyes-open"
+category = "Qualitative replication"
+difficulty = "easy"
+calibration_status = "not_run"
+dataset_source = "PhysioNet (mne.datasets.eegbci)"
+dataset_id = "EEG Motor Movement/Imagery Database (eegmmidb)"
+source_paper = "Berger 1929 (Uber das Elektrenkephalogramm des Menschen)"
+
+[verifier]
+timeout_sec = 1800.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
