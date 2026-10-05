@@ -1,0 +1,31 @@
+version = "2.0"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/viscat/source_manifest.json", "/app/method_contract.json"]
+
+[metadata]
+task_id = "VISCAT-001"
+title = "Category preference and conditional-selection sensitivity in human MTL recordings"
+category = "Method control"
+dataset_source = "DANDI (NWB human single-neuron electrophysiology)"
+dataset_id = "000004"
+difficulty = "easy"
+source_paper = "Faraut 2018 Table 2 and selective-cell Methods; Chandravadia 2020 Figure 5f. Original public data and method motivation, not the same ANOVA analysis or finding."
+
+[verifier]
+timeout_sec = 1800.0
+
+[agent]
+timeout_sec = 7200.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 32768
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
