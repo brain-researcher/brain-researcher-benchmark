@@ -1,0 +1,31 @@
+version = "1.1"
+instruction_version = "3.0"
+test_version = "3.0"
+artifacts = ["/app/output", "/app/source_manifest.json", "/app/method_contract.json", "/app/output_schema.json", "/app/subject_ids.txt", "/app/statistics_kernel.py", "/app/SOURCE_NOTICE.md"]
+
+[metadata]
+task_id = "FCMATUR-001"
+title = "Connectivity and age in ABIDE: an aggregation case study"
+category = "fMRI connectivity / cross-sectional multi-site case study"
+# Difficulty intentionally unassigned until separately authorized calibration.
+dataset_source = "Original ABIDE PCP CPAC filt_noglobal CC200 derivatives and phenotype; exact checksum-pinned build-time staging, offline runtime"
+dataset_id = "ABIDE_pcp/cpac/filt_noglobal/rois_cc200"
+source_paper = "Methodological motivation: individual versus ecological correlations, Robinson1950. Not a reproduction or required scientific outcome; difficulty uncalibrated."
+
+[verifier]
+timeout_sec = 3600.0
+
+[agent]
+timeout_sec = 7200.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
