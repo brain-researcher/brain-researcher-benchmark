@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/steinmetz/source_manifest.json"]
+
+[metadata]
+task_id = "STEINMETZ-001"
+title = "Registered-response decoding across window and split recipes"
+category = "Method sensitivity"
+difficulty = "easy"
+dataset_source = "Published DANDI NWB conversion of one original Steinmetz session"
+dataset_id = "000017/0.240329.1926"
+source_paper = "Steinmetz et al. 2019, Nature (10.1038/s41586-019-1787-x)"
+
+[verifier]
+timeout_sec = 900.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
