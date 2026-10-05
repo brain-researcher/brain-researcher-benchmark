@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/source_manifest.json", "/app/data/source_comparison.json"]
+
+[metadata]
+task_id = "QSMDIPOLE-001"
+title = "Source-derived CF-L2 reconstruction and numeric ROI medians"
+category = "Method control"
+difficulty = "easy"
+dataset_source = "QSM Reconstruction Challenge 1.0 (2016), neuroimaging.at (public, no login)"
+dataset_id = "qsm2016_recon_challenge"
+source_paper = "Langkammer et al. 2018, Magn Reson Med (10.1002/mrm.26830)"
+
+[verifier]
+timeout_sec = 3600.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
