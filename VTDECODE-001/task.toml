@@ -1,0 +1,31 @@
+version = "1.2"
+instruction_version = "2.0"
+test_version = "2.0"
+artifacts = ["/app/output", "/app/data/data_manifest.json"]
+
+[metadata]
+task_id = "VTDECODE-001"
+title = "Run-held-out object decoding on Haxby subject 1"
+category = "Method validation"
+difficulty = "easy"
+dataset_source = "PyMVPA subject-1 archive (Haxby et al. 2001), checksum-pinned and baked offline"
+dataset_id = "haxby2001"
+source_paper = "Haxby et al. 2001, Science 293:2425 (10.1126/science.1063736)"
+
+[verifier]
+timeout_sec = 3600.0
+
+[agent]
+timeout_sec = 3600.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
