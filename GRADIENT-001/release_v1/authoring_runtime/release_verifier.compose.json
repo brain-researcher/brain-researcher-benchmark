@@ -1,0 +1,15 @@
+{
+  "services": {
+    "main": {
+      "network_mode": "none",
+      "memswap_limit": "8g",
+      "pids_limit": 128,
+      "cap_drop": ["ALL"],
+      "cap_add": ["SYS_CHROOT", "SETUID", "SETGID", "KILL", "DAC_OVERRIDE", "FOWNER"],
+      "tmpfs": [
+        "/sandbox/tmp:rw,noexec,nosuid,size=67108864,uid=61616,gid=61616,mode=0700",
+        "/sandbox/out:rw,noexec,nosuid,size=16777216,uid=61616,gid=61616,mode=0700"
+      ]
+    }
+  }
+}
