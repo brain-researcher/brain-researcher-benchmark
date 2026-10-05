@@ -1,0 +1,31 @@
+version = "1.1"
+instruction_version = "3.0"
+test_version = "3.0"
+artifacts = ["/app/output", "/app/source_manifest.json", "/app/method_contract.json", "/app/methods.md", "/app/output_schema.json", "/app/subject_ids.txt", "/app/selection_kernel.py", "/app/SOURCE_NOTICE.md"]
+
+[metadata]
+task_id = "FCSTAB-001"
+title = "Within-run connectivity: an edge-selection sensitivity case study"
+category = "fMRI connectivity / methods control"
+# Difficulty is unassigned until separately authorized model calibration.
+dataset_source = "Fixed40 original ABIDE PCP CPAC filt_noglobal CC200 derivatives, full phenotype and upstream notice; pinned build-time capture, offline runtime"
+dataset_id = "ABIDE_pcp/cpac/filt_noglobal/rois_cc200"
+source_paper = "Methodological motivation: Barnett et al.2005 regression to the mean; Noble et al.2019 reliability. A within-run adaptation, not reproduction of a paper finding or repeat-session ICC."
+
+[verifier]
+timeout_sec = 3600.0
+
+[agent]
+timeout_sec = 7200.0
+
+[environment]
+build_timeout_sec = 1200.0
+cpus = 2
+memory_mb = 8192
+storage_mb = 16384
+gpus = 0
+allow_internet = false
+
+[verifier.env]
+
+[solution.env]
