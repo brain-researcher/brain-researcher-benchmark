@@ -1,0 +1,3 @@
+note = "adversarial, synthetic: the pipeline sentence names an RT modulator (the recurring pipeline-vocabulary false-pass class) but the conclusion is a flat reproduction"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"

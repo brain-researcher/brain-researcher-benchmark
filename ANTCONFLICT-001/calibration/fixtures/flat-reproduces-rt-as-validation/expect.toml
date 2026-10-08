@@ -1,0 +1,4 @@
+note = "adversarial, synthetic (no agent run yet): the hypothesised modal answer. Reports the RT cost as behavioural validation of conflict and the dACC effect as conflict monitoring, never linking the two"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"
+"*" = "pass"

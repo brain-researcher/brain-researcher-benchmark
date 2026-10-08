@@ -1,0 +1,3 @@
+note = "correct answer, synthetic: RT-length epochs wording"
+[expect]
+test_reproduction_recognises_time_on_task = "pass"

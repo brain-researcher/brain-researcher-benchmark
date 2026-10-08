@@ -1,0 +1,136 @@
+{
+  "schema_version": "benchmark-question-spec-v1",
+  "question_id": "ANTCONFLICT-001",
+  "opportunity_id": "adhoc:ANTCONFLICT-001",
+  "paper_candidate_id": "10.1016/j.neuroimage.2005.02.004",
+  "public_instruction_ref": {
+    "artifact_id": "ANTCONFLICT-001:instruction.md",
+    "uri": "instruction.md",
+    "sha256": "931c726711ebf445d214e18980cb71087c13ae8f5fc72332bd7268035ba33ced",
+    "media_type": "text/markdown",
+    "visibility": "public"
+  },
+  "fixed_substrate_ref": {
+    "artifact_id": "ANTCONFLICT-001:task.toml",
+    "uri": "task.toml",
+    "sha256": "0d6fc487f635bb734a9769ed5138188bf2d85cafc221cd92e1dd24682b4584c3",
+    "media_type": "application/octet-stream",
+    "visibility": "public"
+  },
+  "expected_output_schema_ref": {
+    "artifact_id": "ANTCONFLICT-001:instruction.md",
+    "uri": "instruction.md",
+    "sha256": "931c726711ebf445d214e18980cb71087c13ae8f5fc72332bd7268035ba33ced",
+    "media_type": "text/markdown",
+    "visibility": "public"
+  },
+  "oracle_ref": {
+    "artifact_id": "ANTCONFLICT-001:solution_compute.py",
+    "uri": "solution/compute.py",
+    "sha256": "b4c13c2a1f913ed3813cd3621381c43aeb8709c63699880acee3d946b14eadf6",
+    "media_type": "text/x-python",
+    "visibility": "oracle_private"
+  },
+  "verifier_ref": {
+    "artifact_id": "ANTCONFLICT-001:tests_test_outputs.py",
+    "uri": "tests/test_outputs.py",
+    "sha256": "45aa34bd347652eaa8ab498f14d0c8faf8fb9170a981831f5462b1a81e523bbb",
+    "media_type": "text/x-python",
+    "visibility": "oracle_private"
+  },
+  "required_artifact_refs": [
+    {
+      "artifact_id": "ANTCONFLICT-001:instruction.md",
+      "uri": "instruction.md",
+      "sha256": "931c726711ebf445d214e18980cb71087c13ae8f5fc72332bd7268035ba33ced",
+      "media_type": "text/markdown",
+      "visibility": "public"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:task.toml",
+      "uri": "task.toml",
+      "sha256": "0d6fc487f635bb734a9769ed5138188bf2d85cafc221cd92e1dd24682b4584c3",
+      "media_type": "application/octet-stream",
+      "visibility": "public"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:environment_Dockerfile",
+      "uri": "environment/Dockerfile",
+      "sha256": "176fd18dbbdb3ba87821ee151294754fa0e3e72f897bda8cd2388e3b8e43986c",
+      "media_type": "application/octet-stream",
+      "visibility": "public"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:solution_solve.sh",
+      "uri": "solution/solve.sh",
+      "sha256": "f10bfdf873b431245423424b64d2b113609104af533b0b10b4420e158b1b34bf",
+      "media_type": "application/x-sh",
+      "visibility": "oracle_private"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:solution_compute.py",
+      "uri": "solution/compute.py",
+      "sha256": "b4c13c2a1f913ed3813cd3621381c43aeb8709c63699880acee3d946b14eadf6",
+      "media_type": "text/x-python",
+      "visibility": "oracle_private"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:tests_test.sh",
+      "uri": "tests/test.sh",
+      "sha256": "443b95191343d52a500d963113eca421a993b0c985abf175df60a7ca5bbce2ee",
+      "media_type": "application/x-sh",
+      "visibility": "oracle_private"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:tests_test_outputs.py",
+      "uri": "tests/test_outputs.py",
+      "sha256": "45aa34bd347652eaa8ab498f14d0c8faf8fb9170a981831f5462b1a81e523bbb",
+      "media_type": "text/x-python",
+      "visibility": "oracle_private"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:proposal.md",
+      "uri": "proposal.md",
+      "sha256": "8186d4c4a32d41deabfbe8300099b15adfa878e9f95a162d975f09c5915e6957",
+      "media_type": "text/markdown",
+      "visibility": "author_private"
+    },
+    {
+      "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
+      "uri": "step0/evidence.json",
+      "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+      "media_type": "application/json",
+      "visibility": "author_private"
+    }
+  ],
+  "private_failure_axis_ref": {
+    "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
+    "uri": "step0/evidence.json",
+    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "media_type": "application/json",
+    "visibility": "author_private"
+  },
+  "private_hidden_lever_ref": {
+    "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
+    "uri": "step0/evidence.json",
+    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "media_type": "application/json",
+    "visibility": "author_private"
+  },
+  "calibration_status": "not_run",
+  "release_status": "draft",
+  "benchmark_verdict": "build_hard_candidate",
+  "intake_route": [
+    "advance_to_step0"
+  ],
+  "critical_path_result": "no (off-path)",
+  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv, find a modest positive dACC conflict effect, report the 142 ms RT conflict effect as behavioural validation, and conclude 'reproduces' (or, with correct-only trials at p = 0.058, a flat 'weak/does not reproduce'). Either way they will not put RT into the GLM or ask whether the dACC effect is time on task. The Grinband/Yeung debate is in the literature but off the execution path; DEVCONN shows agents do not volunteer the confound check for a behavioural covariate they already hold. UNCALIBRATED: this is a hypothesis until Stage-5 runs.",
+  "step0_evidence_ref": {
+    "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
+    "uri": "step0/evidence.json",
+    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "media_type": "application/json",
+    "visibility": "author_private"
+  },
+  "calibration_plan": "oracle reward 1.0 in-container; calibration/fixtures discrimination (tools/check_verifier.py); >=2 frontier families x k>=3, hand re-scored (TASK_WORKFLOW.md Stages 4-5)"
+}

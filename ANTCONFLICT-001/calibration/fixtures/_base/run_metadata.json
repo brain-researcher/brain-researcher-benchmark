@@ -1,0 +1,55 @@
+{
+  "bold": "derivatives/sub-*/ses-1/func/*_bold.nii.gz (AFNI afni_proc, MNI152 2009c 2 mm)",
+  "dataset_id": "ds001907",
+  "events": "rebuilt from derivatives/ANT-eprime-export.zip and checked against events.tsv",
+  "first_level": {
+    "cues": "NoCue/CenterCue/SpatialCue, 0.2 s",
+    "drift": "cosine, 1/128 Hz",
+    "frame_times": "mid-TR (AFNI tshift)",
+    "hrf": "spm",
+    "primary_targets": "Congruent/Incongruent correct trials, 2 s; errors and misses separate",
+    "signal": "voxelwise z-scored; regressors peak-normalised; OLS"
+  },
+  "group": "one-sample t across subjects",
+  "roi": {
+    "radius_mm": 10.0,
+    "xyz_mni": [
+      0.0,
+      16.0,
+      42.0
+    ]
+  },
+  "runs": [
+    1,
+    2
+  ],
+  "session": 1,
+  "status": "ok",
+  "subjects": [
+    "sub-RC4101",
+    "sub-RC4103",
+    "sub-RC4106",
+    "sub-RC4107",
+    "sub-RC4109",
+    "sub-RC4110",
+    "sub-RC4111",
+    "sub-RC4112",
+    "sub-RC4113",
+    "sub-RC4115",
+    "sub-RC4116",
+    "sub-RC4117",
+    "sub-RC4118",
+    "sub-RC4119",
+    "sub-RC4120",
+    "sub-RC4121",
+    "sub-RC4122",
+    "sub-RC4123",
+    "sub-RC4125",
+    "sub-RC4126",
+    "sub-RC4128",
+    "sub-RC4129",
+    "sub-RC4130",
+    "sub-RC4131"
+  ],
+  "task_id": "ANTCONFLICT-001"
+}

@@ -1,0 +1,3 @@
+note = "adversarial, synthetic: RT-trimming pipeline sentence ('controlled for RT outliers') next to a flat null; the first verifier draft false-passed this phrasing"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"

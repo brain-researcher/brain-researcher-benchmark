@@ -1,0 +1,3 @@
+note = "correct answer, synthetic: 'cannot be separated from time on task' wording with the modulator result"
+[expect]
+test_reproduction_recognises_time_on_task = "pass"

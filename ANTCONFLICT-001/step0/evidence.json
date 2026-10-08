@@ -1,0 +1,322 @@
+{
+  "schema_version": "step0-evidence-v1",
+  "task_id": "ANTCONFLICT-001",
+  "opportunity_id": "adhoc:ANTCONFLICT-001",
+  "_comment": "Step-0 record. EvidenceItem/ArtifactRef shapes follow contracts/curation/curation-contracts-v1.schema.json. Status vocabulary: reported | verified | measured | planned | missing. This file names the hidden lever (time on task / RT), so like solution/ it is author_private for any held-out task.",
+  "intake_route": [
+    "advance_to_step0"
+  ],
+  "intake_reason": "Primary empirical fMRI paper with an exact contrast (ANT incongruent - congruent flanker -> dorsal ACC). Fixed public substrate (OpenNeuro ds001907, AFNI derivatives + E-Prime logs, no credentials). Method is a standard event-related GLM. Truth is a measurement on that substrate. A long-running methods dispute (Grinband 2011 vs Yeung, Cohen & Botvinick 2011; Mumford 2023) names the lever, and the lever is checkable because trial-level RTs exist.",
+  "paper": {
+    "paper_id": "10.1016/j.neuroimage.2005.02.004",
+    "paper_kind": "primary_empirical",
+    "claim_and_contrast": "Fan, McCandliss, Fossella, Flombaum & Posner 2005 (NeuroImage 26:471), event-related ANT fMRI: the executive-control (conflict) contrast, incongruent - congruent flanker targets, activates the anterior cingulate (dorsal ACC / pMFC) together with lateral prefrontal cortex.",
+    "target_measurement": "Group one-sample test of the incongruent - congruent contrast averaged over a 10 mm sphere at MNI (0, 16, 42) (dorsal ACC), plus the voxelwise map near it; behavioural conflict effect RT(incongruent) - RT(congruent), correct trials.",
+    "reported_values": [
+      {
+        "field": "conflict_contrast_dacc",
+        "status": "reported",
+        "evidence_refs": [],
+        "value": "incongruent > congruent activation in anterior cingulate and lateral prefrontal cortex (Fan et al. 2005)"
+      },
+      {
+        "field": "roi_center_mni",
+        "status": "reported",
+        "value": [
+          0,
+          16,
+          42
+        ],
+        "evidence_refs": [],
+        "note": "Grinband et al. 2011 (NeuroImage 57:303), Fig. 6 legend: location of the standard incongruent-vs-congruent dMFC effect, replicating Botvinick/Carter/Kerns. Used only to place the ROI; the task instruction does not cite Grinband."
+      },
+      {
+        "field": "time_on_task_account",
+        "status": "reported",
+        "evidence_refs": [],
+        "value": "Grinband et al. 2011 argue the dMFC congruency effect is explained by time on task (RT); Yeung, Cohen & Botvinick 2011 dispute this; Mumford et al. 2023 (bioRxiv, 'response time paradox') recommend constant-duration targets plus an RT modulator"
+      }
+    ]
+  },
+  "substrate": {
+    "dataset_id": "ds001907",
+    "fetcher": "public S3 https://s3.amazonaws.com/openneuro.org/ds001907/ (no credentials): derivatives/sub-<id>/ses-1/func/sub-<id>_ses-1_task-ANT_run-<1|2>_bold.nii.gz (AFNI afni_proc: despike, tshift, align, tlrc MNI152_T1_2009c NL, volreg 2 mm, blur, mask, regress with ANATICOR, no stimulus model); sub-<id>/ses-1/func/*_events.tsv; derivatives/ANT-eprime-export.zip",
+    "version_pin": "OpenNeuro ds001907 as served on 2026-10-08; numpy==2.5.3 scipy==1.18.1 pandas==3.0.6 nibabel==5.4.2 nilearn==0.14.1",
+    "cohort": "healthy-aging group sub-RC41*, session 1, ANT runs 1-2 (TR 2.4 s, 149 vols). 24 subjects: RC4101/03/06/07/09/10/11/12/13/15/16/17/18/19/20/21/22/23/25/26/28/29/30/31. RC4114 has BOLD but no session-1 E-Prime log, so it is excluded.",
+    "access": "public"
+  },
+  "probe": {
+    "script": "step0/probe.py",
+    "command": "DS001907_DIR=<ds001907> EPRIME_DIR=<unzipped RC4-ANT-1> python step0/probe.py > step0/run.log 2>&1; FRAME_OFFSET=0 ... > step0/run_frame_offset0.log 2>&1",
+    "log": "step0/run.log",
+    "outputs": [
+      "step0/outputs/metrics.json",
+      "step0/outputs/subject_roi_effects.csv",
+      "step0/outputs/subject_behaviour.csv",
+      "step0/outputs/metrics_frame_offset0.json",
+      "step0/outputs/pip_freeze.txt"
+    ],
+    "ran_on": "2026-10-08, macOS arm64 (Darwin 24.6), Python 3.14.7; 147 s per variant"
+  },
+  "results": [
+    {
+      "field": "events_provenance",
+      "status": "verified",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_run.log",
+          "uri": "step0/run.log",
+          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_eprime_events.py",
+          "uri": "step0/eprime_events.py",
+          "sha256": "88214b9733a297bcc3bf659461f151d773daa699af8fc8868cf6c4c6117dee53",
+          "media_type": "text/x-python",
+          "visibility": "author_private"
+        }
+      ],
+      "value": "Trial-level RT/accuracy rebuilt from the E-Prime export (BIDS run-N = block Run<ABCDEF[N-1]>Proc; first 2 lead-in trials dropped; trigger = TrigTest.RTTime; ReactionTime/Accuracy fields). Matches all 12 derivative events.tsv files that carry RT (6 subjects) exactly, and all 48 raw BIDS events.tsv files (error trials relabelled TargetErr/CueErr) to < 10 ms."
+    },
+    {
+      "field": "raw_effect",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
+          "uri": "step0/outputs/metrics.json",
+          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_roi_effects.csv",
+          "uri": "step0/outputs/subject_roi_effects.csv",
+          "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_run.log",
+          "uri": "step0/run.log",
+          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "roi_conflict_fixed_2s_all_trials": {
+          "mean_sd": 0.066,
+          "t23": 2.19,
+          "p": 0.039,
+          "d": 0.45
+        },
+        "roi_conflict_fixed_2s_correct_only": {
+          "mean_sd": 0.054,
+          "t23": 2.0,
+          "p": 0.057,
+          "d": 0.41
+        },
+        "roi_conflict_impulse": {
+          "mean_sd": 0.101,
+          "t23": 3.22,
+          "p": 0.0038,
+          "d": 0.66
+        },
+        "voxelwise_z_gt_3_1_within_20mm": {
+          "std_all": {
+            "n": 63,
+            "peak_z": 4.31,
+            "peak_xyz": [
+              -9.0,
+              17.0,
+              53.0
+            ]
+          },
+          "std_correct": {
+            "n": 49,
+            "peak_z": 4.56,
+            "peak_xyz": [
+              7.0,
+              27.0,
+              43.0
+            ]
+          },
+          "std_impulse": {
+            "n": 110,
+            "peak_z": 4.17,
+            "peak_xyz": [
+              -13.0,
+              21.0,
+              43.0
+            ]
+          }
+        },
+        "summary": "The dACC conflict effect reproduces at face value under standard fixed-duration / impulse target models (modest, t 2.0-3.2)."
+      }
+    },
+    {
+      "field": "lever_premise",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
+          "uri": "step0/outputs/metrics.json",
+          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_behaviour.csv",
+          "uri": "step0/outputs/subject_behaviour.csv",
+          "sha256": "afa1d390b48c79d3d2b49dbbb02cd6709669125816541eb3754768d252b5ee4a",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "rt_conflict_ms": {
+          "mean": 142.0,
+          "t23": 10.3,
+          "d": 2.1
+        },
+        "rt_congruent_ms": 886.9,
+        "rt_incongruent_ms": 1028.9,
+        "acc_congruent": 0.986,
+        "acc_incongruent": 0.972,
+        "roi_rt_slope": {
+          "t23": 6.84,
+          "p": 5.6e-07,
+          "d": 1.4
+        },
+        "summary": "Incongruent trials take 142 ms longer, and the dACC ROI scales strongly with trial-by-trial RT."
+      }
+    },
+    {
+      "field": "controlled_effect",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
+          "uri": "step0/outputs/metrics.json",
+          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_roi_effects.csv",
+          "uri": "step0/outputs/subject_roi_effects.csv",
+          "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_run.log",
+          "uri": "step0/run.log",
+          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "roi_conflict_rt_duration_epochs": {
+          "mean_sd": 0.041,
+          "t23": 1.34,
+          "p": 0.19,
+          "d": 0.27
+        },
+        "roi_conflict_constant_2s_plus_rt_modulator": {
+          "mean_sd": -0.116,
+          "t23": -2.61,
+          "p": 0.016,
+          "d": -0.53
+        },
+        "voxelwise_z_gt_3_1_within_20mm": {
+          "rt_duration": 34,
+          "rt_modulator": 0
+        },
+        "summary": "Once time on task is modelled the dACC conflict effect is no longer significant (RT-duration epochs) or reverses sign (RT modulator, RT mean-centred across both conditions)."
+      }
+    },
+    {
+      "field": "negative_control_task_positive",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
+          "uri": "step0/outputs/metrics.json",
+          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        }
+      ],
+      "value": "all targets vs baseline in a 10 mm occipital sphere (0, -90, 0): t23 = 5.53 (the same pipeline detects task signal)"
+    },
+    {
+      "field": "slice_timing_variant",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics_frame_offset0.json",
+          "uri": "step0/outputs/metrics_frame_offset0.json",
+          "sha256": "20f20feaa4335c890d7e784eccdd117f87b0050dc1ef5d11f84dbb268dbf8d64",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_run_frame_offset0.log",
+          "uri": "step0/run_frame_offset0.log",
+          "sha256": "efc3879a7e5fa4c2ef638c9121124e4480abeca02a258caa375861904a2c1de5",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        }
+      ],
+      "value": "Naive frame times (volume i at i*TR, ignoring AFNI tshift's mid-TR reference): raw conflict null (fixed 2 s t = 0.07; impulse t = 1.36), RT-controlled still null/reversed (RT-duration t = -0.08; RT modulator t = -3.39). The instruction pins the mid-TR reference so the compute step is not where agents diverge."
+    }
+  ],
+  "lever": {
+    "name": "time on task (trial-level RT) in the target model",
+    "flips_result": true,
+    "variants_tried": [
+      "fixed 2 s targets, all trials (as in the E-Prime events): t = 2.19",
+      "fixed 2 s targets, correct trials + error regressor: t = 2.00",
+      "impulse targets: t = 3.22",
+      "RT-duration epochs (duration = RT), correct trials: t = 1.34 (n.s.)",
+      "constant 2 s targets + RT parametric modulator (RT mean-centred across conditions): t = -2.61 (reversed)",
+      "each of the above with naive frame times (FRAME_OFFSET=0): raw t = 0.07 / -0.20 / 1.36, controlled t = -0.08 / -3.39"
+    ],
+    "honesty_notes": [
+      "The raw effect is modest (p = 0.039 with the most standard model, 0.058 correct-only); the impulse model is the strongest. Do not frame the face-value result as a strong reproduction.",
+      "The raw effect depends on the slice-timing frame reference. With naive frame times it vanishes, so the instruction states the derivative is slice-time corrected to mid-TR. The mid-TR reference was chosen from AFNI's documented 3dTshift default and confirmed by an onset-shift fit (peak R^2 at -1.2 to -2.4 s for naive frame times in 4/6 subjects); it was not chosen by its effect on the conflict contrast.",
+      "The RT-modulator condition effect is the effect at matched RT. Its reversal is the arithmetic expected when a region scales with RT and carries no extra congruency signal (Mumford 2023). Centring RT within condition instead would reproduce the fixed-duration estimate by construction, so it is not an independent test.",
+      "Interpretation is contested: conflict-monitoring theory predicts dACC scales with RT. The defensible conclusion is that on these data the dACC congruency effect cannot be separated from time on task, NOT that conflict monitoring is refuted. The verifier must accept that wording.",
+      "Older adults (healthy-aging cohort, mean RT 887/1029 ms) rather than Fan's young adults; only 2 of 6 runs. Both reduce power for the raw effect. Neither affects the lever result, whose RT slope is t = 6.8.",
+      "Between-subject correlation of the ROI conflict effect with the behavioural RT cost: r = 0.09 (n.s.). The time-on-task account is trial-level, not between-subject, so this is not counter-evidence; recorded so it is not cherry-picked later.",
+      "Voxelwise counts are uncorrected z > 3.1, used only as a description next to the a-priori ROI."
+    ]
+  },
+  "failure_axis": "wrong-cause (time on task masquerading as a conflict effect); same family as DEVCONN-001, different lever, modality (task fMRI) and dataset",
+  "critical_path_test": {
+    "question": "To complete exactly what the instruction asks, must a competent agent already make this correction or choice?",
+    "answer": "no (off-path)",
+    "rationale": "The instruction asks for the ANT conflict contrast in a pinned dACC ROI, plus the standard behavioural conflict score. Both can be completed with the default nilearn/SPM event model (onsets and the trial lengths listed in events.tsv). Nothing in the requested outputs requires putting RT into the fMRI model. The behavioural RT cost is computed anyway, but as a separate behavioural validation, so the agent holds the premise without being asked to connect it to the imaging result."
+  },
+  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv, find a modest positive dACC conflict effect, report the 142 ms RT conflict effect as behavioural validation, and conclude 'reproduces' (or, with correct-only trials at p = 0.058, a flat 'weak/does not reproduce'). Either way they will not put RT into the GLM or ask whether the dACC effect is time on task. The Grinband/Yeung debate is in the literature but off the execution path; DEVCONN shows agents do not volunteer the confound check for a behavioural covariate they already hold. UNCALIBRATED: this is a hypothesis until Stage-5 runs.",
+  "cue_terms": [
+    "time on task",
+    "time-on-task",
+    "parametric",
+    "modulat",
+    "duration",
+    "grinband",
+    "yeung",
+    "mumford",
+    "response time paradox",
+    "processing time",
+    "trial-by-trial"
+  ],
+  "verdict": "build_hard_candidate",
+  "verdict_reason": "The face-value dACC conflict effect reproduces modestly (t = 2.0-3.2). It is not significant once time on task is modelled (RT-duration t = 1.3) and reverses with an RT modulator (t = -2.6), while the ROI tracks RT at t = 6.8. That is a real, measured, literature-grounded lever off the critical path. Hard status is unproven until calibration (not run here, per scope)."
+}

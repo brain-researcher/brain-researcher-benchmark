@@ -1,0 +1,3 @@
+note = "adversarial, synthetic: says NO RT modulator was used next to a flat null; the negation must not count as the check"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"

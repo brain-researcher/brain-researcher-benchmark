@@ -1,0 +1,33 @@
+version = "1.1"
+instruction_version = "1.0"
+test_version = "1.0"
+
+[metadata]
+task_id = "ANTCONFLICT-001"
+title = "Reproduce the ANT executive-network (conflict) activation in dorsal ACC — un-cued time-on-task confound"
+category = "Activation"
+difficulty = "hard"
+dataset_source = "OpenNeuro (AFNI-preprocessed derivatives, public S3)"
+dataset_id = "ds001907"
+source_paper = "Fan et al. 2005, NeuroImage (10.1016/j.neuroimage.2005.02.004)"
+
+# Runtime is dominated by fetching 48 runs x ~424 MB (~20 GB). Step 0 measured ~9 MB/s on a
+# home connection (~40 min); cloud runners reading the public S3 bucket are usually much faster.
+# The GLMs themselves take ~4 s per subject-run.
+[verifier]
+timeout_sec = 3600.0
+
+[agent]
+timeout_sec = 10800.0
+
+[environment]
+build_timeout_sec = 2400.0
+cpus = 4
+memory_mb = 8192
+storage_mb = 40960
+gpus = 0
+allow_internet = true
+
+[verifier.env]
+
+[solution.env]
