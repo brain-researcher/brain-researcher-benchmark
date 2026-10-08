@@ -2,7 +2,7 @@
   "schema_version": "step0-evidence-v1",
   "task_id": "ANTCONFLICT-001",
   "opportunity_id": "adhoc:ANTCONFLICT-001",
-  "_comment": "Step-0 record. EvidenceItem/ArtifactRef shapes follow contracts/curation/curation-contracts-v1.schema.json. Status vocabulary: reported | verified | measured | planned | missing. This file names the hidden lever (time on task / RT), so like solution/ it is author_private for any held-out task.",
+  "_comment": "Step-0 record. EvidenceItem/ArtifactRef shapes follow contracts/curation/curation-contracts-v1.schema.json. Status vocabulary: reported | verified | measured | planned | missing. This file names the hidden lever (time on task / RT), so like solution/ it is author_private for any held-out task. v2 (2026-10-08): every task regressor of a model shares one scale; the v1 record, whose contrast compared differently scaled betas, is kept under 'superseded'.",
   "intake_route": [
     "advance_to_step0"
   ],
@@ -47,16 +47,19 @@
   },
   "probe": {
     "script": "step0/probe.py",
-    "command": "DS001907_DIR=<ds001907> EPRIME_DIR=<unzipped RC4-ANT-1> python step0/probe.py > step0/run.log 2>&1; FRAME_OFFSET=0 ... > step0/run_frame_offset0.log 2>&1",
+    "command": "DS001907_DIR=<ds001907> EPRIME_DIR=<unzipped RC4-ANT-1> python step0/probe.py > step0/run.log 2>&1; FRAME_OFFSET=0 ... > step0/run_frame_offset0.log 2>&1; EPRIME_DIR=... python step0/scaling_check.py > step0/scaling_check.log; DS001907_DIR=... python step0/alt_pipeline_check.py > step0/alt_pipeline_check.log",
     "log": "step0/run.log",
     "outputs": [
       "step0/outputs/metrics.json",
       "step0/outputs/subject_roi_effects.csv",
       "step0/outputs/subject_behaviour.csv",
       "step0/outputs/metrics_frame_offset0.json",
+      "step0/outputs/scaling_check.json",
+      "step0/outputs/alt_pipeline_check.json",
+      "step0/outputs/alt_pipeline_subjects.csv",
       "step0/outputs/pip_freeze.txt"
     ],
-    "ran_on": "2026-10-08, macOS arm64 (Darwin 24.6), Python 3.14.7; 147 s per variant"
+    "ran_on": "2026-10-08, macOS arm64 (Darwin 24.6), Python 3.14.7; v2 (shared regressor scale, step0/probe_models.py) rerun on the same data cache; v1 kept under superseded"
   },
   "results": [
     {
@@ -66,7 +69,7 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_run.log",
           "uri": "step0/run.log",
-          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "sha256": "65d7fa926a1a3a0b147b0e26e0868fee4fe495c2df278b48d39191cdc88f283a",
           "media_type": "text/plain",
           "visibility": "author_private"
         },
@@ -87,48 +90,48 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
           "uri": "step0/outputs/metrics.json",
-          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "sha256": "6a474ecb6b4254d119b05e4a5456e6d96e2df262923cdfaa10e51eba34eb5700",
           "media_type": "application/json",
           "visibility": "author_private"
         },
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_roi_effects.csv",
           "uri": "step0/outputs/subject_roi_effects.csv",
-          "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+          "sha256": "7b93b562c415a1201f7dfa4e03a5ef319bcbb23069e77a480536ecc06e721901",
           "media_type": "text/csv",
           "visibility": "author_private"
         },
         {
           "artifact_id": "ANTCONFLICT-001:step0_run.log",
           "uri": "step0/run.log",
-          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "sha256": "65d7fa926a1a3a0b147b0e26e0868fee4fe495c2df278b48d39191cdc88f283a",
           "media_type": "text/plain",
           "visibility": "author_private"
         }
       ],
       "value": {
         "roi_conflict_fixed_2s_all_trials": {
-          "mean_sd": 0.066,
-          "t23": 2.19,
-          "p": 0.039,
-          "d": 0.45
-        },
-        "roi_conflict_fixed_2s_correct_only": {
-          "mean_sd": 0.054,
-          "t23": 2.0,
+          "mean_sd": 0.042,
+          "t23": 2.01,
           "p": 0.057,
           "d": 0.41
         },
+        "roi_conflict_fixed_2s_correct_only": {
+          "mean_sd": 0.034,
+          "t23": 1.82,
+          "p": 0.081,
+          "d": 0.37
+        },
         "roi_conflict_impulse": {
-          "mean_sd": 0.101,
-          "t23": 3.22,
-          "p": 0.0038,
-          "d": 0.66
+          "mean_sd": 0.063,
+          "t23": 2.95,
+          "p": 0.0071,
+          "d": 0.6
         },
         "voxelwise_z_gt_3_1_within_20mm": {
           "std_all": {
-            "n": 63,
-            "peak_z": 4.31,
+            "n": 61,
+            "peak_z": 4.33,
             "peak_xyz": [
               -9.0,
               17.0,
@@ -136,8 +139,8 @@
             ]
           },
           "std_correct": {
-            "n": 49,
-            "peak_z": 4.56,
+            "n": 47,
+            "peak_z": 4.43,
             "peak_xyz": [
               7.0,
               27.0,
@@ -145,8 +148,8 @@
             ]
           },
           "std_impulse": {
-            "n": 110,
-            "peak_z": 4.17,
+            "n": 99,
+            "peak_z": 4.21,
             "peak_xyz": [
               -13.0,
               21.0,
@@ -154,7 +157,8 @@
             ]
           }
         },
-        "summary": "The dACC conflict effect reproduces at face value under standard fixed-duration / impulse target models (modest, t 2.0-3.2)."
+        "units": "SD units at the peak of one isolated reference event (2 s target / impulse); one scale per model",
+        "summary": "Weak and model-dependent at face value: positive in all three standard target models, significant only with impulse targets (p = 0.007); 2 s targets p = 0.057 (all trials) and 0.081 (correct trials). Down from v1 (t 2.19 / 2.00 / 3.22), whose contrast carried a spurious positive scaling term."
       }
     },
     {
@@ -164,7 +168,7 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
           "uri": "step0/outputs/metrics.json",
-          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "sha256": "6a474ecb6b4254d119b05e4a5456e6d96e2df262923cdfaa10e51eba34eb5700",
           "media_type": "application/json",
           "visibility": "author_private"
         },
@@ -187,11 +191,12 @@
         "acc_congruent": 0.986,
         "acc_incongruent": 0.972,
         "roi_rt_slope": {
-          "t23": 6.84,
-          "p": 5.6e-07,
-          "d": 1.4
+          "mean_sd_per_s": 0.73,
+          "t23": 5.47,
+          "p": 1.5e-05,
+          "d": 1.12
         },
-        "summary": "Incongruent trials take 142 ms longer, and the dACC ROI scales strongly with trial-by-trial RT."
+        "summary": "Incongruent trials take 142 ms longer, and the dACC ROI scales strongly with trial-by-trial RT (slope per second of RT; v1 reported t = 6.84 in per-run peak units, which varied by subject)."
       }
     },
     {
@@ -201,43 +206,43 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
           "uri": "step0/outputs/metrics.json",
-          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "sha256": "6a474ecb6b4254d119b05e4a5456e6d96e2df262923cdfaa10e51eba34eb5700",
           "media_type": "application/json",
           "visibility": "author_private"
         },
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_roi_effects.csv",
           "uri": "step0/outputs/subject_roi_effects.csv",
-          "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+          "sha256": "7b93b562c415a1201f7dfa4e03a5ef319bcbb23069e77a480536ecc06e721901",
           "media_type": "text/csv",
           "visibility": "author_private"
         },
         {
           "artifact_id": "ANTCONFLICT-001:step0_run.log",
           "uri": "step0/run.log",
-          "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+          "sha256": "65d7fa926a1a3a0b147b0e26e0868fee4fe495c2df278b48d39191cdc88f283a",
           "media_type": "text/plain",
           "visibility": "author_private"
         }
       ],
       "value": {
         "roi_conflict_rt_duration_epochs": {
-          "mean_sd": 0.041,
-          "t23": 1.34,
-          "p": 0.19,
-          "d": 0.27
+          "mean_sd": 0.022,
+          "t23": 1.04,
+          "p": 0.31,
+          "d": 0.21
         },
         "roi_conflict_constant_2s_plus_rt_modulator": {
-          "mean_sd": -0.116,
-          "t23": -2.61,
-          "p": 0.016,
-          "d": -0.53
+          "mean_sd": -0.082,
+          "t23": -2.71,
+          "p": 0.013,
+          "d": -0.55
         },
         "voxelwise_z_gt_3_1_within_20mm": {
-          "rt_duration": 34,
+          "rt_duration": 44,
           "rt_modulator": 0
         },
-        "summary": "Once time on task is modelled the dACC conflict effect is no longer significant (RT-duration epochs) or reverses sign (RT modulator, RT mean-centred across both conditions)."
+        "summary": "With time on task modelled, the positive difference is smaller and not significant (RT-length epochs) or reverses sign (RT modulator, RT mean-centred across both conditions: lower dACC response on incongruent than congruent trials at matched RT). Three different outcomes: attenuation, loss of significance, sign reversal. Only the last is significant, and its cause is not established."
       }
     },
     {
@@ -247,7 +252,7 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics.json",
           "uri": "step0/outputs/metrics.json",
-          "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+          "sha256": "6a474ecb6b4254d119b05e4a5456e6d96e2df262923cdfaa10e51eba34eb5700",
           "media_type": "application/json",
           "visibility": "author_private"
         }
@@ -261,39 +266,166 @@
         {
           "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics_frame_offset0.json",
           "uri": "step0/outputs/metrics_frame_offset0.json",
-          "sha256": "20f20feaa4335c890d7e784eccdd117f87b0050dc1ef5d11f84dbb268dbf8d64",
+          "sha256": "fbb921cc44ff1a7a8fe094ac90cdd5b5ef591973369d04118311f5974275d880",
           "media_type": "application/json",
           "visibility": "author_private"
         },
         {
           "artifact_id": "ANTCONFLICT-001:step0_run_frame_offset0.log",
           "uri": "step0/run_frame_offset0.log",
-          "sha256": "efc3879a7e5fa4c2ef638c9121124e4480abeca02a258caa375861904a2c1de5",
+          "sha256": "4cbe8b11cbaa3da2daba89b84389ff23b536173a364c936844c000acd36a13b5",
           "media_type": "text/plain",
           "visibility": "author_private"
         }
       ],
-      "value": "Naive frame times (volume i at i*TR, ignoring AFNI tshift's mid-TR reference): raw conflict null (fixed 2 s t = 0.07; impulse t = 1.36), RT-controlled still null/reversed (RT-duration t = -0.08; RT modulator t = -3.39). The instruction pins the mid-TR reference so the compute step is not where agents diverge."
+      "value": "Naive frame times (volume i at i*TR, ignoring AFNI tshift's mid-TR reference): raw conflict null (fixed 2 s t = 0.12 all trials / -0.20 correct; impulse t = 1.27), RT-controlled RT-length t = 0.44, RT modulator t = -3.42. nilearn's FirstLevelModel default (slice_time_ref = 0) is this case."
+    },
+    {
+      "field": "regressor_scaling_check",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_scaling_check.py",
+          "uri": "step0/scaling_check.py",
+          "sha256": "157a4efcb1a6df24c2aa67dfa57bc7e193a85fd31c4f2885ce242fd960429e19",
+          "media_type": "text/x-python",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_scaling_check.log",
+          "uri": "step0/scaling_check.log",
+          "sha256": "b2a830a9ce9671a9f3a70b0481b616d84393372c30ebb067e51ea7faaa33f118",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_scaling_check.json",
+          "uri": "step0/outputs/scaling_check.json",
+          "sha256": "f5d45b2fb011ed65b4978c3dd80d10b57435f9fea582b58d033ad4b8bbbf3873",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "peak_ratio_incongruent_over_congruent": {
+          "std_all": "1.033 (1.003-1.052)",
+          "std_correct": "1.029 (0.91-1.08)",
+          "std_impulse": "1.027",
+          "rt_duration": "1.098 (0.60-1.77)"
+        },
+        "noise_free_contrast_no_conflict_effect": {
+          "std_all": {
+            "per_regressor_peak": 0.047,
+            "common": 0.0
+          },
+          "rt_modulator": {
+            "per_regressor_peak": 0.042,
+            "common": 0.0
+          }
+        },
+        "noise_free_contrast_conflict_10pct": {
+          "std_all": {
+            "per_regressor_peak": 0.195,
+            "common": 0.1
+          },
+          "rt_duration": {
+            "common": -0.029
+          },
+          "rt_modulator": {
+            "common": 0.1
+          }
+        },
+        "noise_free_contrast_pure_time_on_task": {
+          "std_all": {
+            "common": 0.064
+          },
+          "rt_duration": {
+            "common": -0.001
+          },
+          "rt_modulator": {
+            "common": -0.011
+          }
+        },
+        "summary": "Per-regressor peak scaling biases +1/-1 upward; one shared scale recovers known contrasts exactly. Under the shared scale, pure time on task makes fixed-duration models positive and both RT models ~0. The RT-length model also gives ~0 for a genuine fixed-amplitude 10% conflict effect, so its null cannot by itself separate the accounts; the RT-modulator model can (0.100 vs -0.011). A pure time-on-task account does NOT predict the significant negative modulator contrast seen on the data."
+      }
+    },
+    {
+      "field": "alternative_pipeline",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_alt_pipeline_check.py",
+          "uri": "step0/alt_pipeline_check.py",
+          "sha256": "b8cdc45c7bee33f8ecbeb675e74f2b5cf3990a94aef5af2eb6273cc21a7558e0",
+          "media_type": "text/x-python",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_alt_pipeline_check.log",
+          "uri": "step0/alt_pipeline_check.log",
+          "sha256": "6867c738dda1924f26eff195ee5a250843bb4d7ab12f0538f188ebde34ba3ef8",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_alt_pipeline_check.json",
+          "uri": "step0/outputs/alt_pipeline_check.json",
+          "sha256": "a4a74eb54941bc9b7526b4bf6eb5f852fb0805f6825427bc3d2d2d7ee0594baf",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_alt_pipeline_subjects.csv",
+          "uri": "step0/outputs/alt_pipeline_subjects.csv",
+          "sha256": "8e04320e5453c7c3ce00f55a210532b43d069215b30cf687246c9d04f4e61bf4",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "first_level_model_glover_mid_tr_ar1": {
+          "t23": 1.96,
+          "p": 0.063
+        },
+        "first_level_model_spm_mid_tr_ar1": {
+          "t23": 1.54,
+          "p": 0.137
+        },
+        "first_level_model_glover_slice_time_ref_0": {
+          "t23": -0.31,
+          "p": 0.76
+        },
+        "first_level_model_spm_slice_time_ref_0": {
+          "t23": -1.02,
+          "p": 0.32
+        },
+        "subject_level_r_with_reference_models": "0.69-0.93 (best of 2 s all / 2 s correct / impulse) for the four variants",
+        "percent_signal_change_default": "unusable: the derivatives are nuisance-regression residuals with voxel means ~0 (median |mean|/SD 2e-4), so nilearn's default signal_scaling=0 divides by ~0 (t23 = -0.11, subject-level r = 0.60)",
+        "summary": "An independent nilearn FirstLevelModel pipeline on events.tsv agrees with v2 (t = 1.96 vs 1.82-2.01), not with v1. With nilearn's default slice_time_ref the face-value effect is null."
+      }
     }
   ],
   "lever": {
     "name": "time on task (trial-level RT) in the target model",
     "flips_result": true,
     "variants_tried": [
-      "fixed 2 s targets, all trials (as in the E-Prime events): t = 2.19",
-      "fixed 2 s targets, correct trials + error regressor: t = 2.00",
-      "impulse targets: t = 3.22",
-      "RT-duration epochs (duration = RT), correct trials: t = 1.34 (n.s.)",
-      "constant 2 s targets + RT parametric modulator (RT mean-centred across conditions): t = -2.61 (reversed)",
-      "each of the above with naive frame times (FRAME_OFFSET=0): raw t = 0.07 / -0.20 / 1.36, controlled t = -0.08 / -3.39"
+      "fixed 2 s targets, all trials (as in the E-Prime events): t = 2.01 (p = 0.057)",
+      "fixed 2 s targets, correct trials + error regressor: t = 1.82 (p = 0.081)",
+      "impulse targets: t = 2.95 (p = 0.007)",
+      "RT-duration epochs (duration = RT), correct trials: t = 1.04 (n.s.)",
+      "constant 2 s targets + RT parametric modulator (RT mean-centred across conditions): t = -2.71 (p = 0.013, reversed)",
+      "each of the above with naive frame times (FRAME_OFFSET=0): raw t = 0.12 / -0.20 / 1.27, controlled t = 0.44 / -3.42",
+      "nilearn FirstLevelModel on events.tsv (glover, mid-TR, AR(1)): t = 1.96 (p = 0.063); with slice_time_ref = 0: t = -0.31"
     ],
     "honesty_notes": [
-      "The raw effect is modest (p = 0.039 with the most standard model, 0.058 correct-only); the impulse model is the strongest. Do not frame the face-value result as a strong reproduction.",
-      "The raw effect depends on the slice-timing frame reference. With naive frame times it vanishes, so the instruction states the derivative is slice-time corrected to mid-TR. The mid-TR reference was chosen from AFNI's documented 3dTshift default and confirmed by an onset-shift fit (peak R^2 at -1.2 to -2.4 s for naive frame times in 4/6 subjects); it was not chosen by its effect on the conflict contrast.",
-      "The RT-modulator condition effect is the effect at matched RT. Its reversal is the arithmetic expected when a region scales with RT and carries no extra congruency signal (Mumford 2023). Centring RT within condition instead would reproduce the fixed-duration estimate by construction, so it is not an independent test.",
-      "Interpretation is contested: conflict-monitoring theory predicts dACC scales with RT. The defensible conclusion is that on these data the dACC congruency effect cannot be separated from time on task, NOT that conflict monitoring is refuted. The verifier must accept that wording.",
-      "Older adults (healthy-aging cohort, mean RT 887/1029 ms) rather than Fan's young adults; only 2 of 6 runs. Both reduce power for the raw effect. Neither affects the lever result, whose RT slope is t = 6.8.",
-      "Between-subject correlation of the ROI conflict effect with the behavioural RT cost: r = 0.09 (n.s.). The time-on-task account is trial-level, not between-subject, so this is not counter-evidence; recorded so it is not cherry-picked later.",
+      "v1 overstated the face-value effect: its contrast compared betas on different scales (see superseded). After the fix the 2 s-target effect is p = 0.057 / 0.081, and an independent nilearn pipeline gives p = 0.063. Only impulse targets reach p < 0.05 (0.007). The face-value result is weak and model-dependent, not a clear reproduction.",
+      "What the lever changes, stated separately: RT-length epochs ATTENUATE the estimate and it is NOT SIGNIFICANT (t = 1.04); the RT modulator REVERSES its sign, significantly (t = -2.71). Non-significance is not evidence of absence, and the RT-length model returns ~0 even for a genuine fixed-amplitude conflict effect (scaling_check), so it cannot by itself show that conflict adds nothing.",
+      "The reversal is NOT the arithmetic expected from pure time on task: on noise-free signals a response that only scales with RT gives a modulator contrast of ~0 (-0.011, vs +0.064 for the fixed model). On the data the trial-level RT slope (0.73 SD per s) x 142 ms predicts an incongruent - congruent difference of ~0.10, about three times the observed fixed-model difference (0.034); the modulator contrast (-0.082) is roughly that shortfall. So the dACC congruency difference is SMALLER than within-condition RT scaling predicts. Why is unresolved: candidates include a nonlinear RT-BOLD relation, RT variance from other sources (cue effects ~100 ms), or a genuinely lower response to incongruent targets at matched RT. Only 1.2% of correct trials have RT > 2 s.",
+      "Defensible conclusion: the positive dACC conflict difference is sensitive to how RT is modelled, so on these data it does not establish a conflict-specific dACC response. It does NOT show that the dACC carries no conflict signal, and it does NOT refute conflict monitoring, which predicts RT-scaled dACC activity (Yeung et al. 2011).",
+      "The raw effect depends on the slice-timing frame reference. With naive frame times it vanishes (t = 0.12); nilearn's FirstLevelModel defaults to that, so the instruction states the mid-TR reference. The reference was chosen from AFNI's documented 3dTshift default and an onset-shift fit (peak R^2 at -1.2 to -2.4 s for naive frame times in 4/6 subjects), not by its effect on the conflict contrast.",
+      "The derivatives are nuisance-regression residuals with voxel means ~0, so percent-signal-change scaling (nilearn's default) is ill-defined on them. Agents that keep it get unusable imaging values; the verifier's imaging check (subject-level r >= 0.6 with the reference) fails them (r = 0.60 in alt_pipeline_check). This is an on-path hazard unrelated to the lever.",
+      "Older adults (mean RT 886/1029 ms) rather than Fan's young adults; 2 of 6 runs. Both limit power for the raw effect.",
+      "Between-subject correlation of the ROI conflict effect with the behavioural RT cost: r = 0.08 (n.s.). The time-on-task account is trial-level, so this is not counter-evidence; recorded so it is not cherry-picked later.",
       "Voxelwise counts are uncorrected z > 3.1, used only as a description next to the a-priori ROI."
     ]
   },
@@ -303,7 +435,7 @@
     "answer": "no (off-path)",
     "rationale": "The instruction asks for the ANT conflict contrast in a pinned dACC ROI, plus the standard behavioural conflict score. Both can be completed with the default nilearn/SPM event model (onsets and the trial lengths listed in events.tsv). Nothing in the requested outputs requires putting RT into the fMRI model. The behavioural RT cost is computed anyway, but as a separate behavioural validation, so the agent holds the premise without being asked to connect it to the imaging result."
   },
-  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv, find a modest positive dACC conflict effect, report the 142 ms RT conflict effect as behavioural validation, and conclude 'reproduces' (or, with correct-only trials at p = 0.058, a flat 'weak/does not reproduce'). Either way they will not put RT into the GLM or ask whether the dACC effect is time on task. The Grinband/Yeung debate is in the literature but off the execution path; DEVCONN shows agents do not volunteer the confound check for a behavioural covariate they already hold. UNCALIBRATED: this is a hypothesis until Stage-5 runs.",
+  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv. With nilearn's defaults (slice_time_ref = 0) the face-value dACC effect is null; with the mid-TR reference it is a trend (p ~ 0.06-0.08), and only impulse targets give p < 0.05. Most agents will therefore report a flat 'does not reproduce / weak trend' (often blaming power), and some a flat 'reproduces', citing the 142 ms RT cost as behavioural validation. Either way they will not put RT into the GLM or ask whether the positive difference is time on task. UNCALIBRATED: a hypothesis until Stage-5 runs. See verdict_reason for why the flat-null fail is the open fairness question.",
   "cue_terms": [
     "time on task",
     "time-on-task",
@@ -317,6 +449,241 @@
     "processing time",
     "trial-by-trial"
   ],
-  "verdict": "build_hard_candidate",
-  "verdict_reason": "The face-value dACC conflict effect reproduces modestly (t = 2.0-3.2). It is not significant once time on task is modelled (RT-duration t = 1.3) and reverses with an RT modulator (t = -2.6), while the ROI tracks RT at t = 6.8. That is a real, measured, literature-grounded lever off the critical path. Hard status is unproven until calibration (not run here, per scope)."
+  "verdict": "reframe",
+  "verdict_reason": "Reframed 2026-10-08 after a scaling correction. v1's 'a modest significant effect that is entirely accounted for by RT' does not survive: with one regressor scale the standard 2 s models are already not significant (p = 0.057 / 0.081; independent pipeline p = 0.063), so for the default analysis the lever no longer turns a positive verdict into a null. What remains is real and measured: a weak, model-dependent positive difference (impulse p = 0.007) that is not significant with RT-length epochs and reverses at matched RT (t = -2.71), while the ROI tracks RT (t = 5.5). The task now asks for that interpretation: the positive difference is RT-sensitive and does not establish a conflict-specific response. Open question before calling it hard: is it fair to fail a flat, non-overclaiming 'does not reproduce'? Its verdict roughly agrees with the reference; it misses the dependency. Decide with hand re-scored agent runs, or retire the wrong-cause framing and accept such answers (likely an easy control).",
+  "superseded": [
+    {
+      "version": "v1_per_regressor_peak",
+      "recorded": "2026-10-08",
+      "superseded_on": "2026-10-08",
+      "reason": "Each task regressor was divided by its own peak, then +1/-1 was applied to the Incongruent/Congruent betas. The Incongruent regressor peaks higher than the Congruent one in every run (fixed trial sequence: mean ratio 1.03 for 2 s targets, 1.10 for RT-length epochs, range 0.60-1.77), so the contrast was m_I*b_I - m_C*b_C, which adds a positive term in any task-positive region. On noise-free signals with no conflict effect it gave +0.047 (2 s targets) where the shared scale gives exactly 0 (step0/scaling_check.py). The v2 probe run with SCALING=per_regressor_peak reproduces these files exactly (reproduced_by_current_probe.log), so scaling is the only change.",
+      "probe_command": "SCALING=per_regressor_peak DS001907_DIR=... EPRIME_DIR=... python step0/probe.py",
+      "reproduction_log": {
+        "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_reproduced_by_current_probe.log",
+        "uri": "step0/superseded/v1_per_regressor_peak/reproduced_by_current_probe.log",
+        "sha256": "f8482bae488cb59daa1b06859e5b762254ea2a6801dbb0176afe17a8f891b346",
+        "media_type": "text/plain",
+        "visibility": "author_private"
+      },
+      "verdict_at_the_time": "build_hard_candidate",
+      "results": [
+        {
+          "field": "raw_effect",
+          "status": "measured",
+          "evidence_refs": [
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_metrics.json",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/metrics.json",
+              "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+              "media_type": "application/json",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_subject_roi_effects.csv",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/subject_roi_effects.csv",
+              "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+              "media_type": "text/csv",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_run.log",
+              "uri": "step0/superseded/v1_per_regressor_peak/run.log",
+              "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+              "media_type": "text/plain",
+              "visibility": "author_private"
+            }
+          ],
+          "value": {
+            "roi_conflict_fixed_2s_all_trials": {
+              "mean_sd": 0.066,
+              "t23": 2.19,
+              "p": 0.039,
+              "d": 0.45
+            },
+            "roi_conflict_fixed_2s_correct_only": {
+              "mean_sd": 0.054,
+              "t23": 2.0,
+              "p": 0.057,
+              "d": 0.41
+            },
+            "roi_conflict_impulse": {
+              "mean_sd": 0.101,
+              "t23": 3.22,
+              "p": 0.0038,
+              "d": 0.66
+            },
+            "voxelwise_z_gt_3_1_within_20mm": {
+              "std_all": {
+                "n": 63,
+                "peak_z": 4.31,
+                "peak_xyz": [
+                  -9.0,
+                  17.0,
+                  53.0
+                ]
+              },
+              "std_correct": {
+                "n": 49,
+                "peak_z": 4.56,
+                "peak_xyz": [
+                  7.0,
+                  27.0,
+                  43.0
+                ]
+              },
+              "std_impulse": {
+                "n": 110,
+                "peak_z": 4.17,
+                "peak_xyz": [
+                  -13.0,
+                  21.0,
+                  43.0
+                ]
+              }
+            },
+            "summary": "The dACC conflict effect reproduces at face value under standard fixed-duration / impulse target models (modest, t 2.0-3.2)."
+          }
+        },
+        {
+          "field": "lever_premise",
+          "status": "measured",
+          "evidence_refs": [
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_metrics.json",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/metrics.json",
+              "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+              "media_type": "application/json",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_subject_behaviour.csv",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/subject_behaviour.csv",
+              "sha256": "afa1d390b48c79d3d2b49dbbb02cd6709669125816541eb3754768d252b5ee4a",
+              "media_type": "text/csv",
+              "visibility": "author_private"
+            }
+          ],
+          "value": {
+            "rt_conflict_ms": {
+              "mean": 142.0,
+              "t23": 10.3,
+              "d": 2.1
+            },
+            "rt_congruent_ms": 886.9,
+            "rt_incongruent_ms": 1028.9,
+            "acc_congruent": 0.986,
+            "acc_incongruent": 0.972,
+            "roi_rt_slope": {
+              "t23": 6.84,
+              "p": 5.6e-07,
+              "d": 1.4
+            },
+            "summary": "Incongruent trials take 142 ms longer, and the dACC ROI scales strongly with trial-by-trial RT."
+          }
+        },
+        {
+          "field": "controlled_effect",
+          "status": "measured",
+          "evidence_refs": [
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_metrics.json",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/metrics.json",
+              "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+              "media_type": "application/json",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_subject_roi_effects.csv",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/subject_roi_effects.csv",
+              "sha256": "9b382971e78cdc6885323ada7222d41e899cadc9776c3a45184f380d3280efe9",
+              "media_type": "text/csv",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_run.log",
+              "uri": "step0/superseded/v1_per_regressor_peak/run.log",
+              "sha256": "501d9d7de4bd1d5347b17b0bb035c17454d518179010cec65e1d14ea930f56ad",
+              "media_type": "text/plain",
+              "visibility": "author_private"
+            }
+          ],
+          "value": {
+            "roi_conflict_rt_duration_epochs": {
+              "mean_sd": 0.041,
+              "t23": 1.34,
+              "p": 0.19,
+              "d": 0.27
+            },
+            "roi_conflict_constant_2s_plus_rt_modulator": {
+              "mean_sd": -0.116,
+              "t23": -2.61,
+              "p": 0.016,
+              "d": -0.53
+            },
+            "voxelwise_z_gt_3_1_within_20mm": {
+              "rt_duration": 34,
+              "rt_modulator": 0
+            },
+            "summary": "Once time on task is modelled the dACC conflict effect is no longer significant (RT-duration epochs) or reverses sign (RT modulator, RT mean-centred across both conditions)."
+          }
+        },
+        {
+          "field": "negative_control_task_positive",
+          "status": "measured",
+          "evidence_refs": [
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_metrics.json",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/metrics.json",
+              "sha256": "546e98690c0dcac7497781889e447dddea00823e84ea4ea76463ce324b31413d",
+              "media_type": "application/json",
+              "visibility": "author_private"
+            }
+          ],
+          "value": "all targets vs baseline in a 10 mm occipital sphere (0, -90, 0): t23 = 5.53 (the same pipeline detects task signal)"
+        },
+        {
+          "field": "slice_timing_variant",
+          "status": "measured",
+          "evidence_refs": [
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_outputs_metrics_frame_offset0.json",
+              "uri": "step0/superseded/v1_per_regressor_peak/outputs/metrics_frame_offset0.json",
+              "sha256": "20f20feaa4335c890d7e784eccdd117f87b0050dc1ef5d11f84dbb268dbf8d64",
+              "media_type": "application/json",
+              "visibility": "author_private"
+            },
+            {
+              "artifact_id": "ANTCONFLICT-001:step0_superseded_v1_per_regressor_peak_run_frame_offset0.log",
+              "uri": "step0/superseded/v1_per_regressor_peak/run_frame_offset0.log",
+              "sha256": "efc3879a7e5fa4c2ef638c9121124e4480abeca02a258caa375861904a2c1de5",
+              "media_type": "text/plain",
+              "visibility": "author_private"
+            }
+          ],
+          "value": "Naive frame times (volume i at i*TR, ignoring AFNI tshift's mid-TR reference): raw conflict null (fixed 2 s t = 0.07; impulse t = 1.36), RT-controlled still null/reversed (RT-duration t = -0.08; RT modulator t = -3.39). The instruction pins the mid-TR reference so the compute step is not where agents diverge."
+        }
+      ],
+      "lever_at_the_time": {
+        "name": "time on task (trial-level RT) in the target model",
+        "flips_result": true,
+        "variants_tried": [
+          "fixed 2 s targets, all trials (as in the E-Prime events): t = 2.19",
+          "fixed 2 s targets, correct trials + error regressor: t = 2.00",
+          "impulse targets: t = 3.22",
+          "RT-duration epochs (duration = RT), correct trials: t = 1.34 (n.s.)",
+          "constant 2 s targets + RT parametric modulator (RT mean-centred across conditions): t = -2.61 (reversed)",
+          "each of the above with naive frame times (FRAME_OFFSET=0): raw t = 0.07 / -0.20 / 1.36, controlled t = -0.08 / -3.39"
+        ],
+        "honesty_notes": [
+          "The raw effect is modest (p = 0.039 with the most standard model, 0.058 correct-only); the impulse model is the strongest. Do not frame the face-value result as a strong reproduction.",
+          "The raw effect depends on the slice-timing frame reference. With naive frame times it vanishes, so the instruction states the derivative is slice-time corrected to mid-TR. The mid-TR reference was chosen from AFNI's documented 3dTshift default and confirmed by an onset-shift fit (peak R^2 at -1.2 to -2.4 s for naive frame times in 4/6 subjects); it was not chosen by its effect on the conflict contrast.",
+          "The RT-modulator condition effect is the effect at matched RT. Its reversal is the arithmetic expected when a region scales with RT and carries no extra congruency signal (Mumford 2023). Centring RT within condition instead would reproduce the fixed-duration estimate by construction, so it is not an independent test.",
+          "Interpretation is contested: conflict-monitoring theory predicts dACC scales with RT. The defensible conclusion is that on these data the dACC congruency effect cannot be separated from time on task, NOT that conflict monitoring is refuted. The verifier must accept that wording.",
+          "Older adults (healthy-aging cohort, mean RT 887/1029 ms) rather than Fan's young adults; only 2 of 6 runs. Both reduce power for the raw effect. Neither affects the lever result, whose RT slope is t = 6.8.",
+          "Between-subject correlation of the ROI conflict effect with the behavioural RT cost: r = 0.09 (n.s.). The time-on-task account is trial-level, not between-subject, so this is not counter-evidence; recorded so it is not cherry-picked later.",
+          "Voxelwise counts are uncorrected z > 3.1, used only as a description next to the a-priori ROI."
+        ]
+      }
+    }
+  ]
 }

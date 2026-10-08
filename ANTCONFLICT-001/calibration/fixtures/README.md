@@ -24,8 +24,18 @@ Every fixture's `note` must say where its text came from.
 
 ## ANTCONFLICT-001
 
-`_base/` holds the numeric outputs of `solution/compute.py` run locally on the Step-0 data
-cache (2026-10-08, not yet an in-container Harbor oracle run), so both tests are asserted.
-`reference/` is that run's findings.md verbatim. No agent has run this task yet, so every
-adversarial fixture is synthetic: it is written from the hypothesised failure modes in
-`step0/evidence.json`. Replace or extend them with real agent findings.md files after Stage 5.
+`_base/` holds the numeric outputs of `solution/compute.py` v2 (one regressor scale per model),
+run locally on the Step-0 data cache (2026-10-08). This is not yet an in-container Harbor
+oracle run. `reference/` is that run's findings.md verbatim. No agent has run this task yet, so
+every other fixture is synthetic, written from the hypothesised failure modes in
+`step0/evidence.json` and from a 2026-10-08 review. Replace or extend them with real agent
+findings.md files after Stage 5.
+
+- Prose fixtures change only `findings.md`; `unsupported-attribution` also drops the RT analysis
+  from `group_results.json`. `negated-rt-explains` and `survives-rt-control` hold the two
+  sentences the review showed the v1 verifier passing. The paraphrase fixtures show the fix is
+  not a two-sentence blacklist.
+- `num-*` fixtures change the numeric outputs and keep the reference prose. They are regenerated
+  by `calibration/make_numeric_fixtures.py`. `remove = [...]` in expect.toml deletes a `_base`
+  file (`num-user-tamper`, `num-missing-metadata`). `num-alt-pipeline` and
+  `num-naive-frame-times` use subject-level values from `step0/alt_pipeline_check.py` and must pass.

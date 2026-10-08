@@ -1,3 +1,3 @@
-note = "adversarial, synthetic: a generic hedge that names reaction time but never ties it to the dACC result"
+note = "adversarial, synthetic: a generic hedge that names reaction time but never ties it to the dACC result (numbers updated to the v2 analysis, 2026-10-08)"
 [expect]
 test_reproduction_recognises_time_on_task = "fail"

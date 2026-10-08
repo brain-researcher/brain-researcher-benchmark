@@ -1,0 +1,3 @@
+note = "correct answer, synthetic: the Yeung/Botvinick reading of the same result (RT-related dACC activity is expected under conflict monitoring), so neither conflict-specific nor refuted"
+[expect]
+test_reproduction_recognises_time_on_task = "pass"

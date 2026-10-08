@@ -25,6 +25,13 @@ six subjects' derivative events.tsv); RC4114 has no session-1 E-Prime log, so n 
         python step0/probe.py 2>&1 | tee step0/run.log
     # variant: naive frame times (no slice-timing offset) -> outputs/*_frame_offset0.*
     FRAME_OFFSET=0 DS001907_DIR=... EPRIME_DIR=... python step0/probe.py > step0/run_frame_offset0.log 2>&1
+    # superseded v1 scaling (each regressor divided by its own peak); reproduces step0/superseded/v1_per_regressor_peak/
+    SCALING=per_regressor_peak PROBE_OUT=/tmp/v1 DS001907_DIR=... EPRIME_DIR=... python step0/probe.py
+    # second Step-0 attempt on all six session-1 runs (step0/runs1to6_decision_rule.md) -> outputs/*_runs1-6.*
+    RUNS=1,2,3,4,5,6 DS001907_DIR=... EPRIME_DIR=... python step0/probe.py > step0/run_runs1-6.log 2>&1
+
+Models and regressor scaling live in step0/probe_models.py. v2 (current) puts every task
+regressor of a model on one scale, so the +1/-1 contrast compares like with like.
 """
 import json
 import os
@@ -37,31 +44,33 @@ import nibabel as nib
 import numpy as np
 import pandas as pd
 from nilearn import datasets, image
-from nilearn.glm.first_level import make_first_level_design_matrix
 from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from eprime_events import subject_events, validate  # noqa: E402
+from probe_models import MODELS, TARGETS, TR, design  # noqa: E402
 
 warnings.filterwarnings("ignore")
 DATA = Path(os.environ.get("DS001907_DIR", "ds001907"))
 EPRIME = Path(os.environ.get("EPRIME_DIR", DATA / "derivatives/RC4-ANT-1"))
-OUT = Path(__file__).resolve().parent / "outputs"
-OUT.mkdir(parents=True, exist_ok=True)
-TR = 2.4
 # AFNI 3dTshift (the "tshift" block) aligns every slice to the mean slice time, so volume i is
 # sampled at (i + 0.5) * TR. FRAME_OFFSET=0 reproduces the naive i * TR grid (recorded variant).
 FRAME_OFFSET = float(os.environ.get("FRAME_OFFSET", TR / 2))
-TAG = "" if FRAME_OFFSET == TR / 2 else f"_frame_offset{FRAME_OFFSET:g}"
+# Regressor scaling (step0/probe_models.py). "common" is current; "per_regressor_peak" reproduces
+# the superseded v1 run (step0/superseded/v1_per_regressor_peak/), whose +1/-1 contrast compared
+# betas on different scales (step0/scaling_check.py).
+SCALING = os.environ.get("SCALING", "common")
+OUT = Path(os.environ.get("PROBE_OUT", Path(__file__).resolve().parent / "outputs"))
+OUT.mkdir(parents=True, exist_ok=True)
 SUBJECTS = [f"RC41{n:02d}" for n in (1, 3, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20,
                                      21, 22, 23, 25, 26, 28, 29, 30, 31)]   # RC4114: no E-Prime log
 if os.environ.get("SUBJECTS"):  # smoke tests only; the recorded run uses all 25
     SUBJECTS = os.environ["SUBJECTS"].split(",")
 RUNS = [int(r) for r in os.environ.get("RUNS", "1,2").split(",")]
+TAG = (("" if FRAME_OFFSET == TR / 2 else f"_frame_offset{FRAME_OFFSET:g}") + ("" if SCALING == "common" else f"_{SCALING}")
+       + ("" if RUNS == [1, 2] else f"_runs{RUNS[0]}-{RUNS[-1]}"))
 ROI_XYZ, ROI_RADIUS = (0.0, 16.0, 42.0), 10.0
 TASKPOS_XYZ = (0.0, -90.0, 0.0)          # occipital pole, all-targets negative control
-CUES = ["NoCue", "CenterCue", "DoubleCue", "SpatialCue"]
-TARGETS = ["Congruent", "Incongruent"]
 
 
 def sphere_mask(img, xyz, radius):
@@ -70,37 +79,6 @@ def sphere_mask(img, xyz, radius):
     return (np.linalg.norm(mm - np.array(xyz), axis=1) <= radius).reshape(img.shape[:3])
 
 
-def target_events(ev, model):
-    """Build the events table for one model. `ev` is from eprime_events.subject_events()."""
-    ev = ev.copy()
-    ev["rt"] = pd.to_numeric(ev["response_time"], errors="coerce") / 1000.0
-    ev["acc"] = pd.to_numeric(ev["accuracy"], errors="coerce")
-    cues = ev[ev.trial_type.isin(CUES)][["onset", "duration", "trial_type"]]
-    tg = ev[ev.trial_type.isin(TARGETS)].copy()
-    good = (tg.acc == 1) & tg.rt.notna()
-    rows = [cues]
-    if model == "std_all":                       # as given in events.tsv
-        rows.append(tg[["onset", "duration", "trial_type"]])
-    elif model == "std_impulse":                 # same, zero-duration targets
-        rows.append(tg[["onset", "trial_type"]].assign(duration=0.0))
-    elif model in ("std_correct", "rt_modulator", "rt_duration"):
-        ok = tg[good].copy()
-        if model == "rt_duration":
-            ok["duration"] = ok.rt
-        rows.append(ok[["onset", "duration", "trial_type"]])
-        bad = tg[~good]
-        if len(bad):
-            rows.append(bad[["onset", "duration"]].assign(trial_type="ErrorOrMiss"))
-        if model == "rt_modulator":
-            rows.append(ok[["onset", "duration"]].assign(
-                trial_type="RTmod", modulation=ok.rt - ok.rt.mean()))
-    out = pd.concat(rows, ignore_index=True)
-    if "modulation" in out:
-        out = out.fillna({"modulation": 1.0})
-    return out.sort_values("onset")
-
-
-MODELS = ["std_all", "std_correct", "std_impulse", "rt_duration", "rt_modulator"]
 
 t0 = time.time()
 validate(EPRIME, DATA)
@@ -135,10 +113,7 @@ for sub in SUBJECTS:
             beh.append({"subject": sub, "run": run, "cond": cond, "rt_ms": float(rt[m].mean()),
                         "acc": float((acc[tg.trial_type == cond] == 1).mean())})
         for model in MODELS:
-            X = make_first_level_design_matrix(frame_times, target_events(ev, model), hrf_model="spm",
-                                               drift_model="cosine", high_pass=1 / 128)
-            task_cols = [c for c in X.columns if not c.startswith(("drift", "constant"))]
-            X[task_cols] = X[task_cols] / X[task_cols].abs().max()   # peak-normalise: comparable betas across models
+            X = design(frame_times, ev, model, SCALING)
             B = np.linalg.pinv(X.values) @ Y                          # p x V (OLS)
             c = np.zeros(X.shape[1]); c[X.columns.get_loc("Incongruent")] = 1; c[X.columns.get_loc("Congruent")] = -1
             sub_eff[model].append(c @ B)
@@ -175,7 +150,7 @@ def one_sample(x):
             "cohen_d": float(np.mean(x) / np.std(x, ddof=1))}
 
 
-metrics = {"n_subjects": int(len(df)), "runs": RUNS, "frame_offset_s": FRAME_OFFSET, "roi": {"xyz_mni": ROI_XYZ, "radius_mm": ROI_RADIUS},
+metrics = {"n_subjects": int(len(df)), "runs": RUNS, "frame_offset_s": FRAME_OFFSET, "scaling": SCALING, "roi": {"xyz_mni": ROI_XYZ, "radius_mm": ROI_RADIUS},
            "raw": {}, "controlled": {}, "voxelwise_z_gt_3.1": {}}
 metrics["premise"] = {"rt_conflict_ms": one_sample(conflict_rt.values),
                       "rt_congruent_ms": float(b["rt_ms"]["Congruent"].mean()),

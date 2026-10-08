@@ -1,0 +1,33 @@
+{
+  "dataset": "OpenNeuro ds001907 (AFNI derivatives)",
+  "participants": 24,
+  "participant_ids": [
+    "RC4101",
+    "RC4103",
+    "RC4106",
+    "RC4107",
+    "RC4109",
+    "RC4110",
+    "RC4111",
+    "RC4112",
+    "RC4113",
+    "RC4115",
+    "RC4116",
+    "RC4117",
+    "RC4118",
+    "RC4119",
+    "RC4120",
+    "RC4121",
+    "RC4122",
+    "RC4123",
+    "RC4125",
+    "RC4126",
+    "RC4128",
+    "RC4129",
+    "RC4130",
+    "RC4131"
+  ],
+  "session": "ses-1",
+  "runs": "run-1, run-2",
+  "model": "nilearn FirstLevelModel, glover HRF, slice_time_ref=0, AR(1), cosine drift 0.01 Hz, events.tsv as shipped (TargetErr/CueErr separate), contrast Incongruent - Congruent effect size averaged in a 10 mm sphere at (0, 16, 42)"
+}

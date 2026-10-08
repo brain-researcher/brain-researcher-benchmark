@@ -10,19 +10,30 @@ from "more time on task" (Grinband et al. 2011, NeuroImage 57:303; reply by Yeun
 refits the same contrast with RT in the model, both as RT-length epochs and as an RT
 modulator on constant-length targets, and reports what happens to the dACC effect.
 
-Validated numbers (Step 0, step0/evidence.json; ds001907 AFNI derivatives, ses-1 runs
-1-2, n = 24, frame times at mid-TR):
-  RAW      ROI conflict, 2 s targets, correct trials : t = 2.00 (p = 0.058)
-           ROI conflict, 2 s targets, all trials     : t = 2.19 (p = 0.039)
-           ROI conflict, impulse targets             : t = 3.22 (p = 0.004)
-  PREMISE  RT(incongruent) - RT(congruent)           : 142 ms (t = 10.3)
-           ROI response vs trial RT (modulator)      : t = 6.84
-  CTRL     RT-length epochs                          : t = 1.34 (p = 0.19)  -> no longer significant
-           2 s targets + RT modulator                : t = -2.61 (p = 0.016) -> reverses
+Estimands (one shared scale per model, so +1/-1 compares like with like):
+  fixed 2 s / impulse targets   per-trial evoked amplitude, incongruent - congruent
+  RT-length epochs              response per unit time on task, incongruent - congruent
+  2 s targets + RT modulator    incongruent - congruent at matched (grand-mean) RT; RT slope
+                                per second of RT
+Every task regressor of a model is divided by ONE constant, the peak of an isolated
+reference event (REF_DURATION). An earlier version divided each regressor by its own peak;
+the Incongruent regressor peaks higher than the Congruent one in every run, so that
+contrast carried a spurious positive term (step0/scaling_check.py; superseded numbers in
+step0/superseded/v1_per_regressor_peak/).
 
-This file is the Step-0 probe (step0/probe.py) promoted to the oracle: same numbers,
-plus the task's required outputs. If the oracle's numbers drift from step0/evidence.json,
-stop and find out why before going further.
+Validated numbers (Step 0 v2, step0/evidence.json; ds001907 AFNI derivatives, ses-1 runs
+1-2, n = 24, frame times at mid-TR):
+  RAW      ROI conflict, 2 s targets, correct trials : t = 1.82 (p = 0.081)
+           ROI conflict, 2 s targets, all trials     : t = 2.01 (p = 0.057)
+           ROI conflict, impulse targets             : t = 2.95 (p = 0.007)
+  PREMISE  RT(incongruent) - RT(congruent)           : 142 ms (t = 10.3)
+           ROI response vs trial RT (modulator)      : t = 5.47
+  CTRL     RT-length epochs                          : t = 1.04 (p = 0.31)   -> not significant
+           2 s targets + RT modulator                : t = -2.71 (p = 0.013) -> sign reverses
+
+This file is the Step-0 probe (step0/probe.py) promoted to the oracle: same models and
+scaling, plus the task's required outputs. If the oracle's numbers drift from
+step0/evidence.json, stop and find out why before going further.
 """
 import json
 import os
@@ -61,6 +72,8 @@ CUES = ["NoCue", "CenterCue", "SpatialCue"]
 TARGETS = ["Congruent", "Incongruent"]
 MODELS = ["std_correct", "std_all", "std_impulse", "rt_duration", "rt_modulator"]
 PRIMARY = "std_correct"         # 2 s targets, error trials modelled separately (as events.tsv labels them)
+# reference event per model: betas are the peak response to one isolated event of this length
+REF_DURATION = {"std_all": 2.0, "std_correct": 2.0, "std_impulse": 0.0, "rt_duration": 1.0, "rt_modulator": 2.0}
 
 
 def wj(name, payload):
@@ -186,6 +199,19 @@ def target_events(ev, model):
     return out.sort_values("onset")
 
 
+_ISO = {}
+
+
+def iso_peak(duration):
+    """Peak of the regressor of ONE isolated event on the TR grid (onsets swept across a TR)."""
+    if duration not in _ISO:
+        ft = np.arange(40) * TR
+        _ISO[duration] = max(make_first_level_design_matrix(
+            ft, pd.DataFrame({"onset": [10.0 + o], "duration": [duration], "trial_type": ["e"]}),
+            hrf_model="spm", drift_model=None)["e"].max() for o in np.linspace(0, TR, 97))
+    return _ISO[duration]
+
+
 def sphere_mask(img, xyz, radius):
     ijk = np.indices(img.shape[:3]).reshape(3, -1).T
     mm = nib.affines.apply_affine(img.affine, ijk)
@@ -218,7 +244,7 @@ def primary_analysis(eprime_dir):
                 X = make_first_level_design_matrix(frame_times, target_events(ev, model), hrf_model="spm",
                                                    drift_model="cosine", high_pass=1 / 128)
                 task_cols = [c for c in X.columns if not c.startswith(("drift", "constant"))]
-                X[task_cols] = X[task_cols] / X[task_cols].abs().max()     # peak-normalised regressors
+                X[task_cols] = X[task_cols] / iso_peak(REF_DURATION[model])  # one scale for all task regressors
                 B = np.linalg.pinv(X.values) @ Y[:, roi | pos]
                 c = np.zeros(X.shape[1])
                 c[X.columns.get_loc("Incongruent")], c[X.columns.get_loc("Congruent")] = 1, -1
@@ -266,11 +292,16 @@ def volunteered_check(df):
 
 def write_findings(primary, check):
     """The write-up a careful researcher would leave. It links time on task to the dACC
-    result, because that link is what tests/test_outputs.py grades."""
+    result, because that link is what tests/test_outputs.py grades, and it keeps apart what
+    each RT model shows: a smaller estimate, a loss of significance, a change of sign."""
     m = check["roi_conflict_by_target_model"]
     rt, s = primary["rt_conflict_ms"], check["roi_rt_slope"]
     def f(v):
         return f"t({v['n'] - 1}) = {v['t']:.2f}, " + (f"p = {v['p']:.3f}" if v["p"] >= 0.001 else "p < 0.001")
+    sig = [k for k in ("std_correct", "std_all", "std_impulse") if m[k]["p"] < 0.05]
+    face = ("significant only with impulse targets" if sig == ["std_impulse"] else
+            "significant in none of the three target models" if not sig else
+            f"significant in {len(sig)} of the three target models")
     (OUT / "findings.md").write_text(f"""# ANTCONFLICT-001: ANT conflict activation in dorsal ACC (ds001907)
 
 ## The result at face value
@@ -279,27 +310,33 @@ flanker conflict effect is large: incongruent targets are {rt['mean']:.0f} ms sl
 ones ({f(rt)}); accuracy {primary['accuracy']['congruent']:.3f} vs {primary['accuracy']['incongruent']:.3f}.
 
 In the dorsal-ACC sphere (MNI 0, 16, 42; 10 mm) the incongruent - congruent contrast is positive
-but modest: 2 s targets with error trials modelled separately {f(m['std_correct'])}; all trials
-{f(m['std_all'])}; impulse targets {f(m['std_impulse'])}. Taken at face value this is a weak
-reproduction of Fan et al. (2005). The same pipeline detects the task response clearly elsewhere
-(all targets vs baseline, occipital pole: {f(check['taskpos_all_targets_occipital'])}).
+but weak, and {face}: 2 s targets with error trials modelled separately {f(m['std_correct'])};
+all trials {f(m['std_all'])}; impulse targets {f(m['std_impulse'])}. The same pipeline detects
+the task response clearly elsewhere (all targets vs baseline, occipital pole:
+{f(check['taskpos_all_targets_occipital'])}).
 
 ## The check the result needs: time on task
 Incongruent trials last about {rt['mean']:.0f} ms longer, and a fixed-length target regressor cannot
-tell a conflict signal from a longer response (Grinband et al. 2011). The dACC ROI scales strongly
-with trial RT (RT modulator slope {f(s)}). When time on task is modelled, the dACC conflict
-effect does not survive:
-- targets modelled as RT-length epochs: {f(m['rt_duration'])}, no longer significant;
-- 2 s targets plus an RT modulator (RT mean-centred across conditions): {f(m['rt_modulator'])},
-  the incongruent - congruent difference reverses sign.
+tell a conflict signal from a longer response (Grinband et al. 2011). The dACC ROI scales with
+trial RT (RT modulator slope, per second of RT: {f(s)}). I refit the same contrast with time on
+task in the model, in two ways:
+- Targets as RT-length epochs: {f(m['rt_duration'])}. The estimate is smaller and not
+  significant. This model assumes the response grows with time on task, so a null here is not
+  by itself evidence that there is no conflict signal.
+- 2 s targets plus an RT modulator (RT mean-centred across both conditions, so the condition
+  difference is estimated at matched RT): {f(m['rt_modulator'])}. The sign reverses: at matched RT
+  the dACC response is lower on incongruent than on congruent trials. A response that only
+  scaled with RT would give a difference near zero here, so the reversal is not explained by
+  time on task alone and is not resolved by this analysis.
 
 ## Conclusion
-The dACC conflict activation is only weakly present at face value. It is explained by time on task:
-once RT is in the model the effect is no longer significant or reverses, while the region tracks
-RT strongly. On these data the dACC congruency effect cannot be separated from time on task, so
-it does not support a conflict-specific dACC response. These data do not adjudicate the
-conflict-monitoring interpretation, under which dACC activity should scale with RT anyway. They
-only show that the incongruent - congruent difference adds nothing beyond RT here.
+At face value the dACC conflict activation of Fan et al. (2005) is weak and depends on the target
+model. The positive incongruent - congruent difference is sensitive to how RT is modelled: once
+time on task is in the model it is no longer significant (RT-length epochs) or reverses
+(RT modulator), while the region tracks RT strongly. On these data the dACC conflict effect
+therefore cannot be separated from time on task, and it does not establish a conflict-specific
+dACC response. This is not evidence that a conflict signal is absent, and it does not adjudicate
+the conflict-monitoring account, under which dACC activity is expected to scale with RT.
 """, encoding="utf-8")
 
 
@@ -318,7 +355,9 @@ def main():
         "bold": "derivatives/sub-*/ses-1/func/*_bold.nii.gz (AFNI afni_proc, MNI152 2009c 2 mm)",
         "events": "rebuilt from derivatives/ANT-eprime-export.zip and checked against events.tsv",
         "first_level": {"hrf": "spm", "drift": "cosine, 1/128 Hz", "frame_times": "mid-TR (AFNI tshift)",
-                        "signal": "voxelwise z-scored; regressors peak-normalised; OLS",
+                        "signal": "voxelwise z-scored; OLS",
+                        "regressor_scaling": "all task regressors of a model divided by one constant, the peak of an "
+                                             "isolated reference event (2 s target; impulse; 1 s RT epoch)",
                         "cues": "NoCue/CenterCue/SpatialCue, 0.2 s",
                         "primary_targets": "Congruent/Incongruent correct trials, 2 s; errors and misses separate"},
         "roi": {"xyz_mni": ROI_XYZ, "radius_mm": ROI_RADIUS}, "group": "one-sample t across subjects"})

@@ -1,0 +1,3 @@
+note = "adversarial, synthetic: an untested, hypothetical RT caveat ('If RT were modelled ... might disappear'); speculation is not the check"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"

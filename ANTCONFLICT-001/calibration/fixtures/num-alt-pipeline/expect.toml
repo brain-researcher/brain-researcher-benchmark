@@ -1,0 +1,3 @@
+note = "numeric, alternative pipeline (step0/alt_pipeline_check.py): nilearn FirstLevelModel on events.tsv, glover HRF, slice_time_ref 0.5, AR(1), no signal scaling (raw units); different run_metadata schema. A defensible alternative: all compute checks must pass"
+[expect]
+"*" = "pass"

@@ -1,0 +1,214 @@
+E-Prime events match derivative events.tsv exactly for 12 runs
+E-Prime events match raw BIDS events.tsv (errors relabelled) for 48 runs
+grid (96, 114, 96, 149) roi voxels 552 taskpos voxels 551
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+     7s RC4101: std_all=+0.199 std_correct=+0.254 std_impulse=+0.201 rt_duration=+0.303 rt_modulator=+0.313 rt_slope=-0.123
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    13s RC4103: std_all=+0.141 std_correct=+0.116 std_impulse=+0.121 rt_duration=+0.089 rt_modulator=+0.217 rt_slope=-0.072
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    19s RC4106: std_all=+0.007 std_correct=+0.061 std_impulse=+0.055 rt_duration=+0.104 rt_modulator=-0.252 rt_slope=+1.236
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    25s RC4107: std_all=-0.188 std_correct=-0.188 std_impulse=-0.094 rt_duration=-0.072 rt_modulator=-0.579 rt_slope=+0.474
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    31s RC4109: std_all=+0.094 std_correct=+0.094 std_impulse=+0.060 rt_duration=+0.097 rt_modulator=-0.300 rt_slope=+0.539
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    37s RC4110: std_all=+0.067 std_correct=+0.076 std_impulse=+0.028 rt_duration=-0.065 rt_modulator=-0.252 rt_slope=+0.916
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    44s RC4111: std_all=+0.147 std_correct=-0.048 std_impulse=+0.261 rt_duration=+0.034 rt_modulator=-0.074 rt_slope=+0.545
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    50s RC4112: std_all=-0.146 std_correct=-0.146 std_impulse=-0.065 rt_duration=-0.116 rt_modulator=-0.246 rt_slope=+0.106
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    56s RC4113: std_all=+0.178 std_correct=+0.112 std_impulse=+0.142 rt_duration=+0.068 rt_modulator=-0.203 rt_slope=+0.540
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    62s RC4115: std_all=+0.177 std_correct=+0.176 std_impulse=+0.124 rt_duration=+0.177 rt_modulator=+0.139 rt_slope=+0.375
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    68s RC4116: std_all=-0.013 std_correct=-0.013 std_impulse=-0.014 rt_duration=+0.012 rt_modulator=-0.222 rt_slope=+0.280
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    74s RC4117: std_all=+0.078 std_correct=-0.013 std_impulse=+0.171 rt_duration=+0.068 rt_modulator=-0.122 rt_slope=+0.297
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    80s RC4118: std_all=-0.161 std_correct=-0.161 std_impulse=-0.092 rt_duration=-0.142 rt_modulator=-0.436 rt_slope=+0.322
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    86s RC4119: std_all=-0.284 std_correct=-0.282 std_impulse=-0.100 rt_duration=-0.324 rt_modulator=-0.519 rt_slope=+0.649
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    92s RC4120: std_all=-0.126 std_correct=-0.126 std_impulse=-0.062 rt_duration=-0.120 rt_modulator=-0.180 rt_slope=+0.258
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+    98s RC4121: std_all=-0.089 std_correct=-0.089 std_impulse=-0.058 rt_duration=-0.075 rt_modulator=-0.280 rt_slope=+0.365
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   104s RC4122: std_all=-0.004 std_correct=-0.004 std_impulse=-0.005 rt_duration=+0.012 rt_modulator=-0.182 rt_slope=+0.478
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   110s RC4123: std_all=-0.368 std_correct=-0.372 std_impulse=-0.306 rt_duration=-0.406 rt_modulator=-0.576 rt_slope=+0.395
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   116s RC4125: std_all=-0.032 std_correct=+0.037 std_impulse=-0.054 rt_duration=-0.033 rt_modulator=+0.084 rt_slope=+0.755
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   122s RC4126: std_all=+0.007 std_correct=+0.007 std_impulse=+0.131 rt_duration=+0.070 rt_modulator=-0.143 rt_slope=+0.241
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   128s RC4128: std_all=+0.244 std_correct=+0.244 std_impulse=+0.301 rt_duration=+0.203 rt_modulator=+0.100 rt_slope=+0.213
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   134s RC4129: std_all=+0.242 std_correct=+0.221 std_impulse=+0.317 rt_duration=+0.198 rt_modulator=+0.035 rt_slope=+0.288
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   140s RC4130: std_all=-0.067 std_correct=-0.067 std_impulse=-0.032 rt_duration=-0.056 rt_modulator=-0.112 rt_slope=+0.009
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+[make_first_level_design_matrix] A 'modulation' column was found in the given events data and is used.
+   146s RC4131: std_all=-0.044 std_correct=-0.044 std_impulse=-0.044 rt_duration=-0.086 rt_modulator=-0.088 rt_slope=-0.045
+{
+  "n_subjects": 24,
+  "runs": [
+    1,
+    2
+  ],
+  "frame_offset_s": 0.0,
+  "roi": {
+    "xyz_mni": [
+      0.0,
+      16.0,
+      42.0
+    ],
+    "radius_mm": 10.0
+  },
+  "raw": {
+    "std_all": {
+      "mean": 0.002419082197763458,
+      "t": 0.07266409763358048,
+      "p": 0.9427016374814405,
+      "n": 24,
+      "cohen_d": 0.014832496818504234
+    },
+    "std_correct": {
+      "mean": -0.006479424639068692,
+      "t": -0.19951099957032048,
+      "p": 0.843616389604921,
+      "n": 24,
+      "cohen_d": -0.04072501225165992
+    },
+    "std_impulse": {
+      "mean": 0.04110897970733935,
+      "t": 1.3637279353848717,
+      "p": 0.1858525393416864,
+      "n": 24,
+      "cohen_d": 0.2783697991393436
+    }
+  },
+  "controlled": {
+    "rt_duration": {
+      "mean": -0.002544397924252632,
+      "t": -0.0776938278054223,
+      "p": 0.9387435565188174,
+      "n": 24,
+      "cohen_d": -0.015859186190578703
+    },
+    "rt_modulator": {
+      "mean": -0.16160135042251952,
+      "t": -3.386813157713657,
+      "p": 0.0025383201973078924,
+      "n": 24,
+      "cohen_d": -0.6913303408785589
+    }
+  },
+  "voxelwise_z_gt_3.1": {
+    "std_all": {
+      "whole_brain": 746,
+      "within_20mm_of_roi": 9,
+      "peak_z_within_20mm": 3.7512689895576834,
+      "peak_xyz": [
+        7.0,
+        27.0,
+        43.0
+      ]
+    },
+    "std_correct": {
+      "whole_brain": 490,
+      "within_20mm_of_roi": 9,
+      "peak_z_within_20mm": 3.988461534409134,
+      "peak_xyz": [
+        7.0,
+        27.0,
+        43.0
+      ]
+    },
+    "std_impulse": {
+      "whole_brain": 1223,
+      "within_20mm_of_roi": 36,
+      "peak_z_within_20mm": 4.064935665254208,
+      "peak_xyz": [
+        7.0,
+        27.0,
+        43.0
+      ]
+    },
+    "rt_duration": {
+      "whole_brain": 426,
+      "within_20mm_of_roi": 9,
+      "peak_z_within_20mm": 3.7871086996198438,
+      "peak_xyz": [
+        7.0,
+        27.0,
+        43.0
+      ]
+    },
+    "rt_modulator": {
+      "whole_brain": 251,
+      "within_20mm_of_roi": 0,
+      "peak_z_within_20mm": 2.474197703584173,
+      "peak_xyz": [
+        9.0,
+        27.0,
+        43.0
+      ]
+    }
+  },
+  "premise": {
+    "rt_conflict_ms": {
+      "mean": 141.9868121206816,
+      "t": 10.297041338305908,
+      "p": 4.3878866330816056e-10,
+      "n": 24,
+      "cohen_d": 2.1018747615995577
+    },
+    "rt_congruent_ms": 886.937806372549,
+    "rt_incongruent_ms": 1028.9246184932308,
+    "acc_congruent": 0.9861111111111112,
+    "acc_incongruent": 0.9722222222222222,
+    "rt_slope_in_roi": {
+      "mean": 0.376758548860606,
+      "t": 5.871418459174776,
+      "p": 5.525624865110829e-06,
+      "n": 24,
+      "cohen_d": 1.1984982742780355
+    },
+    "roi_std_all_vs_rt_conflict": {
+      "r": -0.0774061741779899,
+      "p": 0.7192153337042145
+    }
+  },
+  "negative_control_taskpos_all_targets": {
+    "mean": 0.22854588342164792,
+    "t": 5.3302616641579,
+    "p": 2.063730988102191e-05,
+    "n": 24,
+    "cohen_d": 1.0880351060587643
+  }
+}
+total 147s

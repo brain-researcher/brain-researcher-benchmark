@@ -27,14 +27,14 @@
   "oracle_ref": {
     "artifact_id": "ANTCONFLICT-001:solution_compute.py",
     "uri": "solution/compute.py",
-    "sha256": "b4c13c2a1f913ed3813cd3621381c43aeb8709c63699880acee3d946b14eadf6",
+    "sha256": "ffdfee56fa2a198281c8882f6e0a69276d1622976e7919170fc9140929ac0c5d",
     "media_type": "text/x-python",
     "visibility": "oracle_private"
   },
   "verifier_ref": {
     "artifact_id": "ANTCONFLICT-001:tests_test_outputs.py",
     "uri": "tests/test_outputs.py",
-    "sha256": "45aa34bd347652eaa8ab498f14d0c8faf8fb9170a981831f5462b1a81e523bbb",
+    "sha256": "88885337a5c45762095e62526bb8686231077854dcb24d2bf3ef61eeec658ca7",
     "media_type": "text/x-python",
     "visibility": "oracle_private"
   },
@@ -70,7 +70,7 @@
     {
       "artifact_id": "ANTCONFLICT-001:solution_compute.py",
       "uri": "solution/compute.py",
-      "sha256": "b4c13c2a1f913ed3813cd3621381c43aeb8709c63699880acee3d946b14eadf6",
+      "sha256": "ffdfee56fa2a198281c8882f6e0a69276d1622976e7919170fc9140929ac0c5d",
       "media_type": "text/x-python",
       "visibility": "oracle_private"
     },
@@ -84,21 +84,21 @@
     {
       "artifact_id": "ANTCONFLICT-001:tests_test_outputs.py",
       "uri": "tests/test_outputs.py",
-      "sha256": "45aa34bd347652eaa8ab498f14d0c8faf8fb9170a981831f5462b1a81e523bbb",
+      "sha256": "88885337a5c45762095e62526bb8686231077854dcb24d2bf3ef61eeec658ca7",
       "media_type": "text/x-python",
       "visibility": "oracle_private"
     },
     {
       "artifact_id": "ANTCONFLICT-001:proposal.md",
       "uri": "proposal.md",
-      "sha256": "8186d4c4a32d41deabfbe8300099b15adfa878e9f95a162d975f09c5915e6957",
+      "sha256": "536743999a5e04f76838691a90f103b88d1a76f30851ec4fead75b423325e6d7",
       "media_type": "text/markdown",
       "visibility": "author_private"
     },
     {
       "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
       "uri": "step0/evidence.json",
-      "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+      "sha256": "a58ec3bd83c9a5014cd93ca9a91d51f44cb71b0299d805ee23c3e6a3f218b8b1",
       "media_type": "application/json",
       "visibility": "author_private"
     }
@@ -106,29 +106,29 @@
   "private_failure_axis_ref": {
     "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
     "uri": "step0/evidence.json",
-    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "sha256": "a58ec3bd83c9a5014cd93ca9a91d51f44cb71b0299d805ee23c3e6a3f218b8b1",
     "media_type": "application/json",
     "visibility": "author_private"
   },
   "private_hidden_lever_ref": {
     "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
     "uri": "step0/evidence.json",
-    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "sha256": "a58ec3bd83c9a5014cd93ca9a91d51f44cb71b0299d805ee23c3e6a3f218b8b1",
     "media_type": "application/json",
     "visibility": "author_private"
   },
   "calibration_status": "not_run",
   "release_status": "draft",
-  "benchmark_verdict": "build_hard_candidate",
+  "benchmark_verdict": "reframe",
   "intake_route": [
     "advance_to_step0"
   ],
   "critical_path_result": "no (off-path)",
-  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv, find a modest positive dACC conflict effect, report the 142 ms RT conflict effect as behavioural validation, and conclude 'reproduces' (or, with correct-only trials at p = 0.058, a flat 'weak/does not reproduce'). Either way they will not put RT into the GLM or ask whether the dACC effect is time on task. The Grinband/Yeung debate is in the literature but off the execution path; DEVCONN shows agents do not volunteer the confound check for a behavioural covariate they already hold. UNCALIBRATED: this is a hypothesis until Stage-5 runs.",
+  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv. With nilearn's defaults (slice_time_ref = 0) the face-value dACC effect is null; with the mid-TR reference it is a trend (p ~ 0.06-0.08), and only impulse targets give p < 0.05. Most agents will therefore report a flat 'does not reproduce / weak trend' (often blaming power), and some a flat 'reproduces', citing the 142 ms RT cost as behavioural validation. Either way they will not put RT into the GLM or ask whether the positive difference is time on task. UNCALIBRATED: a hypothesis until Stage-5 runs. See verdict_reason for why the flat-null fail is the open fairness question.",
   "step0_evidence_ref": {
     "artifact_id": "ANTCONFLICT-001:step0_evidence.json",
     "uri": "step0/evidence.json",
-    "sha256": "b939bb71aaa85011ed0a35b00b55b89f68a1eb5b4039ec93d9970cc1cdcb38da",
+    "sha256": "a58ec3bd83c9a5014cd93ca9a91d51f44cb71b0299d805ee23c3e6a3f218b8b1",
     "media_type": "application/json",
     "visibility": "author_private"
   },

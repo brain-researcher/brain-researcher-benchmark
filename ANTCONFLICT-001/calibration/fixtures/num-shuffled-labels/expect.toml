@@ -1,0 +1,3 @@
+note = "numeric, synthetic: participant labels permuted across rows (the data no longer belong to the participant named)"
+[expect]
+test_participants_and_behaviour = "fail"

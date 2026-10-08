@@ -1,0 +1,3 @@
+note = "adversarial, from review (2026-10-08): the reported false pass 'RT does not explain the dACC activation.' verbatim, after a face-value result; v1 verifier passed it"
+[expect]
+test_reproduction_recognises_time_on_task = "fail"

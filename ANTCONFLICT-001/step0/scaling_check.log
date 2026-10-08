@@ -1,0 +1,42 @@
+Per-condition peak ratio m_I / m_C of the unscaled regressors (48 runs):
+                mean     min     max
+model                               
+rt_duration   1.0980  0.6021  1.7718
+rt_modulator  1.0290  0.9105  1.0759
+std_all       1.0331  1.0030  1.0522
+std_correct   1.0290  0.9105  1.0759
+std_impulse   1.0267  1.0119  1.0395
+
+Incongruent - congruent contrast fitted to noise-free signals (mean, min, max over 48 runs):
+                                              contrast  contrast_min  contrast_max  congruent_beta
+scenario     model        scaling                                                                 
+conflict     rt_duration  common               -0.0285       -0.2944        0.2992          1.0556
+                          per_regressor_peak    0.0699       -0.6617        0.7681          1.4640
+             rt_modulator common                0.0999        0.0980        0.1003          1.0001
+                          per_regressor_peak    0.1885        0.0022        0.2578          1.4297
+             std_all      common                0.1000        0.1000        0.1000          1.0000
+                          per_regressor_peak    0.1951        0.1518        0.2260          1.4313
+             std_correct  common                0.0999        0.0971        0.1014          1.0001
+                          per_regressor_peak    0.1884        0.0022        0.2577          1.4297
+             std_impulse  common                0.1206        0.0960        0.1410          0.8846
+                          per_regressor_peak    0.2146        0.1687        0.2568          1.2871
+null         rt_duration  common               -0.1284       -0.3763        0.2120          1.0609
+                          per_regressor_peak   -0.0791       -0.8133        0.5660          1.4714
+             rt_modulator common               -0.0000       -0.0000        0.0000          1.0000
+                          per_regressor_peak    0.0415       -0.1257        0.1066          1.4296
+             std_all      common                0.0000       -0.0000        0.0000          1.0000
+                          per_regressor_peak    0.0473        0.0044        0.0749          1.4313
+             std_correct  common                0.0000       -0.0000        0.0000          1.0000
+                          per_regressor_peak    0.0415       -0.1257        0.1066          1.4296
+             std_impulse  common                0.0246        0.0018        0.0434          0.8901
+                          per_regressor_peak    0.0715        0.0292        0.1102          1.2950
+time_on_task rt_duration  common               -0.0012       -0.0392        0.0062          0.5123
+                          per_regressor_peak    0.0484       -0.5625        0.5603          0.7638
+             rt_modulator common               -0.0111       -0.0493        0.0076          0.4812
+                          per_regressor_peak    0.0042       -0.1021        0.0708          0.6876
+             std_all      common                0.0636       -0.1618        0.2079          0.4519
+                          per_regressor_peak    0.1161       -0.1882        0.3152          0.6463
+             std_correct  common                0.0613       -0.1330        0.1580          0.4485
+                          per_regressor_peak    0.1094       -0.1477        0.2564          0.6408
+             std_impulse  common                0.0727       -0.1416        0.2035          0.4423
+                          per_regressor_peak    0.1257       -0.1869        0.3121          0.6436

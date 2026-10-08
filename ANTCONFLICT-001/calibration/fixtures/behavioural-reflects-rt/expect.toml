@@ -1,3 +1,3 @@
-note = "adversarial, synthetic: 'conflict effect reflects longer reaction times' in a behavioural sentence that also mentions the dACC; tests that the behavioural RT cost is not read as the imaging confound"
+note = "adversarial, synthetic: 'conflict effect reflects longer reaction times' in a behavioural sentence that also mentions the dACC; tests that the behavioural RT cost is not read as the imaging confound (numbers updated to the v2 analysis, 2026-10-08)"
 [expect]
 test_reproduction_recognises_time_on_task = "fail"

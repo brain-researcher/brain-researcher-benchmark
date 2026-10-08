@@ -8,7 +8,8 @@
     "frame_times": "mid-TR (AFNI tshift)",
     "hrf": "spm",
     "primary_targets": "Congruent/Incongruent correct trials, 2 s; errors and misses separate",
-    "signal": "voxelwise z-scored; regressors peak-normalised; OLS"
+    "regressor_scaling": "all task regressors of a model divided by one constant, the peak of an isolated reference event (2 s target; impulse; 1 s RT epoch)",
+    "signal": "voxelwise z-scored; OLS"
   },
   "group": "one-sample t across subjects",
   "roi": {

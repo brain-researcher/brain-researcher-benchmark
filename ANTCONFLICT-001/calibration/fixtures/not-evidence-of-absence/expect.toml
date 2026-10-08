@@ -1,0 +1,3 @@
+note = "correct answer, synthetic: hedged; RT-length epochs give a non-significant estimate, explicitly not read as evidence of absence; conclusion 'not robust to modelling time on task'"
+[expect]
+test_reproduction_recognises_time_on_task = "pass"

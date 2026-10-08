@@ -1,0 +1,211 @@
+{
+  "peak_ratio_I_over_C": {
+    "rt_duration": {
+      "mean": 1.098,
+      "min": 0.6021,
+      "max": 1.7718
+    },
+    "rt_modulator": {
+      "mean": 1.029,
+      "min": 0.9105,
+      "max": 1.0759
+    },
+    "std_all": {
+      "mean": 1.0331,
+      "min": 1.003,
+      "max": 1.0522
+    },
+    "std_correct": {
+      "mean": 1.029,
+      "min": 0.9105,
+      "max": 1.0759
+    },
+    "std_impulse": {
+      "mean": 1.0267,
+      "min": 1.0119,
+      "max": 1.0395
+    }
+  },
+  "noise_free_contrast": {
+    "conflict|rt_duration|common": {
+      "contrast": -0.0285,
+      "contrast_min": -0.2944,
+      "contrast_max": 0.2992,
+      "congruent_beta": 1.0556
+    },
+    "conflict|rt_duration|per_regressor_peak": {
+      "contrast": 0.0699,
+      "contrast_min": -0.6617,
+      "contrast_max": 0.7681,
+      "congruent_beta": 1.464
+    },
+    "conflict|rt_modulator|common": {
+      "contrast": 0.0999,
+      "contrast_min": 0.098,
+      "contrast_max": 0.1003,
+      "congruent_beta": 1.0001
+    },
+    "conflict|rt_modulator|per_regressor_peak": {
+      "contrast": 0.1885,
+      "contrast_min": 0.0022,
+      "contrast_max": 0.2578,
+      "congruent_beta": 1.4297
+    },
+    "conflict|std_all|common": {
+      "contrast": 0.1,
+      "contrast_min": 0.1,
+      "contrast_max": 0.1,
+      "congruent_beta": 1.0
+    },
+    "conflict|std_all|per_regressor_peak": {
+      "contrast": 0.1951,
+      "contrast_min": 0.1518,
+      "contrast_max": 0.226,
+      "congruent_beta": 1.4313
+    },
+    "conflict|std_correct|common": {
+      "contrast": 0.0999,
+      "contrast_min": 0.0971,
+      "contrast_max": 0.1014,
+      "congruent_beta": 1.0001
+    },
+    "conflict|std_correct|per_regressor_peak": {
+      "contrast": 0.1884,
+      "contrast_min": 0.0022,
+      "contrast_max": 0.2577,
+      "congruent_beta": 1.4297
+    },
+    "conflict|std_impulse|common": {
+      "contrast": 0.1206,
+      "contrast_min": 0.096,
+      "contrast_max": 0.141,
+      "congruent_beta": 0.8846
+    },
+    "conflict|std_impulse|per_regressor_peak": {
+      "contrast": 0.2146,
+      "contrast_min": 0.1687,
+      "contrast_max": 0.2568,
+      "congruent_beta": 1.2871
+    },
+    "null|rt_duration|common": {
+      "contrast": -0.1284,
+      "contrast_min": -0.3763,
+      "contrast_max": 0.212,
+      "congruent_beta": 1.0609
+    },
+    "null|rt_duration|per_regressor_peak": {
+      "contrast": -0.0791,
+      "contrast_min": -0.8133,
+      "contrast_max": 0.566,
+      "congruent_beta": 1.4714
+    },
+    "null|rt_modulator|common": {
+      "contrast": -0.0,
+      "contrast_min": -0.0,
+      "contrast_max": 0.0,
+      "congruent_beta": 1.0
+    },
+    "null|rt_modulator|per_regressor_peak": {
+      "contrast": 0.0415,
+      "contrast_min": -0.1257,
+      "contrast_max": 0.1066,
+      "congruent_beta": 1.4296
+    },
+    "null|std_all|common": {
+      "contrast": 0.0,
+      "contrast_min": -0.0,
+      "contrast_max": 0.0,
+      "congruent_beta": 1.0
+    },
+    "null|std_all|per_regressor_peak": {
+      "contrast": 0.0473,
+      "contrast_min": 0.0044,
+      "contrast_max": 0.0749,
+      "congruent_beta": 1.4313
+    },
+    "null|std_correct|common": {
+      "contrast": 0.0,
+      "contrast_min": -0.0,
+      "contrast_max": 0.0,
+      "congruent_beta": 1.0
+    },
+    "null|std_correct|per_regressor_peak": {
+      "contrast": 0.0415,
+      "contrast_min": -0.1257,
+      "contrast_max": 0.1066,
+      "congruent_beta": 1.4296
+    },
+    "null|std_impulse|common": {
+      "contrast": 0.0246,
+      "contrast_min": 0.0018,
+      "contrast_max": 0.0434,
+      "congruent_beta": 0.8901
+    },
+    "null|std_impulse|per_regressor_peak": {
+      "contrast": 0.0715,
+      "contrast_min": 0.0292,
+      "contrast_max": 0.1102,
+      "congruent_beta": 1.295
+    },
+    "time_on_task|rt_duration|common": {
+      "contrast": -0.0012,
+      "contrast_min": -0.0392,
+      "contrast_max": 0.0062,
+      "congruent_beta": 0.5123
+    },
+    "time_on_task|rt_duration|per_regressor_peak": {
+      "contrast": 0.0484,
+      "contrast_min": -0.5625,
+      "contrast_max": 0.5603,
+      "congruent_beta": 0.7638
+    },
+    "time_on_task|rt_modulator|common": {
+      "contrast": -0.0111,
+      "contrast_min": -0.0493,
+      "contrast_max": 0.0076,
+      "congruent_beta": 0.4812
+    },
+    "time_on_task|rt_modulator|per_regressor_peak": {
+      "contrast": 0.0042,
+      "contrast_min": -0.1021,
+      "contrast_max": 0.0708,
+      "congruent_beta": 0.6876
+    },
+    "time_on_task|std_all|common": {
+      "contrast": 0.0636,
+      "contrast_min": -0.1618,
+      "contrast_max": 0.2079,
+      "congruent_beta": 0.4519
+    },
+    "time_on_task|std_all|per_regressor_peak": {
+      "contrast": 0.1161,
+      "contrast_min": -0.1882,
+      "contrast_max": 0.3152,
+      "congruent_beta": 0.6463
+    },
+    "time_on_task|std_correct|common": {
+      "contrast": 0.0613,
+      "contrast_min": -0.133,
+      "contrast_max": 0.158,
+      "congruent_beta": 0.4485
+    },
+    "time_on_task|std_correct|per_regressor_peak": {
+      "contrast": 0.1094,
+      "contrast_min": -0.1477,
+      "contrast_max": 0.2564,
+      "congruent_beta": 0.6408
+    },
+    "time_on_task|std_impulse|common": {
+      "contrast": 0.0727,
+      "contrast_min": -0.1416,
+      "contrast_max": 0.2035,
+      "congruent_beta": 0.4423
+    },
+    "time_on_task|std_impulse|per_regressor_peak": {
+      "contrast": 0.1257,
+      "contrast_min": -0.1869,
+      "contrast_max": 0.3121,
+      "congruent_beta": 0.6436
+    }
+  }
+}

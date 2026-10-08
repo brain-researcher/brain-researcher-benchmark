@@ -1,0 +1,3 @@
+note = "numeric, alternative pipeline: as num-alt-pipeline but with nilearn's default slice_time_ref = 0 (ignores the instruction's mid-TR note; face-value t = -0.31). Kept passing the compute checks: the imaging values are still the contrast on these data"
+[expect]
+"*" = "pass"

@@ -1,3 +1,3 @@
-note = "adversarial, synthetic: the pipeline sentence names an RT modulator (the recurring pipeline-vocabulary false-pass class) but the conclusion is a flat reproduction"
+note = "adversarial, synthetic: the pipeline sentence names an RT modulator (the recurring pipeline-vocabulary false-pass class) next to a flat verdict, never linking RT to the result (numbers updated to v2: with RT in the model these data give a negative contrast, so the realistic verdict is a flat 'does not reproduce')"
 [expect]
 test_reproduction_recognises_time_on_task = "fail"
