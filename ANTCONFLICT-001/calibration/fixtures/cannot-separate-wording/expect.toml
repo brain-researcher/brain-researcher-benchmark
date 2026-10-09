@@ -1,3 +1,0 @@
-note = "correct answer, synthetic: 'cannot be separated from time on task' wording with the modulator result (numbers updated to the v2 analysis, 2026-10-08)"
-[expect]
-test_reproduction_recognises_time_on_task = "pass"

@@ -72,7 +72,7 @@ def validate(eprime_dir, ds_dir):
         assert np.allclose(pd.to_numeric(tb.accuracy).values, te.accuracy.values), evf.name
         n += 1
     print(f"E-Prime events match derivative events.tsv exactly for {n} runs")
-    m = 0
+    m, unlabelled = 0, []
     for evf in sorted(Path(ds_dir).glob("sub-*/ses-1/func/sub-*_ses-1_task-ANT_run-*_events.tsv")):
         sub, run = re.search(r"sub-(\w+?)_ses-1_task-ANT_run-(\d)", evf.name).groups()
         if not (Path(eprime_dir) / f"ANT_fMRI_Session1-{sub.removeprefix('RC4')}-1.txt").is_file():
@@ -80,10 +80,18 @@ def validate(eprime_dir, ds_dir):
         b, e = pd.read_csv(evf, sep="\t"), subject_events(eprime_dir, sub)[int(run)]
         err_t = (e.duration == 2) & (e.accuracy == 0)
         expect = e.trial_type.where(~err_t, "TargetErr").where(~err_t.shift(-1, fill_value=False), "CueErr")
-        assert len(b) == len(e) and (b.trial_type.values == expect.values).all(), evf.name
+        assert len(b) == len(e), evf.name
         assert np.abs(b.onset.values - e.onset.values).max() < 0.01, evf.name
+        # The only tolerated difference: an E-Prime error (Accuracy 0, which the derivative events
+        # agree with) that the raw file leaves under its condition label. Seen in RC4110 runs 5-6.
+        off = b.trial_type.values != expect.values
+        assert (b.trial_type.values[off] == e.trial_type.values[off]).all(), evf.name
+        if off.any():
+            unlabelled.append(f"{evf.name}: {int((off & err_t.values).sum())} error targets")
         m += 1
     print(f"E-Prime events match raw BIDS events.tsv (errors relabelled) for {m} runs")
+    for u in unlabelled:
+        print(f"  raw events.tsv leaves E-Prime errors unrelabelled in {u}")
     return n + m
 
 

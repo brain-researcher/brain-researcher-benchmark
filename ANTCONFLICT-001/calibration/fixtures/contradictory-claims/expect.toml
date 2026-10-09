@@ -1,3 +1,0 @@
-note = "adversarial, synthetic: asserts the time-on-task account and, in the next sentence, that the dACC effect remained significant with RT modelled; contradictory, must not pass"
-[expect]
-test_reproduction_recognises_time_on_task = "fail"

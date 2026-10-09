@@ -47,7 +47,7 @@
   },
   "probe": {
     "script": "step0/probe.py",
-    "command": "DS001907_DIR=<ds001907> EPRIME_DIR=<unzipped RC4-ANT-1> python step0/probe.py > step0/run.log 2>&1; FRAME_OFFSET=0 ... > step0/run_frame_offset0.log 2>&1; EPRIME_DIR=... python step0/scaling_check.py > step0/scaling_check.log; DS001907_DIR=... python step0/alt_pipeline_check.py > step0/alt_pipeline_check.log",
+    "command": "DS001907_DIR=<ds001907> EPRIME_DIR=<unzipped RC4-ANT-1> python step0/probe.py > step0/run.log 2>&1; FRAME_OFFSET=0 ... > step0/run_frame_offset0.log 2>&1; EPRIME_DIR=... python step0/scaling_check.py > step0/scaling_check.log; DS001907_DIR=... python step0/alt_pipeline_check.py > step0/alt_pipeline_check.log; second attempt (step0/runs1to6_decision_rule.md): RUNS=1,2,3,4,5,6 DS001907_DIR=... EPRIME_DIR=... python step0/probe.py > step0/run_runs1-6.log 2>&1; RUNS=1,2,3,4,5,6 DS001907_DIR=... python step0/alt_pipeline_check.py > step0/alt_pipeline_check_runs1-6.log",
     "log": "step0/run.log",
     "outputs": [
       "step0/outputs/metrics.json",
@@ -57,9 +57,14 @@
       "step0/outputs/scaling_check.json",
       "step0/outputs/alt_pipeline_check.json",
       "step0/outputs/alt_pipeline_subjects.csv",
+      "step0/outputs/metrics_runs1-6.json",
+      "step0/outputs/subject_roi_effects_runs1-6.csv",
+      "step0/outputs/subject_behaviour_runs1-6.csv",
+      "step0/outputs/alt_pipeline_check_runs1-6.json",
+      "step0/outputs/alt_pipeline_subjects_runs1-6.csv",
       "step0/outputs/pip_freeze.txt"
     ],
-    "ran_on": "2026-10-08, macOS arm64 (Darwin 24.6), Python 3.14.7; v2 (shared regressor scale, step0/probe_models.py) rerun on the same data cache; v1 kept under superseded"
+    "ran_on": "2026-10-08, macOS arm64 (Darwin 24.6), Python 3.14.7; v2 (shared regressor scale, step0/probe_models.py) rerun on the same data cache; v1 kept under superseded; runs 1-6 attempt: same machine and pinned environment, fresh data cache, probe 595 s"
   },
   "results": [
     {
@@ -74,14 +79,21 @@
           "visibility": "author_private"
         },
         {
+          "artifact_id": "ANTCONFLICT-001:step0_run_runs1-6.log",
+          "uri": "step0/run_runs1-6.log",
+          "sha256": "75a76db7998b39432df32871c8fccc8befa9a816ca6d5e5745053f3bff4e9050",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
           "artifact_id": "ANTCONFLICT-001:step0_eprime_events.py",
           "uri": "step0/eprime_events.py",
-          "sha256": "88214b9733a297bcc3bf659461f151d773daa699af8fc8868cf6c4c6117dee53",
+          "sha256": "18a60b93a10a7ddf8623776e0749d363e8d7dc1921a2415aa2b615e36bc4eb2d",
           "media_type": "text/x-python",
           "visibility": "author_private"
         }
       ],
-      "value": "Trial-level RT/accuracy rebuilt from the E-Prime export (BIDS run-N = block Run<ABCDEF[N-1]>Proc; first 2 lead-in trials dropped; trigger = TrigTest.RTTime; ReactionTime/Accuracy fields). Matches all 12 derivative events.tsv files that carry RT (6 subjects) exactly, and all 48 raw BIDS events.tsv files (error trials relabelled TargetErr/CueErr) to < 10 ms."
+      "value": "Trial-level RT/accuracy rebuilt from the E-Prime export (BIDS run-N = block Run<ABCDEF[N-1]>Proc; first 2 lead-in trials dropped; trigger = TrigTest.RTTime; ReactionTime/Accuracy fields). Matches all 12 derivative events.tsv files that carry RT (6 subjects) exactly, and all 48 raw BIDS events.tsv files (error trials relabelled TargetErr/CueErr) to < 10 ms. Session-1 runs 1-6 (second attempt): matches all 36 derivative events.tsv files with RT exactly and all 144 raw events.tsv files by onset and condition. One discrepancy: the raw events of RC4110 runs 5-6 leave 7 + 1 E-Prime errors (Accuracy 0, which the derivative events agree with) under their condition label instead of TargetErr. validate() was changed to report this case instead of aborting; every other check stays strict. The probe takes accuracy from E-Prime and is unaffected; the events.tsv pipeline (alt_pipeline_check.py) uses the file as shipped."
     },
     {
       "field": "raw_effect",
@@ -403,11 +415,114 @@
         "percent_signal_change_default": "unusable: the derivatives are nuisance-regression residuals with voxel means ~0 (median |mean|/SD 2e-4), so nilearn's default signal_scaling=0 divides by ~0 (t23 = -0.11, subject-level r = 0.60)",
         "summary": "An independent nilearn FirstLevelModel pipeline on events.tsv agrees with v2 (t = 1.96 vs 1.82-2.01), not with v1. With nilearn's default slice_time_ref the face-value effect is null."
       }
+    },
+    {
+      "field": "second_attempt_runs1_6",
+      "status": "measured",
+      "evidence_refs": [
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_runs1to6_decision_rule.md",
+          "uri": "step0/runs1to6_decision_rule.md",
+          "sha256": "a3c23e22b658c5f27b023a33703faff594b59d31cc4c6caee6cd5654f082e7e2",
+          "media_type": "text/markdown",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_probe.py",
+          "uri": "step0/probe.py",
+          "sha256": "b83475029d310d4b645ca0c92b2572e21c9564c105c71b174fff0487513bfe77",
+          "media_type": "text/x-python",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_run_runs1-6.log",
+          "uri": "step0/run_runs1-6.log",
+          "sha256": "75a76db7998b39432df32871c8fccc8befa9a816ca6d5e5745053f3bff4e9050",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_metrics_runs1-6.json",
+          "uri": "step0/outputs/metrics_runs1-6.json",
+          "sha256": "cc11e53e49c766c6aa49358adb9516504a49b543472236d902d98235a4882958",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_roi_effects_runs1-6.csv",
+          "uri": "step0/outputs/subject_roi_effects_runs1-6.csv",
+          "sha256": "abe5830ad9c232872aa1b62ebe6cfcc68bd82ba794f53d3ed48714cc77d195c5",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_subject_behaviour_runs1-6.csv",
+          "uri": "step0/outputs/subject_behaviour_runs1-6.csv",
+          "sha256": "982a74f3e96559bf2ad6bec180bb8ff367b69f984022fc7f4dbe1349acca4553",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_alt_pipeline_check_runs1-6.log",
+          "uri": "step0/alt_pipeline_check_runs1-6.log",
+          "sha256": "834adfd77ea9b577f3f00efb1ead3e5c5149b31eb2a3e855b3a858687dc0d0b3",
+          "media_type": "text/plain",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_alt_pipeline_check_runs1-6.json",
+          "uri": "step0/outputs/alt_pipeline_check_runs1-6.json",
+          "sha256": "c3b6bb714079c5557a08f335c2cc4003024dc2315572698c3b0655b43178b178",
+          "media_type": "application/json",
+          "visibility": "author_private"
+        },
+        {
+          "artifact_id": "ANTCONFLICT-001:step0_outputs_alt_pipeline_subjects_runs1-6.csv",
+          "uri": "step0/outputs/alt_pipeline_subjects_runs1-6.csv",
+          "sha256": "35f22a45725a197aabb37bad79dcdb3ad45e5c621bba7867cea6d3fc8ae816a2",
+          "media_type": "text/csv",
+          "visibility": "author_private"
+        }
+      ],
+      "value": {
+        "decision_rule": "step0/runs1to6_decision_rule.md, committed and pushed (9e77b1f) before any run 3-6 BOLD was analysed",
+        "setup": "same 24 participants, ROI, models and v2 common scaling; session 1 runs 1-6 (6 runs each, 144 runs)",
+        "raw": {
+          "std_all": "t = 5.54, p = 1.2e-05",
+          "std_correct": "t = 5.64, p = 9.7e-06",
+          "std_impulse": "t = 5.92, p = 4.9e-06"
+        },
+        "controlled": {
+          "rt_duration": "t = 3.86, p = 0.0008",
+          "rt_modulator": "t = -0.57, p = 0.58"
+        },
+        "independent_pipeline": {
+          "glover_str0.5": "t = 6.33, p = 1.9e-06",
+          "glover_str0": "t = 4.43, p = 0.00019",
+          "spm_str0.5": "t = 5.82, p = 6.3e-06",
+          "spm_str0": "t = 3.77, p = 0.001",
+          "psc_glover_str0": "t = 4.12, p = 0.00042"
+        },
+        "premise": {
+          "rt_conflict_ms": "138.9 ms, t = 11.15, p = 9.5e-11",
+          "rt_slope_in_roi": "t = 8.80, p = 8e-09",
+          "roi_std_all_vs_rt_conflict": "r = 0.40, p = 0.053"
+        },
+        "negative_control_taskpos_all_targets": "t = 5.30, p = 2.2e-05",
+        "rule_outcome": {
+          "1 std_correct p < 0.01": true,
+          "2 std_all p < 0.05": true,
+          "3 independent glover mid-TR p < 0.05": true,
+          "4 rt_duration p >= 0.05": false,
+          "5 rt_modulator p >= 0.05": true,
+          "verdict": "archive (criterion 4 fails: RT-length epochs leave a significant positive effect)"
+        }
+      }
     }
   ],
   "lever": {
     "name": "time on task (trial-level RT) in the target model",
-    "flips_result": true,
+    "flips_result": false,
     "variants_tried": [
       "fixed 2 s targets, all trials (as in the E-Prime events): t = 2.01 (p = 0.057)",
       "fixed 2 s targets, correct trials + error regressor: t = 1.82 (p = 0.081)",
@@ -415,7 +530,9 @@
       "RT-duration epochs (duration = RT), correct trials: t = 1.04 (n.s.)",
       "constant 2 s targets + RT parametric modulator (RT mean-centred across conditions): t = -2.71 (p = 0.013, reversed)",
       "each of the above with naive frame times (FRAME_OFFSET=0): raw t = 0.12 / -0.20 / 1.27, controlled t = 0.44 / -3.42",
-      "nilearn FirstLevelModel on events.tsv (glover, mid-TR, AR(1)): t = 1.96 (p = 0.063); with slice_time_ref = 0: t = -0.31"
+      "nilearn FirstLevelModel on events.tsv (glover, mid-TR, AR(1)): t = 1.96 (p = 0.063); with slice_time_ref = 0: t = -0.31",
+      "session-1 runs 1-6 (second attempt, pre-stated rule): fixed 2 s all trials t = 5.54, p = 1.2e-05; correct trials t = 5.64, p = 9.7e-06; impulse t = 5.92, p = 4.9e-06; independent nilearn glover mid-TR t = 6.33, p = 1.9e-06 (slice_time_ref 0: t = 4.43, p = 0.00019)",
+      "session-1 runs 1-6, RT controls: RT-length epochs t = 3.86, p = 0.0008 (attenuated, still significant); 2 s targets + RT modulator t = -0.57, p = 0.58 (null)"
     ],
     "honesty_notes": [
       "v1 overstated the face-value effect: its contrast compared betas on different scales (see superseded). After the fix the 2 s-target effect is p = 0.057 / 0.081, and an independent nilearn pipeline gives p = 0.063. Only impulse targets reach p < 0.05 (0.007). The face-value result is weak and model-dependent, not a clear reproduction.",
@@ -426,7 +543,10 @@
       "The derivatives are nuisance-regression residuals with voxel means ~0, so percent-signal-change scaling (nilearn's default) is ill-defined on them. Agents that keep it get unusable imaging values; the verifier's imaging check (subject-level r >= 0.6 with the reference) fails them (r = 0.60 in alt_pipeline_check). This is an on-path hazard unrelated to the lever.",
       "Older adults (mean RT 886/1029 ms) rather than Fan's young adults; 2 of 6 runs. Both limit power for the raw effect.",
       "Between-subject correlation of the ROI conflict effect with the behavioural RT cost: r = 0.08 (n.s.). The time-on-task account is trial-level, so this is not counter-evidence; recorded so it is not cherry-picked later.",
-      "Voxelwise counts are uncorrected z > 3.1, used only as a description next to the a-priori ROI."
+      "Voxelwise counts are uncorrected z > 3.1, used only as a description next to the a-priori ROI.",
+      "Runs 1-6 (2026-10-08): with three times the data the face-value conflict effect is robust in every pipeline tried (t = 3.8-6.3), so the two-run null was a power limit, not a property of the data.",
+      "The two RT controls now disagree. At matched RT (modulator) the incongruent - congruent difference is null (t = -0.57); per unit time on task (RT-length epochs) incongruent targets still respond more (t = 3.86). Pure time on task predicts ~0 for both (scaling_check). So these data neither show that RT accounts for the effect nor that it survives RT control: which answer is right depends on which RT model the key adopts, and the literature (Grinband 2011 vs Yeung 2011; Mumford 2023) does not settle that. There is no fair fixed oracle for a wrong-cause key.",
+      "The two-run modulator reversal (t = -2.71) did not persist with six runs (t = -0.57); it was most likely noise."
     ]
   },
   "failure_axis": "wrong-cause (time on task masquerading as a conflict effect); same family as DEVCONN-001, different lever, modality (task fMRI) and dataset",
@@ -435,7 +555,7 @@
     "answer": "no (off-path)",
     "rationale": "The instruction asks for the ANT conflict contrast in a pinned dACC ROI, plus the standard behavioural conflict score. Both can be completed with the default nilearn/SPM event model (onsets and the trial lengths listed in events.tsv). Nothing in the requested outputs requires putting RT into the fMRI model. The behavioural RT cost is computed anyway, but as a separate behavioural validation, so the agent holds the premise without being asked to connect it to the imaging result."
   },
-  "agent_headroom_hypothesis": "Agents will build a standard FirstLevelModel from events.tsv. With nilearn's defaults (slice_time_ref = 0) the face-value dACC effect is null; with the mid-TR reference it is a trend (p ~ 0.06-0.08), and only impulse targets give p < 0.05. Most agents will therefore report a flat 'does not reproduce / weak trend' (often blaming power), and some a flat 'reproduces', citing the 142 ms RT cost as behavioural validation. Either way they will not put RT into the GLM or ask whether the positive difference is time on task. UNCALIBRATED: a hypothesis until Stage-5 runs. See verdict_reason for why the flat-null fail is the open fairness question.",
+  "agent_headroom_hypothesis": "Not applicable: archived at Step 0. (Previous hypothesis, for the record: agents fit a fixed-duration model and report reproduction without checking RT.) Agents will build a standard FirstLevelModel from events.tsv. With nilearn's defaults (slice_time_ref = 0) the face-value dACC effect is null; with the mid-TR reference it is a trend (p ~ 0.06-0.08), and only impulse targets give p < 0.05. Most agents will therefore report a flat 'does not reproduce / weak trend' (often blaming power), and some a flat 'reproduces', citing the 142 ms RT cost as behavioural validation. Either way they will not put RT into the GLM or ask whether the positive difference is time on task. UNCALIBRATED: a hypothesis until Stage-5 runs. See verdict_reason for why the flat-null fail is the open fairness question.",
   "cue_terms": [
     "time on task",
     "time-on-task",
@@ -449,8 +569,8 @@
     "processing time",
     "trial-by-trial"
   ],
-  "verdict": "reframe",
-  "verdict_reason": "Reframed 2026-10-08 after a scaling correction. v1's 'a modest significant effect that is entirely accounted for by RT' does not survive: with one regressor scale the standard 2 s models are already not significant (p = 0.057 / 0.081; independent pipeline p = 0.063), so for the default analysis the lever no longer turns a positive verdict into a null. What remains is real and measured: a weak, model-dependent positive difference (impulse p = 0.007) that is not significant with RT-length epochs and reverses at matched RT (t = -2.71), while the ROI tracks RT (t = 5.5). The task now asks for that interpretation: the positive difference is RT-sensitive and does not establish a conflict-specific response. Open question before calling it hard: is it fair to fail a flat, non-overclaiming 'does not reproduce'? Its verdict roughly agrees with the reference; it misses the dependency. Decide with hand re-scored agent runs, or retire the wrong-cause framing and accept such answers (likely an easy control).",
+  "verdict": "archive",
+  "verdict_reason": "Archived 2026-10-08 under the rule fixed in step0/runs1to6_decision_rule.md. On runs 1-2 RAW was not significant (p = 0.057 / 0.081), so the gate could not be met. On all six session-1 runs RAW holds (std_correct t = 5.64, p = 9.7e-06; std_all t = 5.54, p = 1.2e-05; independent pipeline t = 6.33, p = 1.9e-06), but CTRL does not flip it: the RT modulator gives a null (t = -0.57, p = 0.58) while RT-length epochs leave a significant positive effect (t = 3.86, p = 0.0008). Criterion 4 fails. Beyond the rule, the disagreement means the key would have to pick one side of an open modelling debate, so no fair fixed oracle exists for the time-on-task trap. No task is built; the verifier, oracle and fixtures are kept in git history (9e77b1f).",
   "superseded": [
     {
       "version": "v1_per_regressor_peak",

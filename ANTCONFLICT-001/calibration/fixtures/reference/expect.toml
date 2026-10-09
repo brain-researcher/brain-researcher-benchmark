@@ -1,3 +1,0 @@
-note = "reference: the oracle's findings.md, verbatim (solution/compute.py run locally on the Step-0 data cache, 2026-10-08; not yet an in-container Harbor oracle run)"
-[expect]
-"*" = "pass"

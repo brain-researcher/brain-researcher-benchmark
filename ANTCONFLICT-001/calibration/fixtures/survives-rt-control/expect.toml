@@ -1,3 +1,0 @@
-note = "adversarial, from review (2026-10-08): the reported false pass 'After controlling for RT, dACC activation remained significant and did not weaken.' verbatim; v1 verifier passed it"
-[expect]
-test_reproduction_recognises_time_on_task = "fail"

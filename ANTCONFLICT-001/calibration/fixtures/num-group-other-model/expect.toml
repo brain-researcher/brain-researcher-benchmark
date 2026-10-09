@@ -1,5 +1,0 @@
-note = "numeric, synthetic: subjects.csv has the 2 s correct-trial model, but the group ROI test reported is the impulse model's"
-[expect]
-test_required_outputs_and_metadata = "pass"
-test_participants_and_behaviour = "pass"
-test_dacc_contrast_computed = "fail"

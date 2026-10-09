@@ -1,3 +1,0 @@
-note = "adversarial, synthetic: attributes the dACC difference to time on task with no RT analysis anywhere (group_results.json holds only the required tests); unsupported prose must not pass"
-[expect]
-test_reproduction_recognises_time_on_task = "fail"

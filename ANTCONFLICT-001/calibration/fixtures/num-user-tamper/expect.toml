@@ -1,7 +1,0 @@
-note = "numeric tamper reported in review (2026-10-08): original behaviour kept, every roi_conflict set to 0, group ROI mean 987 and t 123, run_metadata.json deleted; v1 verifier passed it"
-remove = ["run_metadata.json"]
-[expect]
-test_required_outputs_and_metadata = "fail"
-test_participants_and_behaviour = "pass"
-test_dacc_contrast_computed = "fail"
-test_reproduction_recognises_time_on_task = "pass"

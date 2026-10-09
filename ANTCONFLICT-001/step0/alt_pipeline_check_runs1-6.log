@@ -1,0 +1,51 @@
+RC4101 glover_str0.5=+106.9043 glover_str0=+74.5124 spm_str0.5=+46.6959 spm_str0=+76.6445 psc_glover_str0=+1297.8610
+RC4103 glover_str0.5=+79.7041 glover_str0=+75.1293 spm_str0.5=+286.3571 spm_str0=+205.1213 psc_glover_str0=+565.4212
+RC4106 glover_str0.5=+464.4599 glover_str0=+534.4709 spm_str0.5=+701.0810 spm_str0=+873.1481 psc_glover_str0=+28417.8692
+RC4107 glover_str0.5=+830.1753 glover_str0=+433.2260 spm_str0.5=+1002.2030 spm_str0=+242.5013 psc_glover_str0=+18420.3465
+RC4109 glover_str0.5=+12.4128 glover_str0=-132.7207 spm_str0.5=-8.1855 spm_str0=-189.6839 psc_glover_str0=-3991.6425
+RC4110 glover_str0.5=+38.0983 glover_str0=-59.2781 spm_str0.5=+393.2056 spm_str0=+176.3082 psc_glover_str0=-565.5753
+RC4111 glover_str0.5=+634.7732 glover_str0=+513.0216 spm_str0.5=+976.4630 spm_str0=+645.8972 psc_glover_str0=+24900.4754
+RC4112 glover_str0.5=+302.5600 glover_str0=+198.4614 spm_str0.5=+439.2516 spm_str0=+295.9152 psc_glover_str0=+7249.3560
+RC4113 glover_str0.5=+295.3522 glover_str0=+395.8100 spm_str0.5=+717.8117 spm_str0=+767.6062 psc_glover_str0=+12290.3697
+RC4115 glover_str0.5=+95.0403 glover_str0=+234.0058 spm_str0.5=+401.7794 spm_str0=+572.2671 psc_glover_str0=+8779.6407
+RC4116 glover_str0.5=+261.9289 glover_str0=+24.9392 spm_str0.5=+314.6777 spm_str0=+48.1819 psc_glover_str0=+231.1738
+RC4117 glover_str0.5=+252.6322 glover_str0=+76.0194 spm_str0.5=+371.0261 spm_str0=+48.4008 psc_glover_str0=+4482.9099
+RC4118 glover_str0.5=+388.6441 glover_str0=+217.2795 spm_str0.5=+335.6306 spm_str0=+29.5860 psc_glover_str0=+6455.6515
+RC4119 glover_str0.5=+579.0841 glover_str0=+107.7712 spm_str0.5=+448.1113 spm_str0=-195.8639 psc_glover_str0=+2370.1794
+RC4120 glover_str0.5=+316.7124 glover_str0=+7.8248 spm_str0.5=+363.8206 spm_str0=-40.5803 psc_glover_str0=-1127.4078
+RC4121 glover_str0.5=+750.5498 glover_str0=+530.1820 spm_str0.5=+1050.7355 spm_str0=+549.9897 psc_glover_str0=+21067.7073
+RC4122 glover_str0.5=+147.6264 glover_str0=+165.2441 spm_str0.5=+259.0687 spm_str0=+269.5737 psc_glover_str0=+10959.0705
+RC4123 glover_str0.5=+319.2033 glover_str0=-70.3040 spm_str0.5=+491.2312 spm_str0=-101.3208 psc_glover_str0=-1743.3629
+RC4125 glover_str0.5=+482.7628 glover_str0=+572.5269 spm_str0.5=+625.4770 spm_str0=+706.4768 psc_glover_str0=+24872.2479
+RC4126 glover_str0.5=+1297.9410 glover_str0=+1192.1407 spm_str0.5=+2356.5677 spm_str0=+2068.7070 psc_glover_str0=+55272.9947
+RC4128 glover_str0.5=+283.8689 glover_str0=+63.3830 spm_str0.5=+438.5652 spm_str0=+97.9174 psc_glover_str0=+922.5805
+RC4129 glover_str0.5=+790.6209 glover_str0=+665.6635 spm_str0.5=+1612.5403 spm_str0=+1295.6891 psc_glover_str0=+28638.4670
+RC4130 glover_str0.5=+210.0082 glover_str0=+246.8463 spm_str0.5=+256.2751 spm_str0=+288.9696 psc_glover_str0=+9158.1577
+RC4131 glover_str0.5=+473.3296 glover_str0=+708.5887 spm_str0.5=+831.0358 spm_str0=+1035.1568 psc_glover_str0=+23301.7143
+{
+  "glover_str0.5": {
+    "mean": 392.266374875363,
+    "t": 6.3300777338186425,
+    "p": 1.8504674366271412e-06
+  },
+  "glover_str0": {
+    "mean": 282.28100748297055,
+    "t": 4.426262012360279,
+    "p": 0.0001945588005202214
+  },
+  "spm_str0.5": {
+    "mean": 612.9760661346739,
+    "t": 5.8174184272815594,
+    "p": 6.29443173750564e-06
+  },
+  "spm_str0": {
+    "mean": 406.9420455014438,
+    "t": 3.7686325809867336,
+    "p": 0.000997521954392427
+  },
+  "psc_glover_str0": {
+    "mean": 11759.425238287024,
+    "t": 4.116614846864265,
+    "p": 0.00042096432919864877
+  }
+}

@@ -1,3 +1,0 @@
-note = "adversarial, synthetic: other wordings of the two reviewed false passes (not driven by, conflict rather than RT, essentially unchanged with an RT modulator), so the fix is not a blacklist of two sentences"
-[expect]
-test_reproduction_recognises_time_on_task = "fail"

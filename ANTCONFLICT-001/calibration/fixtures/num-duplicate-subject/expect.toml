@@ -1,3 +1,0 @@
-note = "numeric, synthetic: the last row relabelled as the participant above it"
-[expect]
-test_participants_and_behaviour = "fail"

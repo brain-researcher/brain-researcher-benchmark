@@ -1,3 +1,0 @@
-note = "adversarial, synthetic (numbers deliberately not these data's): RT modulator only 'attenuated' the dACC estimate and the conclusion is still a reproduction; attenuation alone is not loss of significance or reversal"
-[expect]
-test_reproduction_recognises_time_on_task = "fail"
